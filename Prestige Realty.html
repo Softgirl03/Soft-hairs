@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prestige Realty Nigeria – Luxury Real Estate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0d1b2a;--navy-mid:#162032;--navy-light:#1e2e42;
+  --lilac:#c4b5d4;--lilac-light:#ddd3e8;--lilac-pale:#f2eef7;
+  --gold:#c9a84c;--gold-light:#e8c97a;
+  --white:#ffffff;--off-white:#f8f6f2;
+  --text-light:#a8b4c0;--text-mid:#6b7a8d;
+  --font-display:'Cormorant Garamond',serif;--font-body:'DM Sans',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--off-white);color:var(--navy);overflow-x:hidden}
+
+/* SCROLL ANIMATIONS */
+.reveal{opacity:0;transform:translateY(44px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.up{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-54px);transition:opacity 0.8s ease,transform 0.8s ease}
+.reveal-left.up{opacity:1;transform:translateX(0)}
+.reveal-right{opacity:0;transform:translateX(54px);transition:opacity 0.8s ease,transform 0.8s ease}
+.reveal-right.up{opacity:1;transform:translateX(0)}
+.s1{transition-delay:.05s}.s2{transition-delay:.12s}.s3{transition-delay:.19s}
+.s4{transition-delay:.26s}.s5{transition-delay:.33s}.s6{transition-delay:.40s}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 4%;background:rgba(13,27,42,0.93);backdrop-filter:blur(14px);border-bottom:1px solid rgba(196,181,212,0.13);transition:all .3s}
+.nav-logo{font-family:var(--font-display);font-size:1.5rem;color:var(--white);font-weight:600;letter-spacing:.04em;text-decoration:none}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:2.2rem;list-style:none}
+.nav-links a{color:var(--lilac-light);font-size:.84rem;text-decoration:none;letter-spacing:.07em;text-transform:uppercase;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{background:var(--gold);color:var(--navy);padding:.54rem 1.4rem;border-radius:4px;font-size:.82rem;font-weight:600;text-decoration:none;letter-spacing:.06em;text-transform:uppercase;transition:background .2s;white-space:nowrap}
+.nav-cta:hover{background:var(--gold-light)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white);border-radius:2px;transition:all .3s}
+.mob-menu{display:none;position:fixed;top:65px;left:0;right:0;background:rgba(13,27,42,0.98);padding:2rem;z-index:999;flex-direction:column;gap:1.5rem}
+.mob-menu a{color:var(--lilac-light);font-size:1rem;text-decoration:none;letter-spacing:.06em;text-transform:uppercase}
+.mob-menu.open{display:flex}
+
+/* HERO */
+.hero{height:100vh;min-height:600px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero-slides{position:absolute;inset:0}
+.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.4s ease;will-change:transform}
+.hero-slide.active{opacity:1}
+.hero-slide::after{content:'';position:absolute;inset:0;background:linear-gradient(140deg,rgba(13,27,42,.84) 0%,rgba(13,27,42,.48) 55%,rgba(13,27,42,.22) 100%)}
+.hero-content{position:relative;z-index:2;text-align:center;padding:0 1.5rem;max-width:860px}
+.hero-eyebrow{font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1.2rem}
+.hero-title{font-family:var(--font-display);font-size:clamp(3rem,8vw,6.5rem);font-weight:300;color:var(--white);line-height:1.05;margin-bottom:1.4rem}
+.hero-title em{font-style:italic;color:var(--lilac-light)}
+.hero-sub{font-size:clamp(.9rem,2vw,1.1rem);color:rgba(255,255,255,.7);line-height:1.7;max-width:540px;margin:0 auto 2.4rem}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-p{background:var(--gold);color:var(--navy);padding:.85rem 2.2rem;border-radius:4px;font-weight:600;font-size:.88rem;text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:all .2s}
+.btn-p:hover{background:var(--gold-light);transform:translateY(-2px)}
+.btn-o{border:1px solid rgba(255,255,255,.5);color:var(--white);padding:.85rem 2.2rem;border-radius:4px;font-weight:500;font-size:.88rem;text-decoration:none;letter-spacing:.08em;text-transform:uppercase;transition:all .2s}
+.btn-o:hover{border-color:var(--gold);color:var(--gold)}
+.hero-dots{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;gap:.5rem;z-index:3}
+.hero-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.32);cursor:pointer;transition:all .3s}
+.hero-dot.active{background:var(--gold);transform:scale(1.35)}
+.hero-scroll{position:absolute;bottom:2rem;right:4%;z-index:3;writing-mode:vertical-rl;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.38);display:flex;align-items:center;gap:.6rem}
+.hero-scroll::after{content:'';width:1px;height:40px;background:rgba(255,255,255,.22)}
+
+/* STATS */
+.stats-bar{background:var(--navy);padding:2rem 4%;display:flex;justify-content:center;flex-wrap:wrap}
+.stat-item{text-align:center;padding:.8rem 3rem;border-right:1px solid rgba(196,181,212,.13)}
+.stat-item:last-child{border-right:none}
+.stat-num{font-family:var(--font-display);font-size:2.4rem;font-weight:600;color:var(--gold);line-height:1}
+.stat-label{font-size:.74rem;letter-spacing:.13em;text-transform:uppercase;color:var(--lilac);margin-top:.3rem}
+
+/* SECTION HEADER */
+.sh{text-align:center;margin-bottom:3.5rem}
+.sh-ey{font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:.8rem}
+.sh-ti{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.2rem);font-weight:400;color:var(--navy);line-height:1.15}
+.sh-ti em{font-style:italic;color:var(--lilac)}
+.sh-ti.light{color:var(--white)}
+.sh-line{width:48px;height:1px;background:var(--gold);margin:1.2rem auto 0}
+
+/* LISTINGS */
+#listings{padding:6rem 4%;background:var(--off-white)}
+.lf{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem}
+.fbtn{border:1px solid rgba(13,27,42,.2);background:transparent;padding:.54rem 1.4rem;border-radius:30px;font-size:.8rem;font-weight:500;cursor:pointer;letter-spacing:.06em;text-transform:uppercase;color:var(--navy);transition:all .2s;font-family:var(--font-body)}
+.fbtn.active,.fbtn:hover{background:var(--navy);color:var(--white);border-color:var(--navy)}
+.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:2rem;max-width:1400px;margin:0 auto}
+
+/* CARD */
+.card{background:var(--white);border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(13,27,42,.07);transition:transform .35s,box-shadow .35s;cursor:pointer;position:relative}
+.card:hover{transform:translateY(-8px);box-shadow:0 22px 60px rgba(13,27,42,.15)}
+.card-img{position:relative;height:248px;overflow:hidden}
+.card-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;display:block}
+.card:hover .card-img img{transform:scale(1.08)}
+/* VIEW DETAILS overlay — gold, no blue */
+.cov{position:absolute;inset:0;background:rgba(13,27,42,.52);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s ease}
+.card:hover .cov{opacity:1}
+.cov-btn{background:var(--gold);color:var(--navy);padding:.72rem 1.9rem;border-radius:5px;font-size:.82rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-family:var(--font-body);border:none;cursor:pointer;transform:translateY(12px);transition:transform .3s ease,background .2s}
+.card:hover .cov-btn{transform:translateY(0)}
+.cov-btn:hover{background:var(--gold-light)}
+.cbadge{position:absolute;top:1rem;left:1rem;background:var(--gold);color:var(--navy);font-size:.69rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .72rem;border-radius:3px;z-index:2}
+.cbadge.rent{background:var(--navy);color:var(--white)}
+.cbadge.newb{background:#2a9d6e;color:var(--white)}
+.ctag{position:absolute;top:1rem;right:1rem;background:rgba(13,27,42,.65);backdrop-filter:blur(4px);color:var(--lilac-light);font-size:.67rem;padding:.24rem .58rem;border-radius:3px;letter-spacing:.08em;text-transform:uppercase;z-index:2}
+.card-body{padding:1.5rem}
+.cprice{font-family:var(--font-display);font-size:1.55rem;font-weight:600;color:var(--navy);margin-bottom:.3rem}
+.cprice sub{font-size:.84rem;font-weight:400;color:var(--text-mid)}
+.cname{font-size:1rem;font-weight:500;color:var(--navy);margin-bottom:.3rem}
+.cloc{font-size:.8rem;color:var(--text-mid);margin-bottom:1rem}
+.cfeats{display:flex;gap:1.1rem;padding-top:1rem;border-top:1px solid rgba(13,27,42,.07);flex-wrap:wrap}
+.cfeat{font-size:.78rem;color:var(--text-mid)}
+
+/* MODAL */
+.moverlay{position:fixed;inset:0;z-index:2000;background:rgba(4,9,16,.93);display:none;align-items:center;justify-content:center;padding:1rem}
+.moverlay.open{display:flex}
+.modal{background:var(--white);border-radius:16px;overflow:hidden;max-width:980px;width:100%;max-height:92vh;display:flex;flex-direction:column;box-shadow:0 48px 140px rgba(0,0,0,.6);animation:mIn .38s cubic-bezier(.34,1.4,.64,1)}
+@keyframes mIn{from{opacity:0;transform:scale(.9) translateY(24px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.mgal{position:relative;height:420px;flex-shrink:0;background:#08111a;overflow:hidden}
+.mgal img.main{width:100%;height:100%;object-fit:cover;transition:opacity .35s ease;display:block}
+.mclose{position:absolute;top:1rem;right:1rem;background:rgba(0,0,0,.65);border:none;width:40px;height:40px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;transition:background .2s}
+.mclose:hover{background:rgba(201,168,76,.9)}
+.mclose svg{width:16px;height:16px;stroke:white;stroke-width:2.5;fill:none}
+.mrlabel{position:absolute;bottom:1rem;left:1rem;background:rgba(13,27,42,.8);backdrop-filter:blur(8px);color:var(--white);font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;padding:.44rem 1rem;border-radius:5px;z-index:5}
+.mnav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.5);border:none;width:42px;height:42px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;z-index:5}
+.mnav:hover{background:rgba(201,168,76,.85)}
+.mnav svg{width:18px;height:18px;stroke:white;stroke-width:2.5;fill:none}
+.mnav.prev{left:1rem}.mnav.next{right:1rem}
+/* THUMB STRIP — dark navy, gold active border */
+.mthumbs{display:flex;gap:.5rem;padding:.8rem 1rem;background:var(--navy);overflow-x:auto;scroll-snap-type:x mandatory;flex-shrink:0}
+.mthumbs::-webkit-scrollbar{height:3px}
+.mthumbs::-webkit-scrollbar-thumb{background:rgba(201,168,76,.4);border-radius:2px}
+.twrap{flex-shrink:0;scroll-snap-align:start;text-align:center;cursor:pointer}
+.mthumb{width:82px;height:56px;border-radius:6px;overflow:hidden;border:2px solid transparent;transition:border-color .2s}
+.twrap.active .mthumb{border-color:var(--gold)}
+.mthumb img{width:100%;height:100%;object-fit:cover;display:block}
+.tlabel{font-size:.54rem;text-align:center;color:var(--lilac);letter-spacing:.06em;text-transform:uppercase;margin-top:.3rem;white-space:nowrap}
+.mbody{overflow-y:auto;padding:2rem;flex:1}
+.mrow{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:.5rem;flex-wrap:wrap}
+.mpname{font-family:var(--font-display);font-size:1.85rem;font-weight:600;color:var(--navy)}
+.mpprice{font-family:var(--font-display);font-size:1.6rem;color:var(--gold);font-weight:600;white-space:nowrap}
+.mploc{font-size:.88rem;color:var(--text-mid);margin-bottom:1.2rem}
+.mfeats{display:flex;flex-wrap:wrap;gap:1.2rem;padding:1rem 0;border-top:1px solid rgba(13,27,42,.1);border-bottom:1px solid rgba(13,27,42,.1);margin-bottom:1.2rem}
+.mfeat{display:flex;flex-direction:column;align-items:center;gap:.2rem}
+.mfval{font-size:1.05rem;font-weight:600;color:var(--navy)}
+.mfkey{font-size:.69rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-mid)}
+.mdesc{font-size:.92rem;line-height:1.8;color:var(--text-mid);margin-bottom:1.8rem}
+.minqbtn{background:var(--navy);color:var(--white);border:none;padding:.95rem 2.2rem;border-radius:6px;font-size:.88rem;font-weight:600;cursor:pointer;letter-spacing:.08em;text-transform:uppercase;font-family:var(--font-body);transition:all .2s;width:100%}
+.minqbtn:hover{background:var(--gold);color:var(--navy)}
+
+/* ABOUT */
+#about{padding:7rem 4%;background:var(--navy);position:relative;overflow:hidden}
+#about::before{content:'';position:absolute;top:-100px;right:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(196,181,212,.06) 0%,transparent 70%);pointer-events:none}
+.about-g{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;max-width:1200px;margin:0 auto}
+.about-iw{position:relative}
+.about-im{width:100%;height:520px;object-fit:cover;border-radius:10px}
+.about-ia{position:absolute;bottom:-2rem;right:-2rem;width:200px;height:160px;object-fit:cover;border-radius:8px;border:4px solid var(--navy);box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.about-badge{position:absolute;top:2rem;left:-2rem;background:var(--gold);color:var(--navy);padding:1rem 1.4rem;border-radius:8px;font-family:var(--font-display);font-size:1.1rem;font-weight:700;text-align:center;line-height:1.2;box-shadow:0 8px 24px rgba(201,168,76,.3)}
+.about-badge span{display:block;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;font-family:var(--font-body);font-weight:500;margin-top:.2rem}
+.about-p{font-size:.95rem;line-height:1.8;color:var(--text-light);margin-bottom:1.2rem}
+.pillars{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.8rem 0}
+.pillar{padding:1rem 1.2rem;border-radius:8px;border:1px solid rgba(196,181,212,.12);background:rgba(255,255,255,.03)}
+.pt{font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:.35rem}
+.pd{font-size:.8rem;line-height:1.5;color:var(--text-light)}
+
+/* TESTIMONIALS */
+#testimonials{padding:6rem 4%;background:var(--lilac-pale)}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.8rem;max-width:1200px;margin:0 auto}
+.tcard{background:var(--white);border-radius:10px;padding:2rem;box-shadow:0 4px 20px rgba(13,27,42,.07);position:relative}
+.tcard::before{content:'\201C';font-family:var(--font-display);font-size:5rem;color:var(--lilac);position:absolute;top:-.5rem;left:1.2rem;line-height:1}
+.ttext{font-size:.92rem;line-height:1.75;color:var(--text-mid);margin-top:1.5rem;margin-bottom:1.5rem}
+.tauth{display:flex;align-items:center;gap:.8rem}
+.tav{width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--lilac)}
+.tname{font-weight:600;font-size:.88rem;color:var(--navy)}
+.trole{font-size:.74rem;color:var(--text-mid)}
+.tstars{color:var(--gold);font-size:.84rem;margin-bottom:.3rem}
+
+/* CONTACT */
+#contact{padding:7rem 4%;background:var(--navy)}
+.cong{display:grid;grid-template-columns:1fr 1fr;gap:5rem;max-width:1100px;margin:0 auto;align-items:start}
+.con-p{font-size:.92rem;line-height:1.8;color:var(--text-light);margin-bottom:2rem}
+.conitems{display:flex;flex-direction:column;gap:1.2rem}
+.conitem{display:flex;align-items:center;gap:1rem}
+.coni{width:42px;height:42px;border-radius:8px;background:rgba(196,181,212,.1);border:1px solid rgba(196,181,212,.15);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.conitem strong{display:block;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:.2rem}
+.conitem a,.conitem span{font-size:.9rem;color:var(--lilac-light);text-decoration:none;transition:color .2s}
+.conitem a:hover{color:var(--gold)}
+.cform{background:rgba(255,255,255,.04);border:1px solid rgba(196,181,212,.12);border-radius:12px;padding:2.5rem}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.fg{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem}
+.fg label{font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--lilac);font-weight:500}
+.fg input,.fg select,.fg textarea{background:rgba(255,255,255,.06);border:1px solid rgba(196,181,212,.18);border-radius:6px;padding:.74rem 1rem;color:var(--white);font-size:.9rem;font-family:var(--font-body);transition:border-color .2s;outline:none;width:100%}
+.fg input::placeholder,.fg textarea::placeholder{color:rgba(255,255,255,.24)}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--gold)}
+.fg select option{background:var(--navy)}
+.fg textarea{resize:vertical;min-height:110px}
+.fsub{width:100%;background:var(--gold);color:var(--navy);border:none;padding:.95rem;border-radius:6px;font-size:.88rem;font-weight:700;cursor:pointer;letter-spacing:.1em;text-transform:uppercase;font-family:var(--font-body);transition:all .2s}
+.fsub:hover{background:var(--gold-light);transform:translateY(-1px)}
+.fnote{text-align:center;font-size:.74rem;color:var(--text-light);margin-top:.8rem}
+.succ{display:none;text-align:center;padding:1.5rem;color:#2ecc71;font-size:.95rem}
+
+/* FOOTER */
+footer{background:#07101a;padding:4rem 4% 2rem}
+.fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;max-width:1200px;margin:0 auto 3rem}
+.fbn{font-family:var(--font-display);font-size:1.4rem;color:var(--white);font-weight:600;margin-bottom:.8rem}
+.fbn span{color:var(--gold)}
+.ftag{font-size:.85rem;color:var(--text-light);line-height:1.7;margin-bottom:1.2rem}
+.fsc{display:flex;gap:.6rem}
+.fsl{width:36px;height:36px;border-radius:6px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:.9rem;text-decoration:none;transition:background .2s}
+.fsl:hover{background:var(--gold)}
+.fct{font-size:.74rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:1rem}
+.flinks{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.flinks a{font-size:.85rem;color:var(--text-light);text-decoration:none;transition:color .2s}
+.flinks a:hover{color:var(--white)}
+.fbot{border-top:1px solid rgba(255,255,255,.06);padding-top:1.8rem;display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto;flex-wrap:wrap;gap:1rem}
+.fcopy{font-size:.78rem;color:var(--text-mid)}
+.fleg{display:flex;gap:1.5rem}
+.fleg a{font-size:.78rem;color:var(--text-mid);text-decoration:none;transition:color .2s}
+.fleg a:hover{color:var(--white)}
+
+@media(max-width:900px){.about-g,.cong{grid-template-columns:1fr;gap:3rem}.about-im{height:320px}.about-ia{display:none}.about-badge{left:1rem}.fgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:680px){nav{padding:1rem 1.2rem}.nav-links,.nav-cta{display:none}.hamburger{display:flex}.stat-item{padding:.8rem 1.5rem}.frow{grid-template-columns:1fr}.mgal{height:250px}.fgrid{grid-template-columns:1fr;gap:2rem}.fbot{flex-direction:column;text-align:center}.lgrid{grid-template-columns:1fr}.pillars{grid-template-columns:1fr}}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--off-white)}::-webkit-scrollbar-thumb{background:var(--lilac);border-radius:3px}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Prestige<span>Realty</span></a>
+  <ul class="nav-links">
+    <li><a href="#listings">Listings</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Inquire Now</a>
+  <div class="hamburger" id="hb"><span></span><span></span><span></span></div>
+</nav>
+<div class="mob-menu" id="mm">
+  <a href="#listings" onclick="cm()">Listings</a>
+  <a href="#about" onclick="cm()">About</a>
+  <a href="#testimonials" onclick="cm()">Reviews</a>
+  <a href="#contact" onclick="cm()">Contact</a>
+  <a href="#contact" onclick="cm()" style="color:var(--gold);font-weight:600">Inquire Now</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-slides" id="hs">
+    <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1800&q=90')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1800&q=90')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1800&q=90')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1800&q=90')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=1800&q=90')"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Nigeria's Premier Real Estate</div>
+    <h1 class="hero-title">Find Your <em>Perfect</em><br>Luxury Home</h1>
+    <p class="hero-sub">Exceptional properties across Lagos, Abuja, and Port Harcourt — curated for those who demand the finest in Nigerian luxury living.</p>
+    <div class="hero-btns">
+      <a href="#listings" class="btn-p">View Listings</a>
+      <a href="#contact" class="btn-o">Book a Tour</a>
+    </div>
+  </div>
+  <div class="hero-dots" id="hd"></div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<div class="stats-bar">
+  <div class="stat-item reveal s1"><div class="stat-num">700+</div><div class="stat-label">Properties Sold</div></div>
+  <div class="stat-item reveal s2"><div class="stat-num">12+</div><div class="stat-label">Years Experience</div></div>
+  <div class="stat-item reveal s3"><div class="stat-num">98%</div><div class="stat-label">Client Satisfaction</div></div>
+  <div class="stat-item reveal s4"><div class="stat-num">3</div><div class="stat-label">Cities Covered</div></div>
+</div>
+
+<section id="listings">
+  <div class="sh">
+    <div class="sh-ey reveal">Our Portfolio</div>
+    <h2 class="sh-ti reveal">Featured <em>Properties</em></h2>
+    <div class="sh-line reveal"></div>
+  </div>
+  <div class="lf reveal">
+    <button class="fbtn active" onclick="fl('all',this)">All</button>
+    <button class="fbtn" onclick="fl('sale',this)">For Sale</button>
+    <button class="fbtn" onclick="fl('rent',this)">For Rent</button>
+    <button class="fbtn" onclick="fl('lagos',this)">Lagos</button>
+    <button class="fbtn" onclick="fl('abuja',this)">Abuja</button>
+    <button class="fbtn" onclick="fl('ph',this)">Port Harcourt</button>
+  </div>
+  <div class="lgrid" id="lg"></div>
+</section>
+
+<section id="about">
+  <div class="about-g">
+    <div class="about-iw reveal-left">
+      <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=90" alt="Luxury property" class="about-im">
+      <img src="https://images.unsplash.com/photo-1600566753151-384129cf4e3e?w=400&q=80" alt="Interior" class="about-ia">
+      <div class="about-badge">12+<span>Years of Excellence</span></div>
+    </div>
+    <div class="reveal-right">
+      <div class="sh-ey" style="text-align:left">Who We Are</div>
+      <h2 class="sh-ti light" style="text-align:left">Nigeria's <em>Most Trusted</em><br>Real Estate Partner</h2>
+      <div class="sh-line" style="margin:1.2rem 0"></div>
+      <p class="about-p">Prestige Realty Nigeria has been at the forefront of premium real estate for over a decade. We don't just sell properties — we match discerning buyers with homes that reflect their status, lifestyle, and vision.</p>
+      <p class="about-p">From the gated estates of Banana Island to the hilltop villas of Maitama, our portfolio spans Nigeria's most coveted addresses, with a team that knows every opportunity before it hits the market.</p>
+      <div class="pillars">
+        <div class="pillar reveal s1"><div class="pt">🏆 Off-Market Deals</div><div class="pd">Exclusive access to properties never publicly listed</div></div>
+        <div class="pillar reveal s2"><div class="pt">📋 Legal Assurance</div><div class="pd">C of O, Deed of Assignment & due diligence guaranteed</div></div>
+        <div class="pillar reveal s3"><div class="pt">🤝 Post-Sale Support</div><div class="pd">Property management & renovation coordination</div></div>
+        <div class="pillar reveal s4"><div class="pt">💼 Investment Advisory</div><div class="pd">ROI analysis and portfolio diversification guidance</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="sh">
+    <div class="sh-ey reveal">Client Stories</div>
+    <h2 class="sh-ti reveal">What Our <em>Clients Say</em></h2>
+    <div class="sh-line reveal"></div>
+  </div>
+  <div class="tgrid">
+    <div class="tcard reveal s1">
+      <div class="tstars">★★★★★</div>
+      <p class="ttext">Prestige Realty found me a stunning duplex in Lekki Phase 1 within two weeks. The team was professional, documentation was airtight, and the experience was absolutely seamless.</p>
+      <div class="tauth"><img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=100&q=80" class="tav" alt=""><div><div class="tname">Adaeze Okonkwo</div><div class="trole">Tech Entrepreneur, Lagos</div></div></div>
+    </div>
+    <div class="tcard reveal s2">
+      <div class="tstars">★★★★★</div>
+      <p class="ttext">I've worked with several real estate firms in Abuja but Prestige Realty is in a class of its own. They showed me properties I didn't even know existed. My villa in Maitama is a dream.</p>
+      <div class="tauth"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" class="tav" alt=""><div><div class="tname">Emeka Chibuike</div><div class="trole">Senior Civil Servant, Abuja</div></div></div>
+    </div>
+    <div class="tcard reveal s3">
+      <div class="tstars">★★★★★</div>
+      <p class="ttext">The room-by-room photos saved me so much time. I shortlisted my top 3 properties before flying in from London. Truly world-class service from a world-class team.</p>
+      <div class="tauth"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&q=80" class="tav" alt=""><div><div class="tname">Funmi Adeleke</div><div class="trole">Diaspora Investor, UK</div></div></div>
+    </div>
+    <div class="tcard reveal s4">
+      <div class="tstars">★★★★★</div>
+      <p class="ttext">From property search to key handover in Port Harcourt — they handled everything. The C of O came faster than I expected. Prestige Realty is simply the best.</p>
+      <div class="tauth"><img src="https://images.unsplash.com/photo-1566753323558-f4e0952af115?w=100&q=80" class="tav" alt=""><div><div class="tname">Godswill Amadi</div><div class="trole">Oil Executive, Port Harcourt</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="cong">
+    <div class="reveal-left">
+      <div class="sh-ey" style="text-align:left">Get In Touch</div>
+      <h2 class="sh-ti light" style="text-align:left">Ready to Find Your <em>Dream Home?</em></h2>
+      <div class="sh-line" style="margin:1.2rem 0"></div>
+      <p class="con-p">Our team of expert consultants is available to guide you through every step — from your first viewing to final handover. Reach out and let's make it happen.</p>
+      <div class="conitems">
+        <div class="conitem"><div class="coni">📧</div><div><strong>Email</strong><a href="mailto:softgirl0311@gmail.com">softgirl0311@gmail.com</a></div></div>
+        <div class="conitem"><div class="coni">💬</div><div><strong>WhatsApp</strong><a href="https://wa.me/2349044303070" target="_blank">+234 904 430 3070</a></div></div>
+        <div class="conitem"><div class="coni">📍</div><div><strong>Head Office</strong><span>25 Adeola Odeku Street, Victoria Island, Lagos</span></div></div>
+        <div class="conitem"><div class="coni">🕐</div><div><strong>Office Hours</strong><span>Mon – Sat: 8:00 AM – 6:00 PM</span></div></div>
+      </div>
+    </div>
+    <div class="cform reveal-right">
+      <form id="cf" action="https://formspree.io/f/mgonbozo" method="POST">
+        <div class="frow">
+          <div class="fg"><label>First Name</label><input type="text" name="firstName" placeholder="Adaeze" required></div>
+          <div class="fg"><label>Last Name</label><input type="text" name="lastName" placeholder="Okonkwo" required></div>
+        </div>
+        <div class="fg"><label>Email Address</label><input type="email" name="email" placeholder="you@email.com" required></div>
+        <div class="fg"><label>Phone (WhatsApp)</label><input type="tel" name="phone" placeholder="+234 800 000 0000"></div>
+        <div class="fg"><label>Interest</label>
+          <select name="interest" required>
+            <option value="" disabled selected>Select enquiry type</option>
+            <option>Buy a Property</option><option>Rent a Property</option>
+            <option>Investment Advisory</option><option>Property Valuation</option><option>General Enquiry</option>
+          </select>
+        </div>
+        <div class="fg"><label>Message</label><textarea name="message" placeholder="Tell us what you're looking for — budget, location, type…"></textarea></div>
+        <button type="submit" class="fsub">Send Enquiry →</button>
+        <p class="fnote">Or reach us instantly on <a href="https://wa.me/2349044303070" style="color:var(--gold)">WhatsApp</a></p>
+      </form>
+      <div class="succ" id="succ">✅ Thank you! We'll be in touch within 24 hours.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fgrid">
+    <div>
+      <div class="fbn">Prestige<span>Realty</span></div>
+      <p class="ftag">Nigeria's premier luxury real estate company, helping discerning clients find extraordinary homes since 2012.</p>
+      <div class="fsc">
+        <a href="https://wa.me/2349044303070" class="fsl">💬</a>
+        <a href="mailto:softgirl0311@gmail.com" class="fsl">📧</a>
+        <a href="#" class="fsl">📸</a>
+        <a href="#" class="fsl">💼</a>
+      </div>
+    </div>
+    <div><div class="fct">Navigation</div><ul class="flinks"><li><a href="#listings">Listings</a></li><li><a href="#about">About Us</a></li><li><a href="#testimonials">Testimonials</a></li><li><a href="#contact">Contact</a></li></ul></div>
+    <div><div class="fct">Locations</div><ul class="flinks"><li><a href="#">Banana Island</a></li><li><a href="#">Lekki / Ajah</a></li><li><a href="#">Maitama, Abuja</a></li><li><a href="#">Asokoro, Abuja</a></li><li><a href="#">Port Harcourt</a></li></ul></div>
+    <div><div class="fct">Property Types</div><ul class="flinks"><li><a href="#">Luxury Duplexes</a></li><li><a href="#">Penthouses</a></li><li><a href="#">Terrace Houses</a></li><li><a href="#">Villas & Mansions</a></li><li><a href="#">Short-Let Apts</a></li></ul></div>
+  </div>
+  <div class="fbot">
+    <div class="fcopy">© 2025 Prestige Realty Nigeria. All rights reserved.</div>
+    <div class="fleg"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#">FRCN Certified</a></div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="moverlay" id="mo" onclick="cmb(event)">
+  <div class="modal">
+    <div class="mgal">
+      <img class="main" id="mmi" src="" alt="Room">
+      <div class="mrlabel" id="mrl"></div>
+      <button class="mclose" onclick="closeM()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <button class="mnav prev" onclick="pr()"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+      <button class="mnav next" onclick="nr()"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+    </div>
+    <div class="mthumbs" id="mt"></div>
+    <div class="mbody">
+      <div class="mrow"><div class="mpname" id="mn"></div><div class="mpprice" id="mp"></div></div>
+      <div class="mploc" id="ml"></div>
+      <div class="mfeats" id="mf"></div>
+      <div class="mdesc" id="md"></div>
+      <button class="minqbtn" onclick="inq()">Inquire About This Property →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const props=[
+  {id:1,name:"Banana Island Grand Villa",loc:"Banana Island, Ikoyi, Lagos",city:"lagos",price:"₦850,000,000",status:"sale",type:"Luxury Villa",badge:"For Sale",beds:6,baths:7,sqm:1200,park:6,
+  desc:"An architectural masterpiece on Banana Island. Italian marble floors, private swimming pool, home cinema, and panoramic ocean views. C of O ready.",
+  rooms:[
+    {l:"Exterior",u:"https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1200&q=90"},
+    {l:"Living Room",u:"https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1200&q=90"},
+    {l:"Master Bedroom",u:"https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1200&q=90"},
+    {l:"Kitchen",u:"https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=90"},
+    {l:"Bathroom",u:"https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1200&q=90"},
+    {l:"Swimming Pool",u:"https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=1200&q=90"},
+  ]},
+  {id:2,name:"Lekki Phase 1 Smart Duplex",loc:"Lekki Phase 1, Lagos",city:"lagos",price:"₦220,000,000",status:"sale",type:"Duplex",badge:"For Sale",beds:5,baths:5,sqm:680,park:4,
+  desc:"A contemporary smart duplex with automated lighting, solar backup, and a rooftop terrace. Premium craftsmanship with fully fitted kitchen throughout.",
+  rooms:[
+    {l:"Front View",u:"https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1200&q=90"},
+    {l:"Living Room",u:"https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1200&q=90"},
+    {l:"Master Bedroom",u:"https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=1200&q=90"},
+    {l:"Kitchen",u:"https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=1200&q=90"},
+    {l:"Bathroom",u:"https://images.unsplash.com/photo-1620626011761-996317702782?w=1200&q=90"},
+    {l:"Rooftop Terrace",u:"https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=90"},
+  ]},
+  {id:3,name:"Maitama Hilltop Mansion",loc:"Maitama District, Abuja",city:"abuja",price:"₦1,200,000,000",status:"sale",type:"Mansion",badge:"For Sale",beds:8,baths:9,sqm:1800,park:8,
+  desc:"Perched on the finest hill in Maitama with unobstructed skyline views. Grand ballroom, wine cellar, cinema room, and staff quarters. The crown jewel of FCT.",
+  rooms:[
+    {l:"Mansion Exterior",u:"https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=90"},
+    {l:"Grand Living Room",u:"https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&q=90"},
+    {l:"Master Bedroom",u:"https://images.unsplash.com/photo-1540518614846-7eded433c457?w=1200&q=90"},
+    {l:"Gourmet Kitchen",u:"https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=1200&q=90"},
+    {l:"Spa Bathroom",u:"https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=1200&q=90"},
+    {l:"Garden & Pool",u:"https://images.unsplash.com/photo-1595514535215-9f4e0e8c62c0?w=1200&q=90"},
+  ]},
+  {id:4,name:"Victoria Island Penthouse",loc:"Eko Atlantic, Victoria Island, Lagos",city:"lagos",price:"₦5,500,000/month",status:"rent",type:"Penthouse",badge:"For Rent",beds:4,baths:4,sqm:420,park:3,
+  desc:"Ultra-premium penthouse on the 22nd floor of a landmark Eko Atlantic tower. Floor-to-ceiling glass, private sky deck, bespoke Italian finishes, and concierge.",
+  rooms:[
+    {l:"Building Exterior",u:"https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=90"},
+    {l:"Open Living Space",u:"https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200&q=90"},
+    {l:"Penthouse Bedroom",u:"https://images.unsplash.com/photo-1602872030490-4a484a7b3ba6?w=1200&q=90"},
+    {l:"Chef's Kitchen",u:"https://images.unsplash.com/photo-1565538810643-b5bdb714032a?w=1200&q=90"},
+    {l:"Luxury Bathroom",u:"https://images.unsplash.com/photo-1562113530-57ba467cea38?w=1200&q=90"},
+    {l:"Sky Terrace",u:"https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=1200&q=90"},
+  ]},
+  {id:5,name:"GRA Estate Home",loc:"Old GRA, Port Harcourt",city:"ph",price:"₦180,000,000",status:"sale",type:"Estate Home",badge:"For Sale",beds:5,baths:6,sqm:720,park:4,
+  desc:"A prestigious estate home in Old GRA — Port Harcourt's original luxury enclave. Lush gardens, backup power, borehole, and 24hr security. Minutes from major oil offices.",
+  rooms:[
+    {l:"Compound Exterior",u:"https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&q=90"},
+    {l:"Sitting Room",u:"https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=1200&q=90"},
+    {l:"Master Bedroom",u:"https://images.unsplash.com/photo-1615873968403-89e068629265?w=1200&q=90"},
+    {l:"Kitchen",u:"https://images.unsplash.com/photo-1556909011-7e0ae02c7903?w=1200&q=90"},
+    {l:"Bathroom",u:"https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=1200&q=90"},
+    {l:"Garden",u:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=90"},
+  ]},
+  {id:6,name:"Asokoro Diplomat Residence",loc:"Asokoro, Abuja",city:"abuja",price:"₦3,200,000/month",status:"rent",type:"Terrace",badge:"For Rent",beds:4,baths:4,sqm:360,park:3,
+  desc:"Freshly renovated diplomat-grade residence in Asokoro — Abuja's most prestigious zone. Ideal for embassy staff or corporate executives. Furnished option available.",
+  rooms:[
+    {l:"Front Exterior",u:"https://images.unsplash.com/photo-1598228723793-52759bba239c?w=1200&q=90"},
+    {l:"Formal Lounge",u:"https://images.unsplash.com/photo-1616137466211-f939a420be84?w=1200&q=90"},
+    {l:"Master Suite",u:"https://images.unsplash.com/photo-1591088398332-8a7791972843?w=1200&q=90"},
+    {l:"Kitchen & Dining",u:"https://images.unsplash.com/photo-1556909078-cc9e7d5c3eb8?w=1200&q=90"},
+    {l:"Bathroom",u:"https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1200&q=90"},
+    {l:"Rear Garden",u:"https://images.unsplash.com/photo-1599922630559-e3b0e5fb5e7b?w=1200&q=90"},
+  ]},
+  {id:7,name:"Chevron Terrace Collection",loc:"Chevron Drive, Lekki, Lagos",city:"lagos",price:"₦95,000,000",status:"sale",type:"Terrace",badge:"New",beds:4,baths:4,sqm:340,park:2,
+  desc:"Brand-new off-plan terrace homes on prestigious Chevron Drive. Gated estate, 24hr security, club house. 40% deposit secures your unit.",
+  rooms:[
+    {l:"Estate Entrance",u:"https://images.unsplash.com/photo-1625602812206-5ec545ca1231?w=1200&q=90"},
+    {l:"Living & Dining",u:"https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=1200&q=90"},
+    {l:"Bedroom",u:"https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=1200&q=90"},
+    {l:"Modern Kitchen",u:"https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=90"},
+    {l:"Bathroom",u:"https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=1200&q=90"},
+    {l:"Estate Pool",u:"https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1200&q=90"},
+  ]},
+  {id:8,name:"Gwarinpa Luxury Bungalow",loc:"Gwarinpa Estate, Abuja",city:"abuja",price:"₦65,000,000",status:"sale",type:"Bungalow",badge:"For Sale",beds:3,baths:3,sqm:280,park:2,
+  desc:"Meticulously finished luxury bungalow in the expansive Gwarinpa Estate. Open-plan interiors, premium tiles, prepaid electricity, and a serene compound.",
+  rooms:[
+    {l:"Exterior",u:"https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=1200&q=90"},
+    {l:"Living Room",u:"https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&q=90"},
+    {l:"Master Bedroom",u:"https://images.unsplash.com/photo-1560185007-5f0bb1866cab?w=1200&q=90"},
+    {l:"Kitchen",u:"https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=90"},
+    {l:"Bathroom",u:"https://images.unsplash.com/photo-1620626011761-996317702782?w=1200&q=90"},
+    {l:"Compound",u:"https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=1200&q=90"},
+  ]},
+  {id:9,name:"Trans-Amadi Executive Suite",loc:"Trans-Amadi, Port Harcourt",city:"ph",price:"₦1,800,000/month",status:"rent",type:"Serviced Apt",badge:"For Rent",beds:2,baths:2,sqm:160,park:1,
+  desc:"Fully-serviced executive apartment in the Trans-Amadi oil hub. Includes 24hr security, daily housekeeping, inverter backup, and high-speed fiber internet.",
+  rooms:[
+    {l:"Building",u:"https://images.unsplash.com/photo-1560185009-dddecf062b8f?w=1200&q=90"},
+    {l:"Executive Lounge",u:"https://images.unsplash.com/photo-1543489822-c49534f3271f?w=1200&q=90"},
+    {l:"Bedroom",u:"https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1200&q=90"},
+    {l:"Kitchen",u:"https://images.unsplash.com/photo-1565538810643-b5bdb714032a?w=1200&q=90"},
+    {l:"Bathroom",u:"https://images.unsplash.com/photo-1562113530-57ba467cea38?w=1200&q=90"},
+    {l:"Lobby",u:"https://images.unsplash.com/photo-1541123437800-1bb1317badc2?w=1200&q=90"},
+  ]},
+  {id:10,name:"Ajah Waterfront Estate",loc:"Ajah, Lagos",city:"lagos",price:"₦145,000,000",status:"sale",type:"Detached House",badge:"For Sale",beds:5,baths:5,sqm:500,park:3,
+  desc:"Five-bedroom detached home overlooking the Ajah lagoon. Private jetty access, solar-powered compound, American kitchen, en-suite in every room.",
+  rooms:[
+    {l:"Waterfront View",u:"https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=1200&q=90"},
+    {l:"Sitting Room",u:"https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=1200&q=90"},
+    {l:"Master Suite",u:"https://images.unsplash.com/photo-1617325247661-675ab4b64ae2?w=1200&q=90"},
+    {l:"Kitchen",u:"https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=1200&q=90"},
+    {l:"Bathroom",u:"https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=1200&q=90"},
+    {l:"Waterfront Deck",u:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=90"},
+  ]},
+  {id:11,name:"Jabi Lake View Apartment",loc:"Jabi, Abuja",city:"abuja",price:"₦2,400,000/month",status:"rent",type:"Apartment",badge:"For Rent",beds:3,baths:3,sqm:220,park:2,
+  desc:"Premium 3-bedroom apartment overlooking Jabi Lake. Contemporary furnished, 2 ACs per room, generator-backed power. Gym and swimming pool on site.",
+  rooms:[
+    {l:"Lake View Building",u:"https://images.unsplash.com/photo-1543157145-f78c636d023d?w=1200&q=90"},
+    {l:"Open Plan Living",u:"https://images.unsplash.com/photo-1556228578-626d5a8a042b?w=1200&q=90"},
+    {l:"Bedroom",u:"https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=1200&q=90"},
+    {l:"Kitchen",u:"https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=90"},
+    {l:"Bathroom",u:"https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=1200&q=90"},
+    {l:"Estate Pool",u:"https://images.unsplash.com/photo-1595514535215-9f4e0e8c62c0?w=1200&q=90"},
+  ]},
+  {id:12,name:"Rumuola Premium Duplex",loc:"Rumuola, Port Harcourt",city:"ph",price:"₦85,000,000",status:"sale",type:"Duplex",badge:"For Sale",beds:4,baths:4,sqm:380,park:2,
+  desc:"Freshly completed duplex in Rumuola. Granite countertops, American kitchen, perimeter fencing. Close to the airport and Shell offices. C of O available.",
+  rooms:[
+    {l:"Front View",u:"https://images.unsplash.com/photo-1598228723793-52759bba239c?w=1200&q=90"},
+    {l:"Living Room",u:"https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=1200&q=90"},
+    {l:"Master Bedroom",u:"https://images.unsplash.com/photo-1615873968403-89e068629265?w=1200&q=90"},
+    {l:"Kitchen",u:"https://images.unsplash.com/photo-1556909011-7e0ae02c7903?w=1200&q=90"},
+    {l:"Bathroom",u:"https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1200&q=90"},
+    {l:"Compound",u:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=90"},
+  ]},
+  {id:13,name:"Ikoyi Garden Townhouse",loc:"Old Ikoyi, Lagos",city:"lagos",price:"₦310,000,000",status:"sale",type:"Townhouse",badge:"For Sale",beds:5,baths:5,sqm:600,park:4,
+  desc:"A rare Old Ikoyi townhouse nestled among mature trees. Heritage charm meets modern luxury — Gaggenau kitchen, Italian marble, and a private plunge pool.",
+  rooms:[
+    {l:"Garden Exterior",u:"https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1200&q=90"},
+    {l:"Drawing Room",u:"https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1200&q=90"},
+    {l:"Master Suite",u:"https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&q=90"},
+    {l:"Gourmet Kitchen",u:"https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=1200&q=90"},
+    {l:"En-Suite Bath",u:"https://images.unsplash.com/photo-1620626011761-996317702782?w=1200&q=90"},
+    {l:"Private Garden",u:"https://images.unsplash.com/photo-1599922630559-e3b0e5fb5e7b?w=1200&q=90"},
+  ]},
+  {id:14,name:"Wuse 2 Executive Flat",loc:"Wuse 2, Abuja",city:"abuja",price:"₦1,500,000/month",status:"rent",type:"Apartment",badge:"For Rent",beds:3,baths:3,sqm:200,park:2,
+  desc:"Premium 3-bedroom serviced flat in Wuse 2 — Abuja's commercial heartbeat. Fully furnished, 24hr security, inverter power. Walk to top restaurants and banks.",
+  rooms:[
+    {l:"Building",u:"https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=90"},
+    {l:"Living Room",u:"https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&q=90"},
+    {l:"Bedroom",u:"https://images.unsplash.com/photo-1560185007-5f0bb1866cab?w=1200&q=90"},
+    {l:"Kitchen",u:"https://images.unsplash.com/photo-1565538810643-b5bdb714032a?w=1200&q=90"},
+    {l:"Bathroom",u:"https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=1200&q=90"},
+    {l:"Balcony View",u:"https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=1200&q=90"},
+  ]},
+  {id:15,name:"Elekahia Luxury Bungalow",loc:"Elekahia, Port Harcourt",city:"ph",price:"₦55,000,000",status:"sale",type:"Bungalow",badge:"For Sale",beds:3,baths:3,sqm:260,park:2,
+  desc:"Tastefully finished 3-bedroom bungalow in serene Elekahia. Open living areas, water heater, borehole, and a good-sized compound. C of O available.",
+  rooms:[
+    {l:"Exterior",u:"https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=1200&q=90"},
+    {l:"Living Room",u:"https://images.unsplash.com/photo-1543489822-c49534f3271f?w=1200&q=90"},
+    {l:"Master Bedroom",u:"https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1200&q=90"},
+    {l:"Kitchen",u:"https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=1200&q=90"},
+    {l:"Bathroom",u:"https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=1200&q=90"},
+    {l:"Compound",u:"https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=90"},
+  ]},
+  {id:16,name:"Sangotedo Smart Home",loc:"Sangotedo, Ajah, Lagos",city:"lagos",price:"₦75,000,000",status:"sale",type:"Semi-Detached",badge:"New",beds:4,baths:4,sqm:320,park:2,
+  desc:"Brand-new smart semi-detached home in one of Lagos's fastest growing corridors. Solar panels, automated gates, CCTV, prepaid electricity. Perfect investment.",
+  rooms:[
+    {l:"Street View",u:"https://images.unsplash.com/photo-1625602812206-5ec545ca1231?w=1200&q=90"},
+    {l:"Living Room",u:"https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1200&q=90"},
+    {l:"Bedroom",u:"https://images.unsplash.com/photo-1591088398332-8a7791972843?w=1200&q=90"},
+    {l:"Modern Kitchen",u:"https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=90"},
+    {l:"Bathroom",u:"https://images.unsplash.com/photo-1562113530-57ba467cea38?w=1200&q=90"},
+    {l:"Backyard",u:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=90"},
+  ]},
+  {id:17,name:"Life Camp Detached Villa",loc:"Life Camp, Abuja",city:"abuja",price:"₦120,000,000",status:"sale",type:"Detached Villa",badge:"For Sale",beds:5,baths:5,sqm:550,park:4,
+  desc:"Expansive 5-bedroom detached villa in Life Camp. Boys' quarters, generator house, solar-ready roofing, and large compound with space for a pool. Perfect title docs.",
+  rooms:[
+    {l:"Villa Exterior",u:"https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1200&q=90"},
+    {l:"Grand Living Room",u:"https://images.unsplash.com/photo-1616137466211-f939a420be84?w=1200&q=90"},
+    {l:"Master Bedroom",u:"https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1200&q=90"},
+    {l:"Kitchen",u:"https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=1200&q=90"},
+    {l:"Bathroom",u:"https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1200&q=90"},
+    {l:"Compound",u:"https://images.unsplash.com/photo-1595514535215-9f4e0e8c62c0?w=1200&q=90"},
+  ]},
+  {id:18,name:"Oniru Private Estate Home",loc:"Oniru Estate, Victoria Island, Lagos",city:"lagos",price:"₦7,000,000/month",status:"rent",type:"Detached House",badge:"For Rent",beds:5,baths:6,sqm:650,park:5,
+  desc:"Ultra-premium detached home inside Oniru Private Estate. Staff quarters, home gym, cinema room, and stunning courtyard. One of Lagos's most guarded addresses.",
+  rooms:[
+    {l:"Estate Exterior",u:"https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=1200&q=90"},
+    {l:"Formal Living Room",u:"https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=1200&q=90"},
+    {l:"Master Suite",u:"https://images.unsplash.com/photo-1617325247661-675ab4b64ae2?w=1200&q=90"},
+    {l:"Kitchen",u:"https://images.unsplash.com/photo-1556909078-cc9e7d5c3eb8?w=1200&q=90"},
+    {l:"Bathroom",u:"https://images.unsplash.com/photo-1620626011761-996317702782?w=1200&q=90"},
+    {l:"Courtyard Pool",u:"https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1200&q=90"},
+  ]},
+  {id:19,name:"Abuloma Waterside Residence",loc:"Abuloma, Port Harcourt",city:"ph",price:"₦110,000,000",status:"sale",type:"Waterside Home",badge:"For Sale",beds:4,baths:4,sqm:450,park:3,
+  desc:"Beautifully positioned waterside residence in Abuloma. Private creek deck, solar backup, borehole. Enjoy sunsets over the water from your own home. C of O ready.",
+  rooms:[
+    {l:"Waterside Exterior",u:"https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&q=90"},
+    {l:"Living Room",u:"https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1200&q=90"},
+    {l:"Master Bedroom",u:"https://images.unsplash.com/photo-1602872030490-4a484a7b3ba6?w=1200&q=90"},
+    {l:"Kitchen",u:"https://images.unsplash.com/photo-1565538810643-b5bdb714032a?w=1200&q=90"},
+    {l:"Bathroom",u:"https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=1200&q=90"},
+    {l:"Creek Deck",u:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=90"},
+  ]},
+  {id:20,name:"Wuye Diplomat Estate Villa",loc:"Wuye, Abuja",city:"abuja",price:"₦2,800,000/month",status:"rent",type:"Semi-Detached",badge:"For Rent",beds:4,baths:4,sqm:380,park:3,
+  desc:"Spacious semi-detached diplomat villa in serene Wuye. Modern kitchen, quality bathroom fittings, 3-phase power, and beautifully landscaped compound. Schools nearby.",
+  rooms:[
+    {l:"Villa Front",u:"https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1200&q=90"},
+    {l:"Living Room",u:"https://images.unsplash.com/photo-1543489822-c49534f3271f?w=1200&q=90"},
+    {l:"Bedroom",u:"https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=1200&q=90"},
+    {l:"Kitchen",u:"https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=1200&q=90"},
+    {l:"Bathroom",u:"https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1200&q=90"},
+    {l:"Compound",u:"https://images.unsplash.com/photo-1599922630559-e3b0e5fb5e7b?w=1200&q=90"},
+  ]},
+];
+
+let cp=null,ri=0;
+
+function bc(p){return p.status==='rent'?'rent':p.badge==='New'?'newb':'';}
+function render(f){
+  const g=document.getElementById('lg');
+  const list=f==='all'?props:props.filter(p=>f==='sale'?p.status==='sale':f==='rent'?p.status==='rent':p.city===f);
+  g.innerHTML=list.map((p,i)=>`
+    <div class="card reveal s${(i%6)+1}" onclick="om(${p.id})">
+      <div class="card-img">
+        <img src="${p.rooms[0].u}" alt="${p.name}" loading="lazy">
+        <div class="cov"><button class="cov-btn">View Details</button></div>
+        <div class="cbadge ${bc(p)}">${p.badge}</div>
+        <div class="ctag">${p.type}</div>
+      </div>
+      <div class="card-body">
+        <div class="cprice">${p.price}${p.status==='rent'?'<sub>/mo</sub>':''}</div>
+        <div class="cname">${p.name}</div>
+        <div class="cloc">📍 ${p.loc}</div>
+        <div class="cfeats">
+          <span class="cfeat">🛏 ${p.beds} Beds</span>
+          <span class="cfeat">🚿 ${p.baths} Baths</span>
+          <span class="cfeat">📐 ${p.sqm}m²</span>
+          <span class="cfeat">🚗 ${p.park}</span>
+        </div>
+      </div>
+    </div>`).join('');
+  requestAnimationFrame(obs);
+}
+
+function fl(f,btn){
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  render(f);
+}
+
+// MODAL
+function om(id){
+  cp=props.find(p=>p.id===id);ri=0;
+  document.getElementById('mn').textContent=cp.name;
+  document.getElementById('mp').textContent=cp.price+(cp.status==='rent'?'/month':'');
+  document.getElementById('ml').textContent='📍 '+cp.loc;
+  document.getElementById('md').textContent=cp.desc;
+  document.getElementById('mf').innerHTML=`
+    <div class="mfeat"><div class="mfval">${cp.beds}</div><div class="mfkey">Bedrooms</div></div>
+    <div class="mfeat"><div class="mfval">${cp.baths}</div><div class="mfkey">Bathrooms</div></div>
+    <div class="mfeat"><div class="mfval">${cp.sqm}m²</div><div class="mfkey">Floor Area</div></div>
+    <div class="mfeat"><div class="mfval">${cp.park}</div><div class="mfkey">Parking</div></div>
+    <div class="mfeat"><div class="mfval">${cp.type}</div><div class="mfkey">Type</div></div>`;
+  document.getElementById('mt').innerHTML=cp.rooms.map((r,i)=>`
+    <div class="twrap ${i===0?'active':''}" id="tw${i}" onclick="sr(${i})">
+      <div class="mthumb"><img src="${r.u}" alt="${r.l}" loading="lazy"></div>
+      <div class="tlabel">${r.l}</div>
+    </div>`).join('');
+  sr(0);
+  document.getElementById('mo').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function sr(i){
+  ri=i;
+  const r=cp.rooms[i];
+  const img=document.getElementById('mmi');
+  img.style.opacity='0';
+  setTimeout(()=>{img.src=r.u;img.style.opacity='1';},220);
+  document.getElementById('mrl').textContent=r.l;
+  document.querySelectorAll('.twrap').forEach((t,j)=>t.classList.toggle('active',j===i));
+  const tw=document.getElementById('tw'+i);
+  if(tw)tw.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+}
+
+function nr(){sr((ri+1)%cp.rooms.length);}
+function pr(){sr((ri-1+cp.rooms.length)%cp.rooms.length);}
+function closeM(){document.getElementById('mo').classList.remove('open');document.body.style.overflow='';}
+function cmb(e){if(e.target===document.getElementById('mo'))closeM();}
+function inq(){
+  closeM();
+  document.getElementById('contact').scrollIntoView({behavior:'smooth'});
+  setTimeout(()=>{
+    const ta=document.querySelector('textarea[name="message"]');
+    if(ta&&cp)ta.value=`I am interested in: ${cp.name} (${cp.loc}) — ${cp.price}. Please get in touch.`;
+  },700);
+}
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('mo').classList.contains('open'))return;
+  if(e.key==='ArrowRight')nr();
+  if(e.key==='ArrowLeft')pr();
+  if(e.key==='Escape')closeM();
+});
+
+// HERO
+let si=0;
+const sels=document.querySelectorAll('.hero-slide');
+const dc=document.getElementById('hd');
+sels.forEach((_,i)=>{const d=document.createElement('div');d.className='hero-dot'+(i===0?' active':'');d.onclick=()=>gs(i);dc.appendChild(d);});
+function gs(i){sels[si].classList.remove('active');dc.children[si].classList.remove('active');si=i;sels[si].classList.add('active');dc.children[si].classList.add('active');}
+setInterval(()=>gs((si+1)%sels.length),5500);
+
+// PARALLAX
+window.addEventListener('scroll',()=>{
+  const y=window.scrollY;
+  sels.forEach(s=>{s.style.transform=`translateY(${y*.3}px)`;});
+},{ passive:true });
+
+// HAMBURGER
+document.getElementById('hb').addEventListener('click',()=>document.getElementById('mm').classList.toggle('open'));
+function cm(){document.getElementById('mm').classList.remove('open');}
+
+// SCROLL REVEAL
+let io;
+function obs(){
+  if(io)io.disconnect();
+  io=new IntersectionObserver(ens=>{
+    ens.forEach(e=>{if(e.isIntersecting){e.target.classList.add('up');io.unobserve(e.target);}});
+  },{threshold:.1,rootMargin:'0px 0px -30px 0px'});
+  document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>io.observe(el));
+}
+
+// FORM
+document.getElementById('cf').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const btn=e.target.querySelector('.fsub');
+  btn.textContent='Sending…';
+  try{
+    const r=await fetch(e.target.action,{method:'POST',body:new FormData(e.target),headers:{Accept:'application/json'}});
+    if(r.ok){e.target.style.display='none';document.getElementById('succ').style.display='block';}
+    else{btn.textContent='Send Enquiry →';alert('Error. Please try again.');}
+  }catch{btn.textContent='Send Enquiry →';alert('Network error.');}
+});
+
+// INIT
+render('all');
+obs();
+</script>
+</body>
+</html>
