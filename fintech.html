@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VAULTR — The New Financial Order</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Neue+Haas+Grotesk+Display+Pro:wght@400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --obsidian: #080A0C;
+    --void: #0C0E11;
+    --steel: #1A1D22;
+    --mercury: #B8BFC9;
+    --silver: #D4D9E1;
+    --chrome: #E8ECF2;
+    --ice: #F2F5FA;
+    --accent: #5CE1E6;
+    --accent2: #3BAFB8;
+    --blood: #FF3B5C;
+    --glow: rgba(92, 225, 230, 0.15);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--obsidian);
+    color: var(--mercury);
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom Cursor */
+  .cursor {
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s ease;
+    mix-blend-mode: exclusion;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transition: all 0.18s ease;
+    opacity: 0.5;
+  }
+
+  /* Canvas */
+  #bg-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* Layout */
+  .wrapper { position: relative; z-index: 1; }
+
+  /* NAV */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 32px 60px;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    backdrop-filter: blur(20px);
+    background: rgba(8,10,12,0.6);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    letter-spacing: 8px;
+    color: var(--chrome);
+    text-transform: uppercase;
+  }
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 48px;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--mercury);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-cta {
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 10px 28px;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .nav-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    transform: translateX(-101%);
+    transition: transform 0.3s ease;
+  }
+  .nav-cta:hover { color: var(--obsidian); }
+  .nav-cta:hover::before { transform: translateX(0); }
+  .nav-cta span { position: relative; z-index: 1; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 160px 60px 80px;
+    position: relative;
+  }
+
+  .hero-content { max-width: 900px; }
+
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.3s forwards;
+  }
+  .eyebrow-line {
+    width: 48px;
+    height: 1px;
+    background: var(--accent);
+  }
+  .eyebrow-text {
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(72px, 10vw, 140px);
+    font-weight: 300;
+    line-height: 0.92;
+    color: var(--ice);
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.5s forwards;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+    display: block;
+  }
+
+  .hero-body {
+    max-width: 480px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--mercury);
+    margin-bottom: 64px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.7s forwards;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.9s forwards;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--accent);
+    color: var(--obsidian);
+    padding: 18px 40px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .btn-primary:hover {
+    background: var(--chrome);
+    gap: 28px;
+  }
+  .btn-arrow { font-size: 16px; transition: transform 0.3s; }
+
+  .btn-ghost {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--mercury);
+    text-decoration: none;
+    text-transform: uppercase;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: all 0.3s;
+  }
+  .btn-ghost:hover {
+    color: var(--ice);
+    border-color: var(--ice);
+  }
+
+  /* Floating stat cards */
+  .hero-stats {
+    position: absolute;
+    right: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    opacity: 0;
+    animation: fadeLeft 1s 1.1s forwards;
+  }
+
+  .stat-card {
+    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.02);
+    backdrop-filter: blur(10px);
+    padding: 28px 36px;
+    min-width: 220px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .stat-card:hover { border-color: rgba(92,225,230,0.2); }
+  .stat-card:hover::before { opacity: 1; }
+
+  .stat-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--mercury);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    opacity: 0.6;
+  }
+  .stat-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 44px;
+    font-weight: 300;
+    color: var(--chrome);
+    line-height: 1;
+  }
+  .stat-value span {
+    font-size: 20px;
+    color: var(--accent);
+  }
+  .stat-change {
+    font-size: 10px;
+    color: var(--accent);
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* Ticker */
+  .ticker-wrap {
+    border-top: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    overflow: hidden;
+    padding: 14px 0;
+    background: rgba(255,255,255,0.015);
+  }
+  .ticker {
+    display: flex;
+    gap: 80px;
+    animation: ticker 30s linear infinite;
+    white-space: nowrap;
+  }
+  .ticker-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+  .ticker-sym { color: var(--accent); font-weight: 700; }
+  .ticker-price { color: var(--chrome); }
+  .ticker-up { color: #4ADE80; }
+  .ticker-down { color: var(--blood); }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* SECTION SHARED */
+  section { padding: 140px 60px; }
+
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 48px;
+    margin-bottom: 80px;
+  }
+  .section-num {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    margin-top: 6px;
+    opacity: 0.6;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(44px, 6vw, 80px);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--ice);
+  }
+  .section-title em { font-style: italic; color: var(--accent); }
+
+  /* FEATURES */
+  .features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .feature-card {
+    background: var(--obsidian);
+    padding: 56px 48px;
+    transition: background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .feature-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+  .feature-card:hover { background: rgba(92,225,230,0.03); }
+  .feature-card:hover::after { transform: scaleX(1); }
+
+  .feature-icon {
+    width: 48px; height: 48px;
+    border: 1px solid rgba(92,225,230,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32px;
+    font-size: 20px;
+    color: var(--accent);
+    transition: border-color 0.3s;
+  }
+  .feature-card:hover .feature-icon { border-color: var(--accent); }
+
+  .feature-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--chrome);
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+  .feature-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--mercury);
+    opacity: 0.7;
+  }
+  .feature-num {
+    position: absolute;
+    bottom: 28px; right: 36px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    opacity: 0.3;
+  }
+
+  /* DASHBOARD MOCKUP */
+  .dashboard-section {
+    background: var(--void);
+    border-top: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .dashboard-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .dashboard-mockup {
+    border: 1px solid rgba(255,255,255,0.08);
+    background: var(--obsidian);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+  }
+  .mockup-bar {
+    background: var(--steel);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .mockup-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+  }
+  .mockup-dot:nth-child(1) { background: #FF5F57; }
+  .mockup-dot:nth-child(2) { background: #FFBD2E; }
+  .mockup-dot:nth-child(3) { background: #28CA41; }
+  .mockup-url {
+    flex: 1;
+    text-align: center;
+    font-size: 10px;
+    color: var(--mercury);
+    opacity: 0.4;
+    letter-spacing: 1px;
+  }
+
+  .mockup-content { padding: 32px; }
+
+  .mockup-balance {
+    margin-bottom: 28px;
+  }
+  .mockup-label { font-size: 9px; letter-spacing: 3px; color: var(--mercury); opacity: 0.5; margin-bottom: 6px; text-transform: uppercase; }
+  .mockup-amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px;
+    font-weight: 300;
+    color: var(--ice);
+    line-height: 1;
+  }
+  .mockup-amount sup { font-size: 28px; color: var(--accent); vertical-align: top; margin-top: 6px; }
+
+  .mockup-chart {
+    height: 80px;
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    margin-bottom: 24px;
+  }
+  .chart-bar {
+    flex: 1;
+    background: rgba(92,225,230,0.15);
+    border-top: 1px solid rgba(92,225,230,0.5);
+    transition: background 0.3s;
+    position: relative;
+  }
+  .chart-bar.active { background: rgba(92,225,230,0.35); }
+  .chart-bar:hover { background: rgba(92,225,230,0.4); }
+
+  .mockup-transactions { display: flex; flex-direction: column; gap: 12px; }
+  .txn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border: 1px solid rgba(255,255,255,0.04);
+    background: rgba(255,255,255,0.01);
+  }
+  .txn-name { font-size: 11px; color: var(--chrome); letter-spacing: 1px; }
+  .txn-date { font-size: 9px; color: var(--mercury); opacity: 0.4; margin-top: 2px; }
+  .txn-amount { font-size: 13px; }
+  .txn-amount.pos { color: #4ADE80; }
+  .txn-amount.neg { color: var(--blood); }
+
+  .dashboard-copy .section-header { margin-bottom: 40px; }
+  .dashboard-features { list-style: none; display: flex; flex-direction: column; gap: 24px; }
+  .dashboard-feat {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .feat-check {
+    width: 24px; height: 24px;
+    border: 1px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+    font-size: 11px;
+    color: var(--accent);
+  }
+  .feat-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--mercury);
+    line-height: 1.5;
+  }
+  .feat-text strong { color: var(--chrome); font-weight: 400; }
+
+  /* PRICING */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    margin-top: 80px;
+  }
+
+  .pricing-card {
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 56px 44px;
+    position: relative;
+    transition: border-color 0.3s;
+  }
+  .pricing-card.featured {
+    border-color: var(--accent);
+    background: rgba(92,225,230,0.03);
+  }
+  .pricing-card:not(.featured):hover { border-color: rgba(255,255,255,0.15); }
+
+  .pricing-badge {
+    position: absolute;
+    top: -1px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: var(--obsidian);
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 20px;
+  }
+
+  .pricing-tier {
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--mercury);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    opacity: 0.6;
+  }
+  .pricing-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px;
+    font-weight: 300;
+    color: var(--ice);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .pricing-price sup { font-size: 32px; vertical-align: top; margin-top: 12px; color: var(--accent); }
+  .pricing-period { font-size: 10px; color: var(--mercury); opacity: 0.5; margin-bottom: 40px; letter-spacing: 2px; text-transform: uppercase; }
+  .pricing-divider { height: 1px; background: rgba(255,255,255,0.06); margin-bottom: 40px; }
+  .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 16px; margin-bottom: 44px; }
+  .pricing-feat {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--mercury);
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .pricing-feat::before {
+    content: '—';
+    color: var(--accent);
+    font-size: 14px;
+  }
+
+  .btn-plan {
+    display: block;
+    text-align: center;
+    padding: 14px;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+    border: 1px solid;
+  }
+  .btn-plan-outline { border-color: rgba(255,255,255,0.15); color: var(--mercury); }
+  .btn-plan-outline:hover { border-color: var(--chrome); color: var(--chrome); }
+  .btn-plan-solid { background: var(--accent); color: var(--obsidian); border-color: var(--accent); }
+  .btn-plan-solid:hover { background: var(--chrome); border-color: var(--chrome); }
+
+  /* CTA BAND */
+  .cta-band {
+    padding: 0 60px;
+    background: var(--void);
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+  .cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 100px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    gap: 60px;
+  }
+  .cta-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 5vw, 72px);
+    font-weight: 300;
+    color: var(--ice);
+    max-width: 640px;
+    line-height: 1.05;
+  }
+  .cta-title em { font-style: italic; color: var(--accent); }
+  .cta-actions { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; flex-shrink: 0; }
+
+  /* FOOTER */
+  footer {
+    padding: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    letter-spacing: 6px;
+    color: var(--mercury);
+    text-transform: uppercase;
+    opacity: 0.4;
+  }
+  .footer-copy { font-size: 10px; color: var(--mercury); opacity: 0.3; letter-spacing: 2px; }
+  .footer-links { display: flex; gap: 32px; }
+  .footer-links a { font-size: 10px; letter-spacing: 2px; color: var(--mercury); opacity: 0.4; text-decoration: none; text-transform: uppercase; transition: opacity 0.3s; }
+  .footer-links a:hover { opacity: 0.8; }
+
+  /* SCROLL INDICATOR */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 48px;
+    left: 60px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    opacity: 0;
+    animation: fadeUp 1s 1.4s forwards;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 64px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  .scroll-text { font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: var(--mercury); opacity: 0.4; writing-mode: vertical-rl; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeLeft {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* Glitch effect */
+  .glitch {
+    position: relative;
+    display: inline-block;
+  }
+  .glitch::before, .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+  }
+  .glitch::before {
+    color: var(--blood);
+    animation: glitch1 8s infinite;
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+    opacity: 0.7;
+  }
+  .glitch::after {
+    color: var(--accent);
+    animation: glitch2 8s infinite;
+    clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+    opacity: 0.7;
+  }
+  @keyframes glitch1 {
+    0%, 92%, 100% { transform: translate(0); }
+    93% { transform: translate(-3px, 1px); }
+    94% { transform: translate(3px, -1px); }
+    95% { transform: translate(0); }
+    96% { transform: translate(-2px); }
+    97% { transform: translate(0); }
+  }
+  @keyframes glitch2 {
+    0%, 92%, 100% { transform: translate(0); }
+    93% { transform: translate(3px, 1px); }
+    94% { transform: translate(-3px, -1px); }
+    95% { transform: translate(0); }
+    96% { transform: translate(2px); }
+    97% { transform: translate(0); }
+  }
+
+  /* Reveal on scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  @media (max-width: 1024px) {
+    nav { padding: 24px 32px; }
+    .nav-links { display: none; }
+    section { padding: 100px 32px; }
+    .hero { padding: 140px 32px 80px; }
+    .hero-stats { display: none; }
+    .features-grid { grid-template-columns: 1fr; }
+    .dashboard-inner { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .cta-inner { flex-direction: column; }
+    footer { flex-direction: column; gap: 24px; text-align: center; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<canvas id="bg-canvas"></canvas>
+
+<div class="wrapper">
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">VAULTR<span>.</span></div>
+    <ul class="nav-links">
+      <li><a href="#">Platform</a></li>
+      <li><a href="#">Markets</a></li>
+      <li><a href="#">Intelligence</a></li>
+      <li><a href="#">Pricing</a></li>
+    </ul>
+    <a href="#" class="nav-cta"><span>Open Account</span></a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <div class="eyebrow-line"></div>
+        <span class="eyebrow-text">Redefining Institutional Finance</span>
+      </div>
+
+      <h1 class="hero-title">
+        <span class="glitch" data-text="Money">Money</span><br>
+        <em>Thinks</em><br>
+        Differently.
+      </h1>
+
+      <p class="hero-body">
+        VAULTR is the intelligent financial platform built for those who move first. Real-time portfolio intelligence, frictionless global transfers, and sovereign-grade security — engineered for the new financial era.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#" class="btn-primary">
+          Start Trading <span class="btn-arrow">→</span>
+        </a>
+        <a href="#" class="btn-ghost">View Architecture</a>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-label">AUM Managed</div>
+        <div class="stat-value">$24<span>B</span></div>
+        <div class="stat-change">↑ +12.4% this quarter</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Avg. Execution</div>
+        <div class="stat-value">0.3<span>ms</span></div>
+        <div class="stat-change">↑ Fastest on market</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Uptime SLA</div>
+        <div class="stat-value">99<span>.99%</span></div>
+        <div class="stat-change">↑ 4 years running</div>
+      </div>
+    </div>
+
+    <div class="scroll-indicator">
+      <div class="scroll-line"></div>
+      <span class="scroll-text">Scroll</span>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <span class="ticker-item"><span class="ticker-sym">BTC/USD</span><span class="ticker-price">$84,210.44</span><span class="ticker-up">+2.14%</span></span>
+      <span class="ticker-item"><span class="ticker-sym">ETH/USD</span><span class="ticker-price">$3,891.20</span><span class="ticker-up">+1.87%</span></span>
+      <span class="ticker-item"><span class="ticker-sym">SPX</span><span class="ticker-price">5,921.44</span><span class="ticker-down">-0.32%</span></span>
+      <span class="ticker-item"><span class="ticker-sym">AAPL</span><span class="ticker-price">$214.82</span><span class="ticker-up">+0.91%</span></span>
+      <span class="ticker-item"><span class="ticker-sym">NVDA</span><span class="ticker-price">$876.45</span><span class="ticker-up">+3.21%</span></span>
+      <span class="ticker-item"><span class="ticker-sym">EUR/USD</span><span class="ticker-price">1.0841</span><span class="ticker-down">-0.18%</span></span>
+      <span class="ticker-item"><span class="ticker-sym">GOLD</span><span class="ticker-price">$3,028.10</span><span class="ticker-up">+0.74%</span></span>
+      <span class="ticker-item"><span class="ticker-sym">TSLA</span><span class="ticker-price">$181.60</span><span class="ticker-down">-1.43%</span></span>
+      <!-- duplicate for loop -->
+      <span class="ticker-item"><span class="ticker-sym">BTC/USD</span><span class="ticker-price">$84,210.44</span><span class="ticker-up">+2.14%</span></span>
+      <span class="ticker-item"><span class="ticker-sym">ETH/USD</span><span class="ticker-price">$3,891.20</span><span class="ticker-up">+1.87%</span></span>
+      <span class="ticker-item"><span class="ticker-sym">SPX</span><span class="ticker-price">5,921.44</span><span class="ticker-down">-0.32%</span></span>
+      <span class="ticker-item"><span class="ticker-sym">AAPL</span><span class="ticker-price">$214.82</span><span class="ticker-up">+0.91%</span></span>
+      <span class="ticker-item"><span class="ticker-sym">NVDA</span><span class="ticker-price">$876.45</span><span class="ticker-up">+3.21%</span></span>
+      <span class="ticker-item"><span class="ticker-sym">EUR/USD</span><span class="ticker-price">1.0841</span><span class="ticker-down">-0.18%</span></span>
+      <span class="ticker-item"><span class="ticker-sym">GOLD</span><span class="ticker-price">$3,028.10</span><span class="ticker-up">+0.74%</span></span>
+      <span class="ticker-item"><span class="ticker-sym">TSLA</span><span class="ticker-price">$181.60</span><span class="ticker-down">-1.43%</span></span>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <section>
+    <div class="section-header reveal">
+      <span class="section-num">01 —</span>
+      <h2 class="section-title">Built for the<br><em>Ruthless</em><br>& the Refined</h2>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <div class="feature-icon">◈</div>
+        <h3 class="feature-title">Quantum Routing Engine</h3>
+        <p class="feature-desc">Sub-millisecond order execution across 140+ global exchanges. Our proprietary routing algorithm cuts slippage to near zero, always finding the best price.</p>
+        <span class="feature-num">/ 01</span>
+      </div>
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-icon">⬡</div>
+        <h3 class="feature-title">Neural Portfolio Intelligence</h3>
+        <p class="feature-desc">AI that reads your portfolio like a seasoned fund manager. Predictive risk signals, correlation alerts, and rebalancing recommendations — live, always.</p>
+        <span class="feature-num">/ 02</span>
+      </div>
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-icon">⌬</div>
+        <h3 class="feature-title">Sovereign-Grade Vaults</h3>
+        <p class="feature-desc">Military-grade MPC custody with zero single-point-of-failure. Your assets are geographically distributed across five jurisdictions with biometric access.</p>
+        <span class="feature-num">/ 03</span>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">⊕</div>
+        <h3 class="feature-title">Global Wire in 4 Seconds</h3>
+        <p class="feature-desc">Send $500M to anywhere on earth in under four seconds. No correspondent banks, no hidden fees, no waiting. SWIFT is a relic. This is the future.</p>
+        <span class="feature-num">/ 04</span>
+      </div>
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-icon">◉</div>
+        <h3 class="feature-title">On-Chain Settlement</h3>
+        <p class="feature-desc">Real-time settlement on-chain for crypto and tokenized assets. Eliminate counterparty risk entirely. Full transparency, full auditability, full control.</p>
+        <span class="feature-num">/ 05</span>
+      </div>
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-icon">⬡</div>
+        <h3 class="feature-title">Institutional API</h3>
+        <p class="feature-desc">FIX protocol, REST, and WebSocket. Sub-10μs colocation available. Build your own trading systems on top of VAULTR's matching engine with full market depth access.</p>
+        <span class="feature-num">/ 06</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section class="dashboard-section">
+    <div class="dashboard-inner">
+      <div class="dashboard-mockup reveal">
+        <div class="mockup-bar">
+          <div class="mockup-dot"></div>
+          <div class="mockup-dot"></div>
+          <div class="mockup-dot"></div>
+          <div class="mockup-url">app.vaultr.io</div>
+        </div>
+        <div class="mockup-content">
+          <div class="mockup-balance">
+            <div class="mockup-label">Total Portfolio Value</div>
+            <div class="mockup-amount"><sup>$</sup>4,821,044<span style="font-size:28px;color:var(--accent)">.88</span></div>
+          </div>
+          <div class="mockup-chart">
+            <div class="chart-bar" style="height:30%"></div>
+            <div class="chart-bar" style="height:50%"></div>
+            <div class="chart-bar" style="height:35%"></div>
+            <div class="chart-bar" style="height:65%"></div>
+            <div class="chart-bar" style="height:45%"></div>
+            <div class="chart-bar" style="height:80%"></div>
+            <div class="chart-bar" style="height:60%"></div>
+            <div class="chart-bar active" style="height:90%"></div>
+            <div class="chart-bar" style="height:70%"></div>
+            <div class="chart-bar" style="height:85%"></div>
+            <div class="chart-bar" style="height:95%"></div>
+            <div class="chart-bar active" style="height:100%"></div>
+          </div>
+          <div class="mockup-transactions">
+            <div class="txn">
+              <div>
+                <div class="txn-name">BTC Purchase</div>
+                <div class="txn-date">Today, 14:32</div>
+              </div>
+              <div class="txn-amount neg">-$84,210</div>
+            </div>
+            <div class="txn">
+              <div>
+                <div class="txn-name">Wire — Cayman Trust</div>
+                <div class="txn-date">Today, 09:14</div>
+              </div>
+              <div class="txn-amount pos">+$500,000</div>
+            </div>
+            <div class="txn">
+              <div>
+                <div class="txn-name">NVDA Options P&L</div>
+                <div class="txn-date">Yesterday</div>
+              </div>
+              <div class="txn-amount pos">+$124,882</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-copy">
+        <div class="section-header reveal">
+          <span class="section-num">02 —</span>
+          <h2 class="section-title">One<br>Command<br><em>Centre</em></h2>
+        </div>
+        <ul class="dashboard-features">
+          <li class="dashboard-feat reveal">
+            <div class="feat-check">✓</div>
+            <div class="feat-text"><strong>Real-time P&L</strong> across every position, asset class, and currency — unified in one view</div>
+          </li>
+          <li class="dashboard-feat reveal reveal-delay-1">
+            <div class="feat-check">✓</div>
+            <div class="feat-text"><strong>One-click rebalancing</strong> with tax-loss harvesting automatically applied before execution</div>
+          </li>
+          <li class="dashboard-feat reveal reveal-delay-2">
+            <div class="feat-check">✓</div>
+            <div class="feat-text"><strong>Live risk dashboard</strong> with VaR, Sharpe, Beta, and custom correlation heatmaps</div>
+          </li>
+          <li class="dashboard-feat reveal reveal-delay-3">
+            <div class="feat-check">✓</div>
+            <div class="feat-text"><strong>Custom alerts</strong> on any metric — price, drawdown, volatility, news sentiment</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section>
+    <div class="section-header reveal">
+      <span class="section-num">03 —</span>
+      <h2 class="section-title">Choose<br>Your<br><em>Tier</em></h2>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card reveal">
+        <div class="pricing-tier">Operator</div>
+        <div class="pricing-price"><sup>$</sup>199</div>
+        <div class="pricing-period">/ month</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li class="pricing-feat">Up to $10M AUM</li>
+          <li class="pricing-feat">50+ markets</li>
+          <li class="pricing-feat">Standard execution</li>
+          <li class="pricing-feat">Bank-grade security</li>
+          <li class="pricing-feat">API access</li>
+        </ul>
+        <a href="#" class="btn-plan btn-plan-outline">Get Started</a>
+      </div>
+
+      <div class="pricing-card featured reveal reveal-delay-1">
+        <div class="pricing-badge">Most Chosen</div>
+        <div class="pricing-tier">Sovereign</div>
+        <div class="pricing-price"><sup>$</sup>899</div>
+        <div class="pricing-period">/ month</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li class="pricing-feat">Unlimited AUM</li>
+          <li class="pricing-feat">140+ markets</li>
+          <li class="pricing-feat">Priority execution</li>
+          <li class="pricing-feat">MPC vault custody</li>
+          <li class="pricing-feat">Full API + FIX</li>
+          <li class="pricing-feat">Dedicated RM</li>
+        </ul>
+        <a href="#" class="btn-plan btn-plan-solid">Open Sovereign Account</a>
+      </div>
+
+      <div class="pricing-card reveal reveal-delay-2">
+        <div class="pricing-tier">Institutional</div>
+        <div class="pricing-price" style="font-size:48px;padding-top:12px">Custom</div>
+        <div class="pricing-period" style="margin-top:20px">/ enterprise</div>
+        <div class="pricing-divider"></div>
+        <ul class="pricing-features">
+          <li class="pricing-feat">Prime brokerage</li>
+          <li class="pricing-feat">Co-location access</li>
+          <li class="pricing-feat">SLA guarantee</li>
+          <li class="pricing-feat">White-label option</li>
+          <li class="pricing-feat">Dedicated infra</li>
+        </ul>
+        <a href="#" class="btn-plan btn-plan-outline">Contact Prime Desk</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <div class="cta-band">
+    <div class="cta-inner">
+      <h2 class="cta-title reveal">The market doesn't wait.<br><em>Neither should you.</em></h2>
+      <div class="cta-actions reveal">
+        <a href="#" class="btn-primary">
+          Open Your Vault <span class="btn-arrow">→</span>
+        </a>
+        <a href="#" class="btn-ghost">Schedule a Demo</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Vaultr.</div>
+    <div class="footer-copy">© 2026 VAULTR Financial Technologies Ltd. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Compliance</a>
+      <a href="#">Status</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx - 5 + 'px';
+    cursor.style.top = my - 5 + 'px';
+  });
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function animRing() {
+    rx = lerp(rx, mx, 0.12);
+    ry = lerp(ry, my, 0.12);
+    ring.style.left = rx - 18 + 'px';
+    ring.style.top = ry - 18 + 'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'scale(2.5)';
+      ring.style.transform = 'scale(1.5)';
+      ring.style.opacity = '0.25';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'scale(1)';
+      ring.style.transform = 'scale(1)';
+      ring.style.opacity = '0.5';
+    });
+  });
+
+  // Canvas particle field
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  class Particle {
+    constructor() { this.reset(); }
+    reset() {
+      this.x = Math.random() * W;
+      this.y = Math.random() * H;
+      this.vx = (Math.random() - 0.5) * 0.3;
+      this.vy = (Math.random() - 0.5) * 0.3;
+      this.alpha = Math.random() * 0.4 + 0.05;
+      this.size = Math.random() * 1.5 + 0.3;
+    }
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(92, 225, 230, ${this.alpha})`;
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < 180; i++) particles.push(new Particle());
+
+  function connectParticles() {
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 120) {
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(92, 225, 230, ${0.07 * (1 - dist/120)})`;
+          ctx.lineWidth = 0.5;
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function loop() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => { p.update(); p.draw(); });
+    connectParticles();
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => observer.observe(r));
+
+  // Live ticker price flicker
+  function flicker() {
+    const prices = document.querySelectorAll('.ticker-price');
+    const pick = prices[Math.floor(Math.random() * prices.length)];
+    pick.style.opacity = '0.3';
+    setTimeout(() => pick.style.opacity = '1', 80);
+    setTimeout(flicker, 1200 + Math.random() * 2000);
+  }
+  flicker();
+</script>
+</body>
+</html>
