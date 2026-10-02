@@ -1,0 +1,1799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>SoFt Hairs – Premium Wigs & Hair Services</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=Italiana&family=Bodoni+Moda:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+:root {
+  --bg: #FBF6F0;
+  --bg2: #F5EDE2;
+  --bg3: #EEE0CE;
+  --surface: #FFFFFF;
+  --surface2: #FBF6F0;
+  --border: rgba(180,100,80,0.15);
+  --accent: #C4614A;
+  --accent2: #E08070;
+  --accent-dim: rgba(196,97,74,0.1);
+  --text: #2A1510;
+  --text2: rgba(42,21,16,0.6);
+  --text3: rgba(42,21,16,0.35);
+  --heading-font: 'Bodoni Moda', serif;
+  --body-font: 'DM Sans', sans-serif;
+  --nav-bg: rgba(251,246,240,0.95);
+  --card-bg: #FFFFFF;
+  --card-hover: #FDF9F5;
+  --badge-bg: #C4614A;
+  --badge-text: #FFFFFF;
+  --modal-bg: #FFFFFF;
+  --input-bg: #FBF6F0;
+  --input-border: rgba(196,97,74,0.25);
+  --shadow: 0 8px 40px rgba(100,40,20,0.12);
+  --tag-bg: rgba(196,97,74,0.1);
+  --tag-text: #C4614A;
+  --green: #2E7D52;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{font-family:var(--body-font);background:var(--bg);color:var(--text);overflow-x:hidden;transition:background 0.4s,color 0.4s;-webkit-font-smoothing:antialiased;}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+button{cursor:pointer;font-family:var(--body-font);}
+.admin-trigger{display:none;}
+/* ── ADMIN LOGIN OVERLAY ── */
+#admin-login{
+  display:none;position:fixed;inset:0;z-index:10000;
+  background:rgba(42,21,16,0.7);backdrop-filter:blur(10px);
+  align-items:center;justify-content:center;
+}
+#admin-login.on{display:flex;}
+.alog-box{
+  background:#fff;border-radius:20px;
+  padding:2.8rem 2.4rem 2.4rem;
+  width:min(380px,92vw);text-align:center;
+  box-shadow:0 32px 80px rgba(100,40,20,0.22);
+  animation:alogIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  position:relative;
+}
+@keyframes alogIn{from{opacity:0;transform:scale(0.88) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.alog-icon{
+  width:60px;height:60px;border-radius:50%;
+  background:var(--tag-bg);border:1.5px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1.4rem;
+  font-size:1.5rem;color:var(--accent);
+}
+.alog-title{
+  font-family:var(--heading-font);font-size:1.7rem;
+  color:var(--text);margin-bottom:0.3rem;font-weight:400;
+}
+.alog-sub{font-size:0.75rem;color:var(--text3);margin-bottom:1.8rem;letter-spacing:0.03em;}
+.alog-field{position:relative;margin-bottom:1rem;}
+.alog-field input{
+  width:100%;padding:0.9rem 1rem 0.9rem 3rem;
+  background:var(--input-bg);border:1.5px solid var(--input-border);
+  border-radius:10px;color:var(--text);
+  font-family:var(--body-font);font-size:0.9rem;
+  outline:none;transition:border-color 0.25s;letter-spacing:0.08em;
+}
+.alog-field input:focus{border-color:var(--accent);}
+.alog-field input::placeholder{color:var(--text3);letter-spacing:0;}
+.alog-field i{
+  position:absolute;left:1rem;top:50%;transform:translateY(-50%);
+  color:var(--text3);font-size:0.85rem;pointer-events:none;
+}
+.alog-btn{
+  width:100%;background:var(--accent);color:#fff;
+  border:none;padding:0.95rem;border-radius:10px;
+  font-family:var(--body-font);font-size:0.78rem;
+  letter-spacing:0.15em;text-transform:uppercase;
+  font-weight:700;transition:all 0.25s;cursor:pointer;
+  margin-top:0.3rem;
+}
+.alog-btn:hover{opacity:0.88;transform:translateY(-1px);}
+.alog-error{
+  font-size:0.75rem;color:#d9534f;margin-top:0.8rem;
+  display:none;
+}
+.alog-error.on{display:block;}
+.alog-cancel{
+  background:none;border:none;color:var(--text3);
+  font-size:0.75rem;cursor:pointer;margin-top:1.1rem;
+  display:block;width:100%;transition:color 0.2s;
+  font-family:var(--body-font);
+}
+.alog-cancel:hover{color:var(--accent);}
+/* ── GOOGLE SHEETS SYNC SECTION ── */
+.a-sheets-sec{
+  background:var(--tag-bg);border:1px solid var(--border);
+  border-radius:10px;padding:1.2rem 1.4rem;margin-bottom:1.8rem;
+}
+.a-sheets-sec h4{
+  font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--accent);font-weight:600;margin-bottom:0.5rem;
+  display:flex;align-items:center;gap:0.4rem;
+}
+.a-sheets-sec p{font-size:0.72rem;color:var(--text2);line-height:1.65;margin-bottom:0.9rem;}
+.a-sheets-row{display:flex;gap:0.6rem;}
+.a-sheets-row input{
+  flex:1;background:var(--input-bg);border:1px solid var(--input-border);
+  border-radius:6px;padding:0.55rem 0.8rem;
+  color:var(--text);font-family:var(--body-font);font-size:0.78rem;
+  outline:none;transition:border-color 0.2s;
+}
+.a-sheets-row input:focus{border-color:var(--accent);}
+.a-sheets-row input::placeholder{color:var(--text3);}
+.a-sheets-btn{
+  background:var(--accent);color:#fff;border:none;
+  padding:0.55rem 1rem;border-radius:6px;font-size:0.7rem;
+  font-weight:700;cursor:pointer;white-space:nowrap;
+  transition:opacity 0.2s;
+}
+.a-sheets-btn:hover{opacity:0.85;}
+.a-sheets-status{font-size:0.72rem;margin-top:0.6rem;display:none;}
+.a-sheets-status.ok{display:block;color:var(--green);}
+.a-sheets-status.err{display:block;color:#d9534f;}
+#loader{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity 0.7s,visibility 0.7s;}
+#loader.out{opacity:0;visibility:hidden;}
+.load-logo{font-family:var(--heading-font);font-size:2.8rem;color:var(--accent);letter-spacing:0.25em;animation:breathe 1.4s ease-in-out infinite;}
+.load-bar{width:160px;height:1px;background:var(--border);margin-top:2rem;overflow:hidden;}
+.load-fill{height:100%;background:var(--accent);animation:fill 2s ease forwards;}
+@keyframes breathe{0%,100%{opacity:.5}50%{opacity:1}}
+@keyframes fill{0%{width:0}100%{width:100%}}
+#nav{position:fixed;top:0;left:0;right:0;z-index:700;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 5%;background:transparent;transition:background 0.4s,box-shadow 0.4s,height 0.3s;}
+#nav.solid{background:var(--nav-bg);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 1px 0 var(--border);height:58px;}
+.nav-logo{font-family:var(--heading-font);font-size:1.6rem;color:var(--text);letter-spacing:0.08em;flex-shrink:0;}
+.nav-logo span{color:var(--accent);}
+.nav-links{display:flex;gap:2.2rem;list-style:none;}
+.nav-links a{font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text2);transition:color 0.25s;font-weight:500;}
+.nav-links a:hover{color:var(--accent);}
+.nav-end{display:flex;align-items:center;gap:0.8rem;}
+.bag-btn{display:flex;align-items:center;gap:0.5rem;background:var(--accent);color:var(--bg);border:none;padding:0.5rem 1.1rem;border-radius:4px;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:600;transition:all 0.25s;}
+.bag-btn:hover{opacity:0.88;transform:translateY(-1px);}
+.bag-count{background:var(--bg);color:var(--accent);border-radius:50%;width:18px;height:18px;font-size:0.6rem;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px;}
+.burger span{width:22px;height:1.5px;background:var(--text);transition:all 0.3s;display:block;border-radius:2px;}
+.drawer-mask{position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:800;opacity:0;visibility:hidden;transition:all 0.3s;}
+.drawer-mask.on{opacity:1;visibility:visible;}
+.drawer{position:fixed;top:0;right:-320px;bottom:0;width:300px;background:var(--surface);z-index:810;padding:5rem 2rem 2rem;transition:right 0.35s cubic-bezier(0.4,0,0.2,1);display:flex;flex-direction:column;gap:0.3rem;border-left:1px solid var(--border);}
+.drawer.on{right:0;}
+.drawer a{font-size:1rem;color:var(--text);padding:0.9rem 0;border-bottom:1px solid var(--border);letter-spacing:0.06em;transition:color 0.2s;}
+.drawer a:hover{color:var(--accent);}
+.drawer-close{position:absolute;top:1.2rem;right:1.5rem;background:none;border:none;font-size:1.3rem;color:var(--text2);}
+#hero{min-height:100svh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:0 5%;gap:3rem;position:relative;overflow:hidden;padding-top:80px;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 70% 50%, var(--accent-dim) 0%, transparent 70%);pointer-events:none;}
+.hero-bg2{position:absolute;bottom:-20%;left:-10%;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle, var(--accent-dim) 0%, transparent 70%);pointer-events:none;animation:drift 8s ease-in-out infinite alternate;}
+@keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(30px,-20px) scale(1.05)}}
+.hero-text{position:relative;z-index:2;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;background:var(--tag-bg);color:var(--tag-text);padding:0.35rem 0.85rem;border-radius:99px;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;font-weight:600;margin-bottom:1.6rem;border:1px solid var(--border);opacity:0;animation:up 0.7s ease 0.4s forwards;}
+.hero-h1{font-family:var(--heading-font);font-size:clamp(3rem,7vw,6.5rem);line-height:0.95;color:var(--text);font-weight:400;margin-bottom:1.5rem;opacity:0;animation:up 0.7s ease 0.55s forwards;}
+.hero-h1 em{font-style:italic;color:var(--accent);display:block;}
+.hero-p{font-size:0.9rem;line-height:1.85;color:var(--text2);max-width:400px;margin-bottom:2.2rem;opacity:0;animation:up 0.7s ease 0.7s forwards;}
+.hero-btns{display:flex;gap:0.9rem;flex-wrap:wrap;opacity:0;animation:up 0.7s ease 0.85s forwards;}
+.btn-fill{display:inline-flex;align-items:center;gap:0.5rem;background:var(--accent);color:var(--bg);padding:0.85rem 2rem;border:none;border-radius:6px;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;transition:all 0.25s;}
+.btn-fill:hover{opacity:0.88;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.25);}
+.btn-ghost{display:inline-flex;align-items:center;gap:0.5rem;background:transparent;color:var(--text);padding:0.85rem 2rem;border:1px solid var(--border);border-radius:6px;font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:500;transition:all 0.25s;}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+.hero-visual{position:relative;z-index:2;opacity:0;animation:fadeIn 1s ease 0.9s forwards;}
+.hero-img-wrap{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/5;}
+.hero-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform 8s ease;}
+.hero-img-wrap:hover img{transform:scale(1.04);}
+.hero-chip{position:absolute;bottom:1.5rem;left:1.5rem;background:var(--modal-bg);border:1px solid var(--border);padding:0.8rem 1.2rem;border-radius:12px;backdrop-filter:blur(12px);display:flex;align-items:center;gap:0.8rem;}
+.chip-icon{width:36px;height:36px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--bg);font-size:1rem;flex-shrink:0;}
+.chip-text strong{display:block;font-size:0.8rem;color:var(--text);}
+.chip-text span{font-size:0.65rem;color:var(--text2);}
+.hero-float-tag{position:absolute;top:1.5rem;right:-0.8rem;background:var(--accent);color:var(--bg);padding:0.4rem 1rem;border-radius:99px;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;box-shadow:0 4px 16px rgba(0,0,0,0.2);animation:bob 2.5s ease-in-out infinite;}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.marquee{background:var(--accent);padding:0.7rem 0;overflow:hidden;user-select:none;}
+.marquee-track{display:flex;width:max-content;animation:scroll 22s linear infinite;}
+.marquee-track span{font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;font-weight:700;color:var(--bg);padding:0 2rem;white-space:nowrap;}
+.marquee-track span::after{content:'✦';margin-left:2rem;}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+section{padding:6rem 5%;}
+.sec-eyebrow{font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:0.7rem;}
+.sec-h2{font-family:var(--heading-font);font-size:clamp(2rem,4.5vw,3.8rem);font-weight:400;color:var(--text);line-height:1.05;}
+.sec-h2 em{font-style:italic;color:var(--accent);}
+.stats-bar{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:2.5rem 5%;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;}
+.stat{text-align:center;flex:1;min-width:130px;}
+.stat-n{font-family:var(--heading-font);font-size:2.6rem;color:var(--accent);display:block;line-height:1;margin-bottom:0.3rem;}
+.stat-l{font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text3);}
+#shop{background:var(--bg2);}
+.shop-head{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2.5rem;}
+.filter-row{display:flex;gap:0.5rem;flex-wrap:wrap;}
+.ftab{background:var(--surface);border:1px solid var(--border);color:var(--text2);padding:0.45rem 1rem;border-radius:99px;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;transition:all 0.25s;}
+.ftab:hover,.ftab.on{background:var(--accent);border-color:var(--accent);color:var(--bg);}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.4rem;}
+.pcard{background:var(--card-bg);border-radius:12px;overflow:hidden;border:1px solid var(--border);transition:transform 0.3s,box-shadow 0.3s,border-color 0.3s;cursor:pointer;}
+.pcard:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:var(--accent);}
+.pcard.hide{display:none;}
+.pcard-img{position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--surface2);}
+.pcard-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;}
+.pcard:hover .pcard-img img{transform:scale(1.06);}
+.pbadge{position:absolute;top:0.8rem;left:0.8rem;background:var(--badge-bg);color:var(--badge-text);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:700;padding:0.25rem 0.65rem;border-radius:99px;}
+.pbadge.new-badge{background:var(--accent2);color:var(--bg);}
+.pcard-body{padding:1rem 1.1rem 1.2rem;}
+.pcard-name{font-family:var(--heading-font);font-size:1.05rem;color:var(--text);margin-bottom:0.25rem;line-height:1.2;}
+.pcard-sub{font-size:0.68rem;color:var(--text3);margin-bottom:0.7rem;}
+.pcard-foot{display:flex;align-items:center;justify-content:space-between;}
+.pcard-price{font-family:var(--heading-font);font-size:1.2rem;color:var(--accent);font-weight:600;}
+.pcard-stars{color:var(--accent);font-size:0.6rem;}
+.quick-add{position:absolute;bottom:0;left:0;right:0;background:var(--accent);color:var(--bg);border:none;padding:0.7rem;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:700;transform:translateY(100%);transition:transform 0.3s;}
+.pcard:hover .quick-add{transform:translateY(0);}
+.pdetail-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1200;opacity:0;visibility:hidden;transition:all 0.3s;display:flex;align-items:center;justify-content:center;padding:1rem;overflow-y:auto;}
+.pdetail-overlay.on{opacity:1;visibility:visible;}
+.pdetail{background:var(--modal-bg);border-radius:16px;max-width:800px;width:100%;border:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr;overflow:hidden;transform:scale(0.93);transition:transform 0.3s;position:relative;}
+.pdetail-overlay.on .pdetail{transform:scale(1);}
+.pdetail-img{position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--surface2);}
+.pdetail-img img{width:100%;height:100%;object-fit:cover;}
+.pdetail-body{padding:2rem 1.8rem;display:flex;flex-direction:column;gap:1rem;overflow-y:auto;max-height:80vh;}
+.pdetail-close{position:absolute;top:1rem;right:1rem;background:var(--surface);border:1px solid var(--border);color:var(--text);width:34px;height:34px;border-radius:50%;font-size:0.9rem;display:flex;align-items:center;justify-content:center;z-index:2;transition:all 0.2s;}
+.pdetail-close:hover{background:var(--accent);color:var(--bg);border-color:var(--accent);}
+.pdetail-badge{display:inline-block;background:var(--tag-bg);color:var(--tag-text);padding:0.25rem 0.7rem;border-radius:99px;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:700;}
+.pdetail-name{font-family:var(--heading-font);font-size:1.8rem;color:var(--text);line-height:1.1;}
+.pdetail-stars{color:var(--accent);font-size:0.75rem;margin-top:-0.4rem;}
+.pdetail-price{font-family:var(--heading-font);font-size:2rem;color:var(--accent);}
+.pdetail-desc{font-size:0.82rem;line-height:1.8;color:var(--text2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1rem 0;}
+.pdetail-specs{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.spec-pill{background:var(--surface2);border:1px solid var(--border);padding:0.3rem 0.75rem;border-radius:99px;font-size:0.65rem;color:var(--text2);letter-spacing:0.06em;}
+.pdetail-atb{width:100%;background:var(--accent);color:var(--bg);border:none;padding:1rem;border-radius:8px;font-family:var(--body-font);font-size:0.78rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:700;transition:all 0.25s;display:flex;align-items:center;justify-content:center;gap:0.6rem;margin-top:auto;}
+.pdetail-atb:hover{opacity:0.88;transform:translateY(-1px);}
+#services{background:var(--bg);}
+.svc-intro{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-bottom:4rem;}
+.svc-img{border-radius:16px;overflow:hidden;aspect-ratio:4/3;position:relative;}
+.svc-img img{width:100%;height:100%;object-fit:cover;}
+.svc-img-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,0,0,0.4),transparent);}
+.lagos-tag{display:inline-flex;align-items:center;gap:0.4rem;background:var(--accent);color:var(--bg);padding:0.3rem 0.75rem;border-radius:99px;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:700;margin-bottom:1.2rem;}
+.svc-note{margin-top:1.2rem;background:var(--accent-dim);border-left:3px solid var(--accent);padding:0.9rem 1.1rem;border-radius:0 8px 8px 0;font-size:0.76rem;line-height:1.75;color:var(--text2);}
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.2rem;}
+.svc-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.6rem;transition:all 0.3s;position:relative;overflow:hidden;}
+.svc-card::after{content:'';position:absolute;inset:0;background:var(--accent-dim);opacity:0;transition:opacity 0.3s;border-radius:12px;}
+.svc-card:hover::after{opacity:1;}
+.svc-card:hover{border-color:var(--accent);transform:translateY(-3px);}
+.svc-icon{font-size:1.4rem;color:var(--accent);margin-bottom:0.8rem;}
+.svc-name{font-family:var(--heading-font);font-size:1.1rem;color:var(--text);margin-bottom:0.4rem;}
+.svc-desc{font-size:0.72rem;color:var(--text2);line-height:1.7;margin-bottom:0.8rem;}
+.svc-price{font-family:var(--heading-font);font-size:1.2rem;color:var(--accent);margin-bottom:0.2rem;}
+.svc-time{font-size:0.62rem;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;}
+.svc-book{margin-top:1rem;width:100%;background:none;border:1px solid var(--border);color:var(--text);padding:0.65rem;border-radius:6px;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:600;transition:all 0.25s;position:relative;z-index:1;}
+.svc-book:hover{background:var(--accent);border-color:var(--accent);color:var(--bg);}
+#why{background:var(--surface);}
+#why .sec-h2{margin-bottom:0.5rem;}
+.why-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.2rem;margin-top:3rem;}
+.why-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:1.6rem;text-align:center;transition:all 0.3s;}
+.why-card:hover{border-color:var(--accent);background:var(--surface2);}
+.why-icon{font-size:1.6rem;color:var(--accent);margin-bottom:0.9rem;}
+.why-title{font-family:var(--heading-font);font-size:1rem;color:var(--text);margin-bottom:0.4rem;}
+.why-desc{font-size:0.72rem;line-height:1.7;color:var(--text2);}
+/* ── PROCESS STEPS ── */
+.process-steps{display:flex;flex-direction:column;align-items:center;max-width:500px;margin:3rem auto 0;position:relative;}
+.process-steps::before{display:none;}
+.proc-step{text-align:center;width:100%;opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease;}
+.proc-step.in{opacity:1;transform:translateY(0);}
+.proc-step:nth-child(1){transition-delay:0s;}
+.proc-step:nth-child(2){transition-delay:0.15s;}
+.proc-step:nth-child(3){transition-delay:0.3s;}
+.proc-step:nth-child(4){transition-delay:0.45s;}
+.proc-arrow{font-size:1.6rem;color:var(--accent);text-align:center;opacity:0;transform:translateY(10px);transition:opacity 0.6s ease,transform 0.6s ease;line-height:1;margin:0.4rem 0;}
+.proc-arrow.in{opacity:1;transform:translateY(0);}
+.proc-num{width:4rem;height:4rem;border:2px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem;background:var(--bg);color:var(--accent);font-family:var(--heading-font);font-size:1.4rem;font-weight:700;position:relative;z-index:1;transition:background 0.3s,color 0.3s;}
+.proc-step:hover .proc-num{background:var(--accent);color:var(--bg);}
+.proc-title{font-family:var(--heading-font);font-size:1rem;color:var(--text);margin-bottom:0.4rem;}
+.proc-desc{font-size:0.72rem;color:var(--text2);line-height:1.7;max-width:300px;margin:0 auto 1.2rem;}
+/* ── TESTIMONIAL SLIDER ── */
+#reviews{background:var(--bg2);}
+.testi-slider{max-width:780px;margin:3rem auto 0;position:relative;}
+.testi-slide{display:none;animation:tFadeIn 0.5s ease;}
+.testi-slide.active{display:block;}
+@keyframes tFadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.rev-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2.2rem 2.4rem;position:relative;text-align:left;}
+.rev-q{position:absolute;top:1rem;right:1.4rem;font-family:var(--heading-font);font-size:5rem;color:var(--border);line-height:1;pointer-events:none;}
+.rev-text{font-size:0.92rem;line-height:1.9;color:var(--text2);font-style:italic;margin-bottom:1.6rem;position:relative;z-index:1;}
+.rev-author{display:flex;align-items:center;gap:0.7rem;}
+.rev-avatar{width:42px;height:42px;border-radius:50%;background:var(--accent-dim);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--accent);font-weight:700;font-size:0.9rem;flex-shrink:0;}
+.rev-name{font-size:0.82rem;font-weight:600;color:var(--text);}
+.rev-loc{font-size:0.65rem;color:var(--text3);}
+.rev-stars{color:var(--accent);font-size:0.7rem;margin-top:0.3rem;}
+.testi-nav{display:flex;justify-content:center;gap:0.6rem;margin-top:1.8rem;flex-wrap:wrap;}
+.testi-dot{width:9px;height:9px;border:1.5px solid var(--accent);border-radius:50%;cursor:pointer;transition:background 0.25s,transform 0.25s;}
+.testi-dot.active{background:var(--accent);transform:scale(1.2);}
+.testi-arrows{display:flex;justify-content:center;gap:1rem;margin-top:1.2rem;}
+.testi-arrow{background:none;border:1px solid var(--border);color:var(--text2);width:38px;height:38px;border-radius:50%;font-size:0.85rem;display:flex;align-items:center;justify-content:center;transition:all 0.25s;cursor:pointer;}
+.testi-arrow:hover{border-color:var(--accent);color:var(--accent);}
+#contact{background:var(--bg);}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
+.cinfo{display:flex;flex-direction:column;gap:1.6rem;}
+.citem{display:flex;align-items:flex-start;gap:1rem;}
+.c-icon{width:42px;height:42px;min-width:42px;background:var(--accent-dim);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:0.95rem;}
+.c-label{font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text3);margin-bottom:0.25rem;}
+.c-val{font-size:0.88rem;color:var(--text);}
+.c-val a:hover{color:var(--accent);}
+.wa-cta{display:flex;align-items:center;gap:1rem;background:#25D366;color:#fff;padding:1.1rem 1.6rem;border-radius:10px;transition:all 0.25s;box-shadow:0 4px 20px rgba(37,211,102,0.25);}
+.wa-cta:hover{background:#20c05e;transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,211,102,0.35);}
+.wa-cta i{font-size:1.8rem;flex-shrink:0;}
+.wa-cta strong{display:block;font-size:0.85rem;}
+.wa-cta span{font-size:0.7rem;opacity:0.85;}
+.cform-wrap{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:2.2rem;}
+.cform-title{font-family:var(--heading-font);font-size:1.6rem;color:var(--text);margin-bottom:1.5rem;}
+.fg{margin-bottom:1rem;}
+.fg label{display:block;font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:0.35rem;font-weight:600;}
+.fg input,.fg textarea,.fg select{width:100%;background:var(--input-bg);border:1px solid var(--input-border);border-radius:6px;padding:0.75rem 1rem;color:var(--text);font-family:var(--body-font);font-size:0.82rem;outline:none;transition:border-color 0.25s;-webkit-appearance:none;appearance:none;}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--accent);}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--text3);}
+.fg textarea{resize:vertical;min-height:90px;}
+.fg select option{background:var(--modal-bg);color:var(--text);}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;}
+.fsub{width:100%;background:var(--accent);color:var(--bg);border:none;padding:0.9rem;border-radius:8px;font-family:var(--body-font);font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:700;transition:all 0.25s;display:flex;align-items:center;justify-content:center;gap:0.5rem;margin-top:0.4rem;}
+.fsub:hover{opacity:0.88;}
+footer{background:var(--surface);border-top:1px solid var(--border);padding:4rem 5% 2rem;}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:2.5rem;}
+.foot-logo{font-family:var(--heading-font);font-size:1.7rem;color:var(--text);letter-spacing:0.08em;display:block;margin-bottom:0.8rem;}
+.foot-logo span{color:var(--accent);}
+.foot-desc{font-size:0.76rem;color:var(--text3);line-height:1.75;max-width:260px;margin-bottom:1.4rem;}
+.foot-socials{display:flex;gap:0.6rem;}
+.fsoc{width:34px;height:34px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--text2);font-size:0.75rem;transition:all 0.25s;}
+.fsoc:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px);}
+.foot-col h5{font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--text2);margin-bottom:1rem;font-weight:600;}
+.foot-col ul{list-style:none;}
+.foot-col li{margin-bottom:0.5rem;}
+.foot-col a{font-size:0.78rem;color:var(--text3);transition:color 0.2s;}
+.foot-col a:hover{color:var(--accent);}
+.foot-bottom{border-top:1px solid var(--border);padding-top:1.5rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;}
+.foot-bottom p{font-size:0.7rem;color:var(--text3);}
+.foot-bottom span{color:var(--accent);}
+.cart-mask{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:1100;opacity:0;visibility:hidden;transition:all 0.3s;}
+.cart-mask.on{opacity:1;visibility:visible;}
+.cart-bar{position:fixed;right:-440px;top:0;bottom:0;width:420px;max-width:100vw;background:var(--modal-bg);z-index:1101;transition:right 0.38s cubic-bezier(0.4,0,0.2,1);display:flex;flex-direction:column;border-left:1px solid var(--border);}
+.cart-bar.on{right:0;}
+.cart-hd{padding:1.5rem 1.8rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.cart-hd h3{font-family:var(--heading-font);font-size:1.4rem;color:var(--text);}
+.cart-x{background:none;border:none;font-size:1.1rem;color:var(--text2);transition:color 0.2s;}
+.cart-x:hover{color:var(--accent);}
+.cart-body{flex:1;overflow-y:auto;padding:1.2rem 1.8rem;}
+.cart-empty{text-align:center;padding:3rem 0;color:var(--text3);}
+.cart-empty i{font-size:2.5rem;margin-bottom:0.8rem;display:block;}
+.cart-empty p{font-size:0.82rem;}
+.citem-row{display:flex;gap:0.9rem;padding:1rem 0;border-bottom:1px solid var(--border);position:relative;}
+.citem-img{width:65px;height:80px;object-fit:cover;border-radius:6px;flex-shrink:0;}
+.citem-name{font-family:var(--heading-font);font-size:0.95rem;color:var(--text);}
+.citem-sub{font-size:0.65rem;color:var(--text3);margin:0.15rem 0 0.3rem;}
+.citem-price{font-family:var(--heading-font);font-size:1rem;color:var(--accent);}
+.qty-ctrl{display:flex;align-items:center;gap:0.4rem;margin-top:0.5rem;}
+.qb{width:24px;height:24px;background:var(--surface2);border:1px solid var(--border);border-radius:4px;font-size:0.85rem;color:var(--text);display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.qb:hover{background:var(--accent-dim);border-color:var(--accent);}
+.qn{font-size:0.78rem;min-width:18px;text-align:center;}
+.citem-rm{position:absolute;top:1rem;right:0;background:none;border:none;color:var(--text3);font-size:0.75rem;transition:color 0.2s;}
+.citem-rm:hover{color:#e55;}
+.cart-foot{padding:1.2rem 1.8rem;border-top:1px solid var(--border);}
+.discount-banner{background:var(--accent-dim);border:1px solid var(--border);border-radius:8px;padding:0.7rem 1rem;margin-bottom:0.9rem;font-size:0.72rem;color:var(--accent);display:none;align-items:center;gap:0.5rem;}
+.discount-banner.show{display:flex;}
+.discount-banner i{font-size:1rem;}
+.cart-totals{margin-bottom:1rem;}
+.ctot-row{display:flex;justify-content:space-between;font-size:0.8rem;padding:0.3rem 0;color:var(--text2);}
+.ctot-row.total{font-family:var(--heading-font);font-size:1.3rem;color:var(--text);padding-top:0.6rem;border-top:1px solid var(--border);margin-top:0.3rem;}
+.ctot-row.total span:last-child{color:var(--accent);}
+.ctot-row.disc{color:var(--green);}
+.clr-btn{width:100%;background:none;border:1px solid var(--border);color:var(--text3);padding:0.65rem;border-radius:6px;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;transition:all 0.25s;margin-bottom:0.7rem;}
+.clr-btn:hover{border-color:#e55;color:#e55;}
+.checkout-main{width:100%;background:var(--accent);color:var(--bg);border:none;padding:0.95rem;border-radius:8px;font-family:var(--body-font);font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:700;display:flex;align-items:center;justify-content:center;gap:0.5rem;transition:all 0.25s;}
+.checkout-main:hover{opacity:0.88;}
+.modal-wrap{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1300;opacity:0;visibility:hidden;transition:all 0.3s;display:flex;align-items:center;justify-content:center;padding:1rem;overflow-y:auto;}
+.modal-wrap.on{opacity:1;visibility:visible;}
+.modal-box{background:var(--modal-bg);border:1px solid var(--border);border-radius:16px;max-width:620px;width:100%;padding:2.2rem;position:relative;transform:scale(0.93);transition:transform 0.3s;max-height:95vh;overflow-y:auto;}
+.modal-wrap.on .modal-box{transform:scale(1);}
+.modal-x{position:absolute;top:1.2rem;right:1.4rem;background:none;border:none;font-size:1.1rem;color:var(--text2);}
+.modal-x:hover{color:var(--accent);}
+.modal-title{font-family:var(--heading-font);font-size:2rem;color:var(--text);margin-bottom:0.2rem;}
+.modal-sub{font-size:0.73rem;color:var(--text3);margin-bottom:1.8rem;}
+.m-sec{margin-bottom:1.4rem;}
+.m-sec-title{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:0.8rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);}
+.order-lines{margin-bottom:0.6rem;}
+.o-line{display:flex;justify-content:space-between;font-size:0.78rem;color:var(--text2);padding:0.25rem 0;border-bottom:1px dotted var(--border);}
+.o-line.ototal{font-family:var(--heading-font);font-size:1.1rem;color:var(--text);padding-top:0.6rem;border-bottom:none;}
+.o-line.odiscount{color:var(--green);}
+.delivery-fee-box{background:var(--accent-dim);border:1px solid var(--border);border-radius:8px;padding:0.9rem 1.1rem;margin:0.8rem 0;display:none;}
+.delivery-fee-box.show{display:block;}
+.dfee-amount{font-family:var(--heading-font);font-size:1.4rem;color:var(--accent);}
+.dfee-days{font-size:0.68rem;color:var(--text3);margin-top:0.2rem;}
+.pay-opts{display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;margin-top:0.8rem;}
+.pay-opt{border:2px solid var(--border);border-radius:8px;padding:1rem;text-align:center;transition:all 0.25s;cursor:pointer;}
+.pay-opt.sel{border-color:var(--accent);background:var(--accent-dim);}
+.pay-opt i{font-size:1.3rem;color:var(--accent);display:block;margin-bottom:0.3rem;}
+.pay-opt span{font-size:0.65rem;color:var(--text2);}
+.bank-details{margin-top:0.9rem;background:var(--input-bg);border:1px solid var(--accent);border-radius:8px;padding:1rem 1.2rem;}
+.bank-row{display:flex;justify-content:space-between;font-size:0.8rem;padding:0.3rem 0;border-bottom:1px solid var(--border);}
+.bank-row:last-child{border-bottom:none;}
+.bank-row span{color:var(--text3);}
+.bank-row strong{color:var(--text);}
+.pay-confirm-box{background:var(--input-bg);border:2px solid var(--accent);border-radius:10px;padding:1.2rem;margin-top:0.8rem;}
+.pay-q{font-size:0.88rem;font-weight:600;color:var(--text);margin-bottom:0.8rem;display:flex;align-items:center;gap:0.5rem;}
+.pay-q i{color:var(--accent);}
+.pay-yes-no{display:flex;gap:0.7rem;}
+.pay-yn{flex:1;padding:0.65rem;border-radius:6px;border:1px solid var(--border);font-size:0.72rem;letter-spacing:0.08em;font-weight:600;transition:all 0.25s;cursor:pointer;}
+.pay-yn.yes{background:var(--green);color:#fff;border-color:var(--green);}
+.pay-yn.no{background:none;color:var(--text2);}
+.pay-yn.no:hover{border-color:var(--text2);}
+.pay-warning{margin-top:0.8rem;background:rgba(255,180,0,0.08);border:1px solid rgba(255,180,0,0.25);border-radius:8px;padding:0.8rem 1rem;font-size:0.75rem;line-height:1.7;color:var(--text2);display:none;}
+.pay-warning.show{display:block;}
+.pay-warning strong{color:#F0A020;}
+.wa-screenshot-note{display:none;margin-top:0.8rem;background:rgba(37,211,102,0.08);border:1px solid rgba(37,211,102,0.2);border-radius:8px;padding:0.8rem 1rem;font-size:0.75rem;line-height:1.7;color:var(--text2);align-items:flex-start;gap:0.6rem;}
+.wa-screenshot-note.show{display:flex;}
+.wa-screenshot-note i{color:var(--green);font-size:1.1rem;flex-shrink:0;margin-top:0.1rem;}
+.place-btn{width:100%;background:var(--accent);color:var(--bg);border:none;padding:1.1rem;border-radius:8px;font-family:var(--body-font);font-size:0.78rem;letter-spacing:0.15em;text-transform:uppercase;font-weight:700;display:flex;align-items:center;justify-content:center;gap:0.6rem;margin-top:1.4rem;transition:all 0.25s;cursor:pointer;}
+.place-btn:hover{opacity:0.88;}
+.place-btn:disabled{opacity:0.4;cursor:not-allowed;}
+.zone-row{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin:0.8rem 0;}
+.zone-c{border:2px solid var(--border);border-radius:8px;padding:1rem;text-align:center;transition:all 0.25s;cursor:pointer;}
+.zone-c.sel{border-color:var(--accent);background:var(--accent-dim);}
+.zone-c i{font-size:1.3rem;color:var(--accent);display:block;margin-bottom:0.4rem;}
+.zone-c strong{font-size:0.78rem;color:var(--text);display:block;}
+.zone-c small{font-size:0.6rem;color:var(--text3);display:block;margin-top:0.2rem;}
+#admin-wrap{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;align-items:center;justify-content:center;padding:1rem;}
+#admin-wrap.on{display:flex;}
+.admin-box{background:var(--modal-bg);border:1px solid var(--border);border-radius:16px;max-width:720px;width:100%;padding:2.2rem;max-height:90vh;overflow-y:auto;position:relative;}
+.admin-title{font-family:var(--heading-font);font-size:1.8rem;color:var(--text);margin-bottom:0.3rem;}
+.admin-sub{font-size:0.72rem;color:var(--text3);margin-bottom:1.8rem;display:flex;align-items:center;gap:0.4rem;}
+.admin-sub i{color:var(--accent);}
+.a-sec{margin-bottom:1.8rem;}
+.a-sec h4{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:0.7rem;padding-bottom:0.4rem;border-bottom:1px solid var(--border);}
+.a-row{display:grid;grid-template-columns:1fr 110px auto;gap:0.6rem;align-items:center;padding:0.4rem 0;border-bottom:1px solid var(--border);}
+.a-row:last-child{border-bottom:none;}
+.a-row label{font-size:0.76rem;color:var(--text2);}
+.a-inp{background:var(--input-bg);border:1px solid var(--input-border);border-radius:4px;padding:0.35rem 0.5rem;color:var(--text);font-family:var(--body-font);font-size:0.75rem;text-align:right;width:100%;}
+.a-save{background:var(--accent);color:var(--bg);border:none;padding:0.35rem 0.7rem;border-radius:4px;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:700;transition:opacity 0.2s;white-space:nowrap;cursor:pointer;}
+.a-save:hover{opacity:0.85;}
+.admin-x{position:absolute;top:1.2rem;right:1.4rem;background:none;border:none;font-size:1.1rem;color:var(--text2);cursor:pointer;}
+.admin-trigger{position:fixed;bottom:2rem;right:5.5rem;width:42px;height:42px;border-radius:50%;background:var(--surface);border:1px solid var(--border);color:var(--text3);font-size:0.9rem;z-index:700;display:flex;align-items:center;justify-content:center;opacity:0.35;transition:all 0.3s;}
+.admin-trigger:hover{opacity:0.9;color:var(--accent);}
+.wa-fab{position:fixed;bottom:2rem;right:2rem;width:52px;height:52px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.4rem;z-index:700;box-shadow:0 4px 20px rgba(37,211,102,0.35);transition:all 0.25s;animation:wap 2s ease-in-out infinite;}
+.wa-fab:hover{transform:scale(1.1);}
+@keyframes wap{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,0.35)}50%{box-shadow:0 4px 30px rgba(37,211,102,0.6),0 0 0 8px rgba(37,211,102,0.08)}}
+.toast{position:fixed;bottom:5.5rem;right:1.5rem;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:0.9rem 1.4rem;border-radius:8px;font-size:0.78rem;box-shadow:var(--shadow);transform:translateX(110%);transition:transform 0.3s;z-index:1500;display:flex;align-items:center;gap:0.6rem;max-width:320px;}
+.toast.on{transform:translateX(0);}
+.toast i{color:var(--accent);flex-shrink:0;}
+.rv{opacity:0;transform:translateY(22px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.rv.in{opacity:1;transform:none;}
+.rv-l{opacity:0;transform:translateX(-22px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.rv-l.in{opacity:1;transform:none;}
+.rv-r{opacity:0;transform:translateX(22px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.rv-r.in{opacity:1;transform:none;}
+@media(max-width:900px){
+  .nav-links{display:none;}
+  .burger{display:flex;}
+  #hero{grid-template-columns:1fr;padding-top:100px;min-height:auto;padding-bottom:3rem;}
+  .hero-visual{display:none;}
+  .hero-h1{font-size:clamp(2.5rem,10vw,4rem);}
+  .svc-intro{grid-template-columns:1fr;}
+  .svc-img{display:none;}
+  .contact-grid{grid-template-columns:1fr;}
+  .foot-grid{grid-template-columns:1fr 1fr;}
+  .pdetail{grid-template-columns:1fr;}
+  .pdetail-img{aspect-ratio:16/9;max-height:280px;}
+  .pdetail-body{max-height:none;padding:1.4rem;}
+  .theme-switcher{top:auto;bottom:5.5rem;transform:none;}
+}
+@media(max-width:640px){
+  section{padding:4rem 4%;}
+  #nav{padding:0 4%;}
+  .pgrid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:0.9rem;}
+  .pcard-name{font-size:0.92rem;}
+  .pcard-price{font-size:1rem;}
+  .svc-grid{grid-template-columns:1fr;}
+  .why-grid{grid-template-columns:1fr 1fr;}
+  .rev-grid{grid-template-columns:1fr;}
+  .foot-grid{grid-template-columns:1fr;}
+  .stats-bar{justify-content:center;gap:2rem;}
+  .modal-box{padding:1.5rem;}
+  .pay-opts{grid-template-columns:1fr 1fr;}
+  .frow{grid-template-columns:1fr;}
+  .pdetail{max-height:95vh;}
+  .cart-bar{width:100%;}
+  .theme-switcher{bottom:6rem;}
+  .hero-btns{flex-direction:column;}
+  .btn-fill,.btn-ghost{width:100%;justify-content:center;}
+}
+@media(max-width:380px){
+  .pgrid{grid-template-columns:1fr 1fr;}
+  .why-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="load-logo"><strong>SOFT HAIRS</strong></div>
+  <div class="load-bar"><div class="load-fill"></div></div>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div id="admin-login">
+  <div class="alog-box">
+    <div class="alog-icon"><i class="fas fa-lock"></i></div>
+    <div class="alog-title">Admin Access</div>
+    <p class="alog-sub">Enter your password to manage prices</p>
+    <div class="alog-field">
+      <i class="fas fa-key"></i>
+      <input type="password" id="alog-pw" placeholder="Password" onkeydown="if(event.key==='Enter')checkAdminPw()">
+    </div>
+    <button class="alog-btn" onclick="checkAdminPw()">Enter</button>
+    <div class="alog-error" id="alog-err">Incorrect password. Try again.</div>
+    <button class="alog-cancel" onclick="closeAdminLogin()">Cancel</button>
+  </div>
+</div>
+
+<!-- WA FAB -->
+<a class="wa-fab" href="https://wa.me/2349044303070" target="_blank" aria-label="WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="tmsg"></span></div>
+
+<!-- MOBILE DRAWER -->
+<div class="drawer-mask" id="dmask" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <button class="drawer-close" onclick="closeDrawer()"><i class="fas fa-times"></i></button>
+  <a href="#shop" onclick="closeDrawer()">Shop Wigs</a>
+  <a href="#services" onclick="closeDrawer()">Hair Services</a>
+  <a href="#why" onclick="closeDrawer()">Why Us</a>
+  <a href="#reviews" onclick="closeDrawer()">Reviews</a>
+  <a href="#contact" onclick="closeDrawer()">Contact</a>
+  <a href="https://wa.me/2349044303070" target="_blank" style="color:#25D366;border:none;margin-top:0.5rem;"><i class="fab fa-whatsapp"></i> WhatsApp Us</a>
+</div>
+
+<!-- NAVBAR -->
+<nav id="nav">
+  <a class="nav-logo" href="#"><span>SoFt</span> Hairs</a>
+  <ul class="nav-links">
+    <li><a href="#shop">Shop</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-end">
+    <button class="bag-btn" onclick="openCart()">
+      <i class="fas fa-shopping-bag"></i>
+      Bag <span class="bag-count" id="bag-c">0</span>
+    </button>
+    <button class="burger" onclick="openDrawer()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-bg2"></div>
+  <div class="hero-text">
+    <div class="hero-eyebrow"><i class="fas fa-star"></i> Premium Wig Boutique · Lagos, Nigeria</div>
+    <h1 class="hero-h1">Wear Your<br><em>Confidence</em></h1>
+    <p class="hero-p">Luxurious human hair wigs crafted for the modern Nigerian woman. 100% human hair, delivered to all 36 states.</p>
+    <div class="hero-btns">
+      <a href="#shop" class="btn-fill"><i class="fas fa-shopping-bag"></i> Shop Collection</a>
+      <a href="#services" class="btn-ghost"><i class="fas fa-scissors"></i> Hair Services</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-img-wrap">
+      <img src="https://snthair.com/cdn/shop/files/Snapinsta.app_400576505_865981405068267_6229361054404248491_n_1080_grande.jpg?v=1705677850" alt="Beautiful Premium Layered Wig on Luxury Mannequin">
+      <div class="hero-chip">
+        <div class="chip-icon"><i class="fas fa-truck"></i></div>
+        <div class="chip-text">
+          <strong>Nationwide Delivery</strong>
+          <span>All 36 states covered</span>
+        </div>
+      </div>
+      <div class="hero-float-tag">★ Best Seller</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Bone Straight</span><span>HD Lace Frontal</span><span>Bouncy Curls</span><span>Closure Wigs</span><span>Wig Revamping</span><span>Nationwide Delivery</span><span>100% Human Hair</span><span>Lagos Services</span><span>Custom Wig Making</span><span>Deep Wave</span>
+    <span>Bone Straight</span><span>HD Lace Frontal</span><span>Bouncy Curls</span><span>Closure Wigs</span><span>Wig Revamping</span><span>Nationwide Delivery</span><span>100% Human Hair</span><span>Lagos Services</span><span>Custom Wig Making</span><span>Deep Wave</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat rv"><span class="stat-n" data-n="500">0+</span><span class="stat-l">Happy Customers</span></div>
+  <div class="stat rv"><span class="stat-n" data-n="36">0</span><span class="stat-l">States Served</span></div>
+  <div class="stat rv"><span class="stat-n" data-n="30">0</span><span class="stat-l">Wig Styles</span></div>
+  <div class="stat rv"><span class="stat-n" data-n="100">0%</span><span class="stat-l">Human Hair</span></div>
+</div>
+
+<!-- PRODUCTS -->
+<section id="shop">
+  <div class="shop-head rv">
+    <div>
+      <div class="sec-eyebrow">✦ Our Collection</div>
+      <h2 class="sec-h2">Shop <em>Premium Wigs</em></h2>
+    </div>
+    <div class="filter-row">
+      <button class="ftab on" onclick="filter('all',this)">All</button>
+      <button class="ftab" onclick="filter('bestseller',this)">Best Sellers</button>
+      <button class="ftab" onclick="filter('straight',this)">Straight</button>
+      <button class="ftab" onclick="filter('curly',this)">Curly</button>
+      <button class="ftab" onclick="filter('closure',this)">Closure</button>
+      <button class="ftab" onclick="filter('frontal',this)">Frontal</button>
+      <button class="ftab" onclick="filter('new',this)">New In</button>
+    </div>
+  </div>
+  <div class="pgrid" id="pgrid"></div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="svc-intro">
+    <div class="rv-l">
+      <div class="lagos-tag"><i class="fas fa-map-marker-alt"></i> Lagos Only</div>
+      <div class="sec-eyebrow">✦ Expert Hair Care</div>
+      <h2 class="sec-h2">Hair <em>Revamp<br>& Styling</em></h2>
+      <p style="font-size:0.83rem;line-height:1.9;color:var(--text2);margin-top:1rem;max-width:380px;">
+        Send your hair to us from anywhere in Lagos. Our experts breathe new life into it, then send it straight back to you.
+      </p>
+      <p style="font-family:var(--heading-font);font-size:1.5rem;color:var(--text);margin-top:1.8rem;font-weight:400;">How it <em style="font-style:italic;color:var(--accent);">Works</em></p>
+    </div>
+   
+  <!-- PROCESS STEPS -->
+  <div class="process-steps" id="proc-steps">
+    <div class="proc-step">
+      <div class="proc-num">01</div>
+      <h3 class="proc-title">Book a Service</h3>
+      <p class="proc-desc">Fill the booking form below and pick the service you need.</p>
+    </div>
+    <div class="proc-arrow"><i class="fas fa-arrow-down"></i></div>
+    <div class="proc-step">
+      <div class="proc-num">02</div>
+      <h3 class="proc-title">Dispatch Your Hair</h3>
+      <p class="proc-desc">Arrange to send your wig or weave to us anywhere in Lagos.</p>
+    </div>
+    <div class="proc-arrow"><i class="fas fa-arrow-down"></i></div>
+    <div class="proc-step">
+      <div class="proc-num">03</div>
+      <h3 class="proc-title">We Work Our Magic</h3>
+      <p class="proc-desc">Our experts handle your hair with care and precision.</p>
+    </div>
+    <div class="proc-arrow"><i class="fas fa-arrow-down"></i></div>
+    <div class="proc-step">
+      <div class="proc-num">04</div>
+      <h3 class="proc-title">Delivered Back to You</h3>
+      <p class="proc-desc">Your hair returns looking absolutely brand new.</p>
+    </div>
+  </div>
+  <!-- /process -->
+  <div class="svc-grid" id="svcgrid"></div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="sec-eyebrow rv">✦ Our Promise</div>
+  <h2 class="sec-h2 rv">Why Choose <em>SoFt Hairs</em></h2>
+  <div class="why-grid">
+    <div class="why-card rv"><div class="why-icon"><i class="fas fa-certificate"></i></div><div class="why-title">100% Human Hair</div><div class="why-desc">Every wig is crafted from premium, ethically sourced human hair. No blends, no synthetic surprises.</div></div>
+    <div class="why-card rv"><div class="why-icon"><i class="fas fa-truck"></i></div><div class="why-title">Nationwide Delivery</div><div class="why-desc">We deliver to all 36 states across Nigeria. Safely packaged, right to your doorstep.</div></div>
+    <div class="why-card rv"><div class="why-icon"><i class="fab fa-whatsapp"></i></div><div class="why-title">Direct Communication</div><div class="why-desc">All orders land directly in our inbox. Quick response, personalized service every time.</div></div>
+    <div class="why-card rv"><div class="why-icon"><i class="fas fa-shield-alt"></i></div><div class="why-title">Quality Guarantee</div><div class="why-desc">Not satisfied? We make it right. Your happiness is our top priority, always.</div></div>
+    <div class="why-card rv"><div class="why-icon"><i class="fas fa-scissors"></i></div><div class="why-title">Expert Styling</div><div class="why-desc">Lagos-based stylists with years of experience in all hair types and transformations.</div></div>
+    <div class="why-card rv"><div class="why-icon"><i class="fas fa-tag"></i></div><div class="why-title">Bulk Discounts</div><div class="why-desc">Orders from ₦150,000 get 3% off. Orders from ₦300,000 get 5% off automatically.</div></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="reviews">
+  <div class="sec-eyebrow rv">✦ Customer Love</div>
+  <h2 class="sec-h2 rv">What Our <em>Clients Say</em></h2>
+  <div class="testi-slider">
+    <div class="testi-slide active">
+      <div class="rev-card">
+        <div class="rev-q">"</div>
+        <p class="rev-text">The bone straight wig I ordered looked exactly like the pictures. Delivery to Abuja took just 2 days and the packaging was so neat. I've already recommended SoFt Hairs to three of my friends!</p>
+        <div class="rev-author"><div class="rev-avatar">A</div><div><div class="rev-name">Adaeze O.</div><div class="rev-loc">Abuja, FCT</div></div></div>
+        <div class="rev-stars">★★★★★</div>
+      </div>
+    </div>
+    <div class="testi-slide">
+      <div class="rev-card">
+        <div class="rev-q">"</div>
+        <p class="rev-text">Sent my old wig for revamping and it came back looking brand new! They fixed the closure, deep conditioned it and even restyled it. So professional and fast. Will definitely be sending another one soon.</p>
+        <div class="rev-author"><div class="rev-avatar">T</div><div><div class="rev-name">Temi A.</div><div class="rev-loc">Lagos Island</div></div></div>
+        <div class="rev-stars">★★★★★</div>
+      </div>
+    </div>
+    <div class="testi-slide">
+      <div class="rev-card">
+        <div class="rev-q">"</div>
+        <p class="rev-text">The bouncy curly wig is everything! Quality is exceptional and the curls are still popping after two weeks. The packaging was so cute too, felt like a proper luxury purchase. Already planning my next order.</p>
+        <div class="rev-author"><div class="rev-avatar">F</div><div><div class="rev-name">Fatima K.</div><div class="rev-loc">Kano, Kano State</div></div></div>
+        <div class="rev-stars">★★★★★</div>
+      </div>
+    </div>
+    <div class="testi-slide">
+      <div class="rev-card">
+        <div class="rev-q">"</div>
+        <p class="rev-text">I was sceptical about ordering a wig online but SoFt Hairs changed that completely. The HD lace frontal looks so natural nobody can even tell. The customer service is also top tier, they replied my DM almost immediately.</p>
+        <div class="rev-author"><div class="rev-avatar">C</div><div><div class="rev-name">Chidinma E.</div><div class="rev-loc">Port Harcourt, Rivers State</div></div></div>
+        <div class="rev-stars">★★★★★</div>
+      </div>
+    </div>
+    <div class="testi-slide">
+      <div class="rev-card">
+        <div class="rev-q">"</div>
+        <p class="rev-text">Ordered the deep wave wig for my sister's wedding and I was the most talked-about person there. Pure quality! The hair is soft and it doesn't shed at all. I'm definitely a loyal customer now.</p>
+        <div class="rev-author"><div class="rev-avatar">B</div><div><div class="rev-name">Blessing N.</div><div class="rev-loc">Enugu, Enugu State</div></div></div>
+        <div class="rev-stars">★★★★★</div>
+      </div>
+    </div>
+    <div class="testi-slide">
+      <div class="rev-card">
+        <div class="rev-q">"</div>
+        <p class="rev-text">Their deep conditioning service is amazing. I thought my wig was finished but after sending it to them it came back looking like fresh hair. Saved me so much money instead of buying a new one. 100% worth it!</p>
+        <div class="rev-author"><div class="rev-avatar">R</div><div><div class="rev-name">Remi A.</div><div class="rev-loc">Ibadan, Oyo State</div></div></div>
+        <div class="rev-stars">★★★★★</div>
+      </div>
+    </div>
+    <div class="testi-slide">
+      <div class="rev-card">
+        <div class="rev-q">"</div>
+        <p class="rev-text">I live in Kaduna and I was worried about delivery but it arrived safely in 3 days, sealed and protected. The closure wig fits perfectly and the hairline looks so realistic. Super impressed with SoFt Hairs!</p>
+        <div class="rev-author"><div class="rev-avatar">H</div><div><div class="rev-name">Hauwa M.</div><div class="rev-loc">Kaduna, Kaduna State</div></div></div>
+        <div class="rev-stars">★★★★★</div>
+      </div>
+    </div>
+    <div class="testi-slide">
+      <div class="rev-card">
+        <div class="rev-q">"</div>
+        <p class="rev-text">I've bought wigs from so many places but SoFt Hairs is different. The quality is consistent and the communication is so smooth. I asked about the difference between two wigs and they responded with details and helped me pick. That kind of service is rare!</p>
+        <div class="rev-author"><div class="rev-avatar">S</div><div><div class="rev-name">Sola B.</div><div class="rev-loc">Lagos Mainland</div></div></div>
+        <div class="rev-stars">★★★★★</div>
+      </div>
+    </div>
+    <div class="testi-slide">
+      <div class="rev-card">
+        <div class="rev-q">"</div>
+        <p class="rev-text">The wig styling service is incredibly good. I sent a plain, unstyled unit and what came back looked like a full salon job. Perfectly trimmed, beautifully laid. My colleagues kept asking where I got my hair done!</p>
+        <div class="rev-author"><div class="rev-avatar">N</div><div><div class="rev-name">Ngozi I.</div><div class="rev-loc">Awka, Anambra State</div></div></div>
+        <div class="rev-stars">★★★★★</div>
+      </div>
+    </div>
+    <div class="testi-slide">
+      <div class="rev-card">
+        <div class="rev-q">"</div>
+        <p class="rev-text">Purchased the bone straight frontal wig and it's been three months, still no shedding, still silky. I wash it weekly too. This is real quality hair. SoFt Hairs has a customer for life in me.</p>
+        <div class="rev-author"><div class="rev-avatar">Y</div><div><div class="rev-name">Yetunde L.</div><div class="rev-loc">Abeokuta, Ogun State</div></div></div>
+        <div class="rev-stars">★★★★★</div>
+      </div>
+    </div>
+  </div>
+  <div class="testi-arrows">
+    <button class="testi-arrow" onclick="prevTesti()"><i class="fas fa-chevron-left"></i></button>
+    <button class="testi-arrow" onclick="nextTesti()"><i class="fas fa-chevron-right"></i></button>
+  </div>
+  <div class="testi-nav" id="testi-dots"></div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-grid">
+    <div class="cinfo rv-l">
+      <div>
+        <div class="sec-eyebrow">✦ Reach Us</div>
+        <h2 class="sec-h2">Let's <em>Talk</em></h2>
+      </div>
+      <a class="wa-cta" href="https://wa.me/2349044303070" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+        <div><strong>Chat on WhatsApp</strong><span>+234 904 430 3070 — We reply fast!</span></div>
+      </a>
+      <div class="citem"><div class="c-icon"><i class="fas fa-phone"></i></div><div><div class="c-label">Phone</div><div class="c-val"><a href="tel:+2349044303070">+234 904 430 3070</a></div></div></div>
+      <div class="citem"><div class="c-icon"><i class="fas fa-envelope"></i></div><div><div class="c-label">Email</div><div class="c-val"><a href="/cdn-cgi/l/email-protection#bad2dfd6d6d5fac9d5dcced2dbd3c8c994d4dd"><span class="__cf_email__" data-cfemail="b8d0ddd4d4d7f8cbd7deccd0d9d1cacb96d6df">[email&#160;protected]</span></a></div></div></div>
+      <div class="citem"><div class="c-icon"><i class="fas fa-map-marker-alt"></i></div><div><div class="c-label">Location</div><div class="c-val">Lagos, Nigeria<br><small style="color:var(--text3);font-size:0.72rem;">Shipping to all 36 states</small></div></div></div>
+    </div>
+    <div class="cform-wrap rv-r">
+      <div class="cform-title">Send a Message</div>
+      <form id="cform" action="https://formspree.io/f/xkopvbqy" method="POST">
+        <div class="frow">
+          <div class="fg"><label>First Name</label><input type="text" name="first_name" placeholder="Ada" required></div>
+          <div class="fg"><label>Last Name</label><input type="text" name="last_name" placeholder="Okonkwo" required></div>
+        </div>
+        <div class="fg"><label>Email</label><input type="email" name="email" placeholder="ada@email.com" required></div>
+        <div class="fg"><label>Phone (WhatsApp)</label><input type="tel" name="phone" placeholder="+234 xxx xxx xxxx"></div>
+        <div class="fg"><label>Message</label><textarea name="message" placeholder="Tell us what you need..." required></textarea></div>
+        <button type="submit" class="fsub"><i class="fas fa-paper-plane"></i> Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-grid">
+    <div>
+      <span class="foot-logo"><span>SoFt</span> Hairs</span>
+      <p class="foot-desc">Premium human hair wigs for the modern Nigerian woman. Crafted with love, delivered with care across all 36 states.</p>
+      <div class="foot-socials">
+        <a class="fsoc" href="https://wa.me/2349044303070" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a class="fsoc" href="#"><i class="fab fa-instagram"></i></a>
+        <a class="fsoc" href="#"><i class="fab fa-tiktok"></i></a>
+        <a class="fsoc" href="/cdn-cgi/l/email-protection#b0d8d5dcdcdff0c3dfd6c4d8d1d9c2c39eded7"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+    <div class="foot-col"><h5>Shop</h5><ul><li><a href="#shop">All Wigs</a></li><li><a href="#shop">Best Sellers</a></li><li><a href="#shop">Straight Wigs</a></li><li><a href="#shop">Curly Wigs</a></li><li><a href="#shop">Frontal Wigs</a></li></ul></div>
+    <div class="foot-col"><h5>Services</h5><ul><li><a href="#services">Wig Revamping</a></li><li><a href="#services">Closure Fixing</a></li><li><a href="#services">Wig Styling</a></li><li><a href="#services">Deep Conditioning</a></li><li><a href="#services">Custom Wig Making</a></li></ul></div>
+    <div class="foot-col"><h5>Info</h5><ul><li><a href="#why">Why SoFt Hairs</a></li><li><a href="#contact">Contact</a></li><li><a href="https://wa.me/2349044303070" target="_blank">WhatsApp</a></li><li><a href="#contact">Delivery Info</a></li></ul></div>
+  </div>
+  <div class="foot-bottom">
+    <p>© 2025 <span>SoFt Hairs</span>. All rights reserved. Lagos, Nigeria.</p>
+    <p>Made with <span>♥</span> for the modern Nigerian woman</p>
+  </div>
+</footer>
+
+<!-- CART SIDEBAR -->
+<div class="cart-mask" id="cmask" onclick="closeCart()"></div>
+<div class="cart-bar" id="cbar">
+  <div class="cart-hd">
+    <h3>Your Bag</h3>
+    <button class="cart-x" onclick="closeCart()"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="cart-body" id="cbody"></div>
+  <div class="cart-foot" id="cfoot" style="display:none;">
+    <div class="discount-banner" id="disc-banner">
+      <i class="fas fa-tag"></i>
+      <span id="disc-msg"></span>
+    </div>
+    <div class="cart-totals">
+      <div class="ctot-row"><span>Subtotal</span><span id="ct-sub">₦0</span></div>
+      <div class="ctot-row disc" id="ct-disc-row" style="display:none;"><span id="ct-disc-label">Discount</span><span id="ct-disc">-₦0</span></div>
+      <div class="ctot-row total"><span>Total</span><span id="ct-total">₦0</span></div>
+    </div>
+    <button class="clr-btn" onclick="clearCart()"><i class="fas fa-trash"></i> Clear Bag</button>
+    <button class="checkout-main" onclick="openCheckout()"><i class="fas fa-arrow-right"></i> Checkout</button>
+  </div>
+</div>
+
+<!-- PRODUCT DETAIL MODAL -->
+<div class="pdetail-overlay" id="pdoverlay">
+  <div class="pdetail" id="pdbox">
+    <button class="pdetail-close" onclick="closePD()"><i class="fas fa-times"></i></button>
+    <div class="pdetail-img"><img id="pd-img" src="" alt=""></div>
+    <div class="pdetail-body">
+      <span class="pdetail-badge" id="pd-badge"></span>
+      <div class="pdetail-name" id="pd-name"></div>
+      <div class="pdetail-stars" id="pd-stars"></div>
+      <div class="pdetail-price" id="pd-price"></div>
+      <p class="pdetail-desc" id="pd-desc"></p>
+      <div class="pdetail-specs" id="pd-specs"></div>
+      <button class="pdetail-atb" id="pd-atb"><i class="fas fa-shopping-bag"></i> Add to Bag</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-wrap" id="co-modal">
+  <div class="modal-box">
+    <button class="modal-x" onclick="closeModal('co-modal')"><i class="fas fa-times"></i></button>
+    <div class="modal-title">Checkout</div>
+    <div class="modal-sub">Complete your order below — you'll receive a confirmation email</div>
+    <form id="order-form" action="https://formspree.io/f/xkopvbqy" method="POST" onsubmit="return handleOrder(event)">
+      <input type="hidden" name="_subject" value="🛍️ New Order — SoFt Hairs">
+      <input type="hidden" name="order_items" id="hidden-items">
+      <input type="hidden" name="order_subtotal" id="hidden-subtotal">
+      <input type="hidden" name="order_discount" id="hidden-discount">
+      <input type="hidden" name="order_delivery_fee" id="hidden-delivery">
+      <input type="hidden" name="order_total" id="hidden-total">
+      <input type="hidden" name="delivery_state" id="hidden-state">
+      <input type="hidden" name="delivery_lga" id="hidden-lga">
+      <input type="hidden" name="payment_method" id="hidden-payment">
+      <div class="m-sec">
+        <div class="m-sec-title">Order Summary</div>
+        <div class="order-lines" id="co-lines"></div>
+        <div class="o-line odiscount" id="co-disc-row" style="display:none;"><span id="co-disc-label">Discount</span><span id="co-disc-val"></span></div>
+        <div class="delivery-fee-box" id="co-dbox">
+          <div style="font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);margin-bottom:0.3rem;">Delivery Fee</div>
+          <div class="dfee-amount" id="co-dfee">₦0</div>
+          <div class="dfee-days" id="co-ddays"></div>
+        </div>
+        <div class="o-line ototal"><span>Grand Total</span><span id="co-gtotal" style="color:var(--accent);"></span></div>
+      </div>
+      <div class="m-sec">
+        <div class="m-sec-title">Your Details</div>
+        <div class="frow">
+          <div class="fg"><label>Full Name</label><input type="text" name="customer_name" id="co-name" placeholder="Your full name" required></div>
+          <div class="fg"><label>Phone (WhatsApp)</label><input type="tel" name="customer_phone" id="co-phone" placeholder="+234 xxx xxx xxxx" required></div>
+        </div>
+        <div class="fg"><label>Email</label><input type="email" name="customer_email" id="co-email" placeholder="your@email.com" required></div>
+      </div>
+      <div class="m-sec">
+        <div class="m-sec-title">Delivery Details</div>
+        <div class="fg">
+          <label>State</label>
+          <select id="co-state" name="state" required onchange="onState()">
+            <option value="">— Select your state —</option>
+          </select>
+        </div>
+        <div class="fg" id="lga-fg" style="display:none;">
+          <label>Local Government / Area</label>
+          <select id="co-lga" name="lga" onchange="onLga()">
+            <option value="">— Select LGA —</option>
+          </select>
+        </div>
+        <div class="fg" id="addr-fg" style="display:none;">
+          <label>Street Address</label>
+          <input type="text" name="address" id="co-addr" placeholder="House number, street, nearest landmark" required>
+        </div>
+      </div>
+      <div class="m-sec">
+        <div class="m-sec-title">Payment Method</div>
+        <div class="pay-opts">
+          <div class="pay-opt sel" onclick="selPay(this,'Opay Transfer')">
+            <i class="fas fa-mobile-alt"></i>
+            <span>Opay Transfer</span>
+          </div>
+          <div class="pay-opt" onclick="selPay(this,'Bank Deposit')">
+            <i class="fas fa-university"></i>
+            <span>Bank Deposit</span>
+          </div>
+        </div>
+        <div class="bank-details" id="bank-box">
+          <div class="bank-row"><span>Platform</span><strong>Opay</strong></div>
+          <div class="bank-row"><span>Account Number</span><strong>9044303070</strong></div>
+          <div class="bank-row"><span>Account Name</span><strong>SoFt Hairs</strong></div>
+          <div class="bank-row"><span>Amount to Pay</span><strong id="bank-amount">—</strong></div>
+        </div>
+        <div class="pay-confirm-box" id="payconfirm">
+          <div class="pay-q"><i class="fas fa-question-circle"></i> Have you made the payment?</div>
+          <div class="pay-yes-no">
+            <button type="button" class="pay-yn yes" onclick="payConfirm(true)"><i class="fas fa-check"></i> Yes, I have</button>
+            <button type="button" class="pay-yn no" onclick="payConfirm(false)">Not yet</button>
+          </div>
+          <div class="pay-warning" id="paywarning">
+            <strong>⚠️ Please Note:</strong> If payment has not been made, your order will not be processed. Kindly complete your payment to the details above before placing your order.
+          </div>
+          <div class="wa-screenshot-note" id="wa-note">
+            <i class="fab fa-whatsapp"></i>
+            <span>Great! After submitting, please send your <strong>payment screenshot</strong> to us on WhatsApp at <a href="https://wa.me/2349044303070" target="_blank" style="color:var(--green);font-weight:700;">+234 904 430 3070</a> so we can confirm and process your order immediately.</span>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="place-btn" id="place-btn">
+        <i class="fas fa-check-circle"></i> Place Order
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- SERVICE BOOKING MODAL -->
+<div class="modal-wrap" id="svc-modal">
+  <div class="modal-box">
+    <button class="modal-x" onclick="closeModal('svc-modal')"><i class="fas fa-times"></i></button>
+    <div class="modal-title" id="sm-title">Book Service</div>
+    <div class="modal-sub" id="sm-sub"></div>
+    <form id="svc-form" action="https://formspree.io/f/xkopvbqy" method="POST" onsubmit="return handleSvcBook(event)">
+      <input type="hidden" name="_subject" id="sm-subject" value="✂️ Service Booking — SoFt Hairs">
+      <input type="hidden" name="service_name" id="sm-svcname">
+      <input type="hidden" name="service_price" id="sm-svcprice">
+      <input type="hidden" name="lagos_zone" id="sm-zone">
+      <input type="hidden" name="lagos_area" id="sm-area-hidden">
+      <div class="m-sec">
+        <div class="m-sec-title">Your Details</div>
+        <div class="frow">
+          <div class="fg"><label>Full Name</label><input type="text" name="name" id="sm-name" placeholder="Your name" required></div>
+          <div class="fg"><label>WhatsApp Number</label><input type="tel" name="phone" id="sm-phone" placeholder="+234 xxx xxx xxxx" required></div>
+        </div>
+        <div class="fg"><label>Email</label><input type="email" name="email" id="sm-email" placeholder="your@email.com" required></div>
+      </div>
+      <div class="m-sec">
+        <div class="m-sec-title">Your Lagos Zone</div>
+        <div class="zone-row">
+          <div class="zone-c" onclick="selZone(this,'island')">
+            <i class="fas fa-water"></i>
+            <strong>Lagos Island</strong>
+            <small>VI, Lekki, Ikoyi, Ajah...</small>
+          </div>
+          <div class="zone-c" onclick="selZone(this,'mainland')">
+            <i class="fas fa-city"></i>
+            <strong>Lagos Mainland</strong>
+            <small>Ikeja, Surulere, Yaba...</small>
+          </div>
+        </div>
+        <div class="fg" id="sm-area-fg" style="display:none;">
+          <label>Specific Area</label>
+          <select id="sm-area">
+            <option value="">— Select area —</option>
+          </select>
+        </div>
+      </div>
+      <div class="m-sec">
+        <div class="m-sec-title">Service Notes</div>
+        <div class="fg">
+          <label>Describe your hair & requirements</label>
+          <textarea name="notes" id="sm-notes" placeholder="e.g. 14 inch bone straight wig, tangled, needs deep conditioning and restyling to body wave..."></textarea>
+        </div>
+      </div>
+      <button type="submit" class="place-btn"><i class="fas fa-paper-plane"></i> Submit Booking</button>
+    </form>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin-wrap">
+  <div class="admin-box">
+    <button class="admin-x" onclick="closeAdmin()"><i class="fas fa-times"></i></button>
+    <div class="admin-title">Price Manager</div>
+    <p class="admin-sub"><i class="fas fa-lock"></i> SOFT HAIRS — Admin Panel</p>
+
+    <!-- GITHUB SYNC STATUS -->
+    <div class="a-sheets-sec">
+      <h4><i class="fas fa-globe"></i> Live Sync — Updates for Everyone</h4>
+      <p>Hit <strong>Save All Changes</strong> below to update prices for every customer worldwide instantly via GitHub. No extra steps needed.</p>
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:0.7rem 1rem;font-size:0.75rem;color:rgba(255,255,255,0.5);margin-top:0.5rem;">
+        ✅ Connected · <span style="color:var(--accent);">github.com/Softgirl03/SoFTDishesMenu → wigmenu.json</span>
+      </div>
+    </div>
+
+    <div class="a-sec"><h4>Product Prices (₦)</h4><div id="ap-list"></div></div>
+    <div class="a-sec"><h4>Service Prices (₦)</h4><div id="as-list"></div></div>
+    <div class="a-sec"><h4>Delivery Fees by State (₦)</h4><div id="ad-list"></div></div>
+
+    <button id="a-save-all-btn" onclick="saveAllAdmin()" style="width:100%;padding:1rem;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:var(--body-font);font-size:1rem;font-weight:700;cursor:pointer;margin-top:1rem;transition:all 0.2s;">💾 Save All Changes</button>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ====== DATA ====== */
+let products=[
+  {id:1,name:"Bone Straight Perfection",sub:"14\" · 180% Density · Full Lace",price:85000,cats:"straight bestseller",badge:"bestseller",stars:5,img:"https://rainbowhairs.com.ng/cdn/shop/files/140.png?v=1733923919&width=1400",desc:"A sleek, ultra-straight wig with a flawless silky finish. Perfect for a polished, professional look or any glam occasion. The full lace construction allows versatile parting in any direction.",specs:["14 Inches","180% Density","Full Lace","Remy Hair","Natural Black"]},
+  {id:2,name:"HD Lace Frontal Wig",sub:"16\" · 200% Density · 13×4 Frontal",price:120000,cats:"frontal bestseller",badge:"bestseller",stars:5,img:"https://m.media-amazon.com/images/I/81bxHanwqCL._SY450_.jpg",desc:"Our bestselling HD lace frontal gives you the most undetectable, natural hairline. Incredibly full and voluminous with HD lace that melts into any skin tone for a truly scalp-like finish.",specs:["16 Inches","200% Density","13×4 Frontal","HD Lace","Natural Black"]},
+  {id:3,name:"Bouncy Body Wave",sub:"18\" · 150% Density · Closure Wig",price:95000,cats:"curly closure bestseller",badge:"bestseller",stars:5,img:"https://i.etsystatic.com/50524968/r/il/e041ee/6738108176/il_794xN.6738108176_f2ns.jpg",desc:"Effortless, beautiful body wave texture that moves naturally with you. This wig has stunning volume and life — perfect for a soft, romantic everyday look that transitions from work to night out.",specs:["18 Inches","150% Density","5×5 Closure","Virgin Hair","Natural Black"]},
+  {id:4,name:"Kinky Curly Queen",sub:"16\" · 180% Density · Full Lace",price:105000,cats:"curly bestseller",badge:"bestseller",stars:5,img:"https://i.ebayimg.com/images/g/mUMAAOSwycFnIzPu/s-l400.jpg",desc:"Big, bold, beautiful curls that make a statement. Full lace construction allows you to style it in any direction. Holds its curl pattern beautifully and stands up to Lagos humidity with ease.",specs:["16 Inches","180% Density","Full Lace","Remy Hair","Natural Black"]},
+  {id:5,name:"Silky Straight Bob",sub:"12\" · 180% Density · Closure Wig",price:75000,cats:"straight closure",badge:"new",stars:4,img:"https://vinhairvn.com/wp-content/uploads/2024/02/bone-straight-short-wig-9.jpg",desc:"A chic, clean bob cut with a silky smooth finish. Short and sophisticated — ideal for those who want a low-maintenance, always-neat look that commands attention in any room.",specs:["12 Inches","180% Density","4×4 Closure","Remy Hair","Natural Black"]},
+  {id:6,name:"Deep Wave Goddess",sub:"20\" · 200% Density · 13×6 Frontal",price:135000,cats:"curly frontal",badge:"",stars:5,img:"https://d21d281c1yd2en.cloudfront.net/media/product_images/12-inch-5x5-closure-full-frontal-deep-wave-wig-durable-long-lasting-curls-chic-and-trendy-4c38-1280x1280.jpeg",desc:"Deep, luscious waves with incredible fullness. The 13×6 frontal gives an ultra-realistic scalp appearance. Long, dramatic, and breathtaking — this is luxury hair at its absolute finest.",specs:["20 Inches","200% Density","13×6 Frontal","HD Lace","Natural Black"]},
+  {id:7,name:"Yaki Texture Wig",sub:"14\" · 180% Density · Closure Wig",price:88000,cats:"straight closure",badge:"",stars:4,img:"https://s.alicdn.com/@sc04/kf/H1ed95d61020947a98eb6998516f81d7fc.jpg?avif=close&webp=close",desc:"A natural-looking yaki texture that perfectly mimics relaxed African hair. Blends seamlessly and looks incredibly natural from roots to tips. The everyday wig every Nigerian woman needs.",specs:["14 Inches","180% Density","5×5 Closure","Virgin Hair","Natural Black"]},
+  {id:8,name:"Loose Deep Wave",sub:"18\" · 180% Density · Full Lace",price:110000,cats:"curly",badge:"new",stars:5,img:"https://ishowbeauty.com/cdn/shop/products/Loosedeepwavehairwigs.jpg?v=1663741182",desc:"A gorgeous combination of loose waves and deep texture. Ultra-versatile — wear it straight, curly, or anywhere in between. Stunning volume and movement in every single setting.",specs:["18 Inches","180% Density","Full Lace","Virgin Hair","Natural Black"]},
+  {id:9,name:"Pixie Cut Sensation",sub:"10\" · 200% Density · Full Lace",price:70000,cats:"straight",badge:"new",stars:4,img:"https://www.dhresource.com/webp/m/0x0/f2/albu/g22/M01/67/04/rBVaEmJVMhOAHjoWAAWZ7vlbUnI864.jpg",desc:"A bold, edgy pixie cut for the fearless woman. Ultra-lightweight and comfortable, this short style turns heads instantly. Full lace allows complete styling freedom for a truly custom look.",specs:["10 Inches","200% Density","Full Lace","Remy Hair","Natural Black"]},
+  {id:10,name:"613 Blonde Bombshell",sub:"18\" · 180% Density · 13×4 Frontal",price:145000,cats:"frontal straight",badge:"new",stars:5,img:"https://hollywoodhairstore.com/cdn/shop/files/613-blonde-body-wave-human-hair-ready-to-waer-glueless-wig-hd-lace-front-view-1_1800x1800_a1b927a5-41db-4839-b21c-3c4c7d067e29_800x.webp?v=1754266075",desc:"Striking honey-to-platinum blonde that commands every room. Pre-bleached and ready to wear straight from the box. The ultimate statement piece for the bold, confident woman.",specs:["18 Inches","180% Density","13×4 Frontal","Bleached Knots","613 Blonde"]},
+  {id:11,name:"Water Wave Luxe",sub:"20\" · 150% Density · Closure Wig",price:115000,cats:"curly closure",badge:"",stars:5,img:"https://i5.walmartimages.com/asr/d51d2dd6-b394-4969-acbc-dd33930848aa.c0e7153c8d32a8d1900fe2e4657aa9d4.jpeg",desc:"Gorgeous, flowing water wave texture that cascades beautifully down your back. The silky smooth wave pattern stays defined even after washing, giving you effortlessly luxurious hair every day.",specs:["20 Inches","150% Density","5×5 Closure","Virgin Hair","Natural Black"]},
+  {id:12,name:"Jerry Curl Glam",sub:"16\" · 180% Density · Full Lace",price:98000,cats:"curly",badge:"",stars:4,img:"https://s.alicdn.com/@sc04/kf/H9f5487b0122d4082a7d88b7b93bab57by.jpg?avif=close&webp=close",desc:"Bouncy, defined jerry curls with incredible spring and life. Each curl coils perfectly for a retro-glam finish that looks polished and intentional. Absolutely showstopping at any event.",specs:["16 Inches","180% Density","Full Lace","Remy Hair","Natural Black"]},
+  {id:13,name:"Ombre Caramel Wave",sub:"18\" · 180% Density · 13×4 Frontal",price:130000,cats:"frontal curly",badge:"new",stars:5,img:"https://i.etsystatic.com/29372608/r/il/aee701/6480636586/il_fullxfull.6480636586_9xmh.jpg",desc:"A stunning natural-to-caramel brown ombre on a lush body wave base. The colour is hand-painted for a seamless gradient that looks completely natural. A true luxury statement piece.",specs:["18 Inches","180% Density","13×4 Frontal","HD Lace","Ombre Brown"]},
+  {id:14,name:"Straight Bob Frontal",sub:"14\" · 200% Density · 13×4 Frontal",price:100000,cats:"straight frontal bestseller",badge:"bestseller",stars:5,img:"https://luxehairbysophie.com/cdn/shop/files/B4E56537-A039-4F05-B9E4-D475DFD325EB_5000x.jpg?v=1734078715",desc:"A sleek, full bob with a flawless frontal finish. The 13×4 lace gives you the freedom to part anywhere along the front, while the dense 200% volume creates a breathtaking, full silhouette.",specs:["14 Inches","200% Density","13×4 Frontal","HD Lace","Natural Black"]},
+  {id:15,name:"Burgundy Wave Queen",sub:"18\" · 180% Density · Full Lace",price:125000,cats:"curly frontal",badge:"new",stars:5,img:"https://i.etsystatic.com/64697295/r/il/c0911b/7820243336/il_300x300.7820243336_aog6.jpg",desc:"A rich, deep burgundy on a gorgeous wavy base. Pre-coloured and ready to wear. This bold colour choice elevates any outfit — perfect for parties, events, and standing out in style.",specs:["18 Inches","180% Density","Full Lace","Coloured Hair","Burgundy Red"]},
+  {id:16,name:"Loose Wave Closure",sub:"22\" · 150% Density · 5×5 Closure",price:118000,cats:"curly closure",badge:"",stars:4,img:"https://m.media-amazon.com/images/I/71S2aLWSwPL._AC_SX679_.jpg",desc:"Long, flowing loose waves that move like a dream. The extra length and generous 150% density create impressive volume and length. A classic, timeless look that never goes out of style.",specs:["22 Inches","150% Density","5×5 Closure","Virgin Hair","Natural Black"]},
+  {id:17,name:"Glueless HD Frontal",sub:"16\" · 200% Density · 13×6 Frontal",price:140000,cats:"frontal straight bestseller",badge:"bestseller",stars:5,img:"https://m.media-amazon.com/images/I/81GvxZh-wxL._AC_UF894,1000_QL80_.jpg",desc:"The ultimate glueless experience. Pre-cut, pre-bleached and ready to install in minutes — no glue required. The 13×6 HD lace gives the most realistic scalp of any wig in our collection.",specs:["16 Inches","200% Density","13×6 Frontal","Pre-Cut HD Lace","Glueless Install"]},
+  {id:18,name:"Spring Curl Bounce",sub:"14\" · 180% Density · Closure Wig",price:92000,cats:"curly closure",badge:"",stars:4,img:"https://s.alicdn.com/@sc04/kf/H05cb3ea55c084db29977ef44f7c8804c9/Vietnamese-Human-Hair-Wig-Top-Quality-Human-Hair-SDD-18Inches-Spring-Curl-13-By-4-Frontal-250-Density-Human-Hair-Wig.jpg_300x300.jpg",desc:"Tight, springy curls with incredible bounce and definition. Each curl is uniform and beautifully shaped — perfect for a playful, youthful look that stays fresh all day long.",specs:["14 Inches","180% Density","4×4 Closure","Remy Hair","Natural Black"]},
+  {id:19,name:"V-Part Straight Wig",sub:"16\" · 180% Density · V-Part",price:72000,cats:"straight",badge:"new",stars:4,img:"https://m.media-amazon.com/images/I/71BH6US6xZL._SX450_.jpg",desc:"Our V-Part wig lets your own hairline peek through the V-shaped opening for the most natural look possible. No lace to cut, no glue needed — the easiest, most beginner-friendly install.",specs:["16 Inches","180% Density","V-Part Opening","Remy Hair","No Glue Needed"]},
+  {id:20,name:"Raw Donor Bone Straight",sub:"24\" · 200% Density · 13×6 Frontal",price:195000,cats:"straight frontal",badge:"new",stars:5,img:"https://pictures-nigeria.jijistatic.net/194005196_NjIwLTgyNy0yYzZmMmI1NGYy.webp",desc:"The crème de la crème of our collection. Raw, single-donor bone straight hair sourced directly for unmatched quality, thickness, and longevity. Ultra-long, ultra-thick, ultra-luxurious — this wig is an investment that lasts for years.",specs:["24 Inches","200% Density","13×6 Frontal","Raw Single Donor","HD Lace"]},
+  {id:21,name:"Ginger Straight 13x6 Frontal",sub:"32 inch · 200% Density · 13x6 Frontal",price:220000,cats:"straight frontal",badge:"new",stars:5,img:"https://m.media-amazon.com/images/I/81kgcPFGtSL._SY450_.jpg",desc:"A bold 350 ginger-orange straight wig with a 13x6 HD lace frontal for the most natural hairline. Pre-plucked with baby hairs for a seamless ready-to-wear finish. A true head-turner.",specs:["32 Inches","200% Density","13x6 Frontal","350 Ginger Colour","Pre-Plucked"]},
+  {id:22,name:"Ginger Body Wave 13x6",sub:"32 inch · 200% Density · 13x6 HD Lace",price:180000,cats:"curly frontal",badge:"new",stars:5,img:"https://m.media-amazon.com/images/I/71wz36x5h6L._SY450_.jpg",desc:"Stunning ginger-orange body wave with an HD 13x6 lace frontal that melts into any skin tone. Full luscious waves with an orange glow that commands every room it walks into.",specs:["32 Inches","200% Density","13x6 HD Lace","Orange Ginger Colour","Pre-Plucked"]},
+  {id:23,name:"99J Burgundy Body Wave",sub:"20 inch · 180% Density · 13x4 Frontal",price:185000,cats:"curly frontal",badge:"",stars:5,img:"https://m.media-amazon.com/images/I/814OsN+RNUL._SY450_.jpg",desc:"A rich wine-red 99J burgundy on a gorgeous body wave base. Glueless and pre-plucked for easy installation. Deep moody colour with soft wave movement — perfect for any occasion.",specs:["20 Inches","180% Density","13x4 Frontal","99J Burgundy","Glueless"]},
+  {id:24,name:"Burgundy Raw Frontal Wig",sub:"26 inch · Full Frontal · Raw Human Hair",price:125000,cats:"curly frontal",badge:"",stars:5,img:"https://snthair.com/cdn/shop/files/Snapinsta.app_400576505_865981405068267_6229361054404248491_n_1080_grande.jpg?v=1705677850",desc:"Luxurious raw human hair in a rich burgundy finish. Full frontal construction with unmatched softness and natural movement. Long-lasting colour that stays vibrant wash after wash.",specs:["26 Inches","Full Frontal","Raw Human Hair","Burgundy Colour","Pre-Plucked"]},
+  {id:25,name:"SDD Bounce Wig",sub:"16 inch · High Density · SDD Hair",price:150000,cats:"curly",badge:"",stars:5,img:"https://luxuryhair.ng/wp-content/uploads/2024/10/16-SDD-Bounce-Wig.jpg",desc:"Soft springy SDD bounce curls with incredible volume and life. High-quality SDD hair that stays defined and bouncy all day long. A playful youthful look that turns heads effortlessly.",specs:["16 Inches","SDD Hair","Bouncy Curls","High Density","Natural Black"]},
+  {id:26,name:"Super Drawn Bounce Frontal",sub:"26 inch · Full Frontal · Super Drawn",price:165000,cats:"curly frontal",badge:"",stars:5,img:"https://asiribeautyshop.com/cdn/shop/files/junior_1_1800x1800.jpg?v=1741181410",desc:"A full frontal super drawn bounce wig with incredible fullness from root to tip. Every strand is drawn to the same length for maximum density and a breathtakingly thick finish.",specs:["26 Inches","Full Frontal","Super Drawn","Bounce Texture","Natural Black"]},
+  {id:27,name:"Pixie Tiwa Frontal Wig",sub:"Short · Full Frontal · Ready to Wear",price:35000,cats:"straight frontal",badge:"new",stars:4,img:"https://ng.jumia.is/unsafe/fit-in/680x680/filters:fill(white)/product/64/2157814/1.jpg?0803",desc:"A chic short pixie style with a full frontal for a natural hairline. Lightweight and ultra-comfortable — the perfect low-maintenance style for the busy fashion-forward woman.",specs:["Short Length","Full Frontal","Ready to Wear","Lightweight","Natural Black"]},
+  {id:28,name:"Wolf Cut Burgundy Skunk Stripe",sub:"24 inch · Layered · HD Lace Glueless",price:140000,cats:"straight frontal",badge:"new",stars:5,img:"https://ygwigs.com/cdn/shop/files/layered-wolf-cut-burgundy-red-skunk-stripe-wig-glueless-hd-lace-straight-1.webp?v=1762441086&width=720",desc:"A bold layered wolf cut with a striking burgundy-red and skunk stripe colour melt. Glueless HD lace for effortless installation. Edgy, fashion-forward, and completely unforgettable.",specs:["24 Inches","Layered Wolf Cut","HD Lace","Burgundy Skunk Stripe","Glueless"]},
+  {id:29,name:"Bone Straight Fringe Closure",sub:"16 inch · 300g · Closure Fringe Wig",price:100000,cats:"straight closure",badge:"",stars:5,img:"https://shoplolaexpresshair.com/wp-content/uploads/2024/02/IMG-20240210-WA0005.jpg",desc:"Ultra-sleek bone straight hair with a stunning closure fringe cut. 300g of premium weight for incredible fullness. The fringe adds a chic editorial touch that sets this wig apart.",specs:["16 Inches","300g Weight","Closure Wig","Fringe Cut","Bone Straight"]},
+  {id:30,name:"Glueless Pixie Curls HD Lace",sub:"14 inch · HD Lace · 100% Human Hair",price:170000,cats:"curly",badge:"new",stars:5,img:"https://d353o6jrfs8ut8.cloudfront.net/uploads/31445/24/10/17296065376717b3893f33e2210241729606537.webp",desc:"Gorgeous defined pixie curls on a glueless HD lace base. 100% human hair with a soft natural curl pattern that bounces back beautifully. Easy to install and even easier to love.",specs:["14 Inches","HD Lace","Glueless","100% Human Hair","Pixie Curls"]}
+];
+
+let services=[
+  {id:"s1",name:"Wig Revamping",icon:"fas fa-magic",desc:"Breathe new life into your old wig. Deep cleaning, detangling, steaming and restyling. Returns looking brand new.",price:8000,time:"3-5 business days"},
+  {id:"s2",name:"Closure Fixing",icon:"fas fa-cut",desc:"Professional lace closure fixing and blending. HD or regular lace, customized to your skin tone.",price:5000,time:"1-2 business days"},
+  {id:"s3",name:"Wig Styling",icon:"fas fa-paint-brush",desc:"Custom styling to your look of choice. Straightening, curling, waves, layers — any style you want.",price:6000,time:"1-3 business days"},
+  {id:"s4",name:"Deep Conditioning",icon:"fas fa-pump-soap",desc:"Intensive protein and moisture treatment. Restores shine, softness and strength. Recommended every 2 months.",price:4000,time:"2-3 business days"},
+  {id:"s5",name:"Bleaching & Tinting",icon:"fas fa-palette",desc:"Professional colour work: bleaching knots, tinting, full colour transformation. Natural-looking results.",price:12000,time:"3-5 business days"},
+  {id:"s6",name:"Custom Wig Making",icon:"fas fa-tools",desc:"Send your hair bundles and we craft your dream wig from scratch. Any length, density, lace type and style.",price:25000,time:"5-7 business days"},
+  {id:"s7",name:"Knot Bleaching",icon:"fas fa-circle",desc:"Bleaching knots for an invisible effect, giving you the most natural-looking hairline possible.",price:4500,time:"1-2 business days"},
+  {id:"s8",name:"Steam & Detangle",icon:"fas fa-wind",desc:"Professional steaming and gentle detangling for severely matted wigs. Saves wigs that seem beyond help.",price:3500,time:"1-2 business days"},
+];
+
+const delivery={
+  "Lagos":{price:3000,days:"Same day – 1 day",lgas:["Ikeja","Victoria Island","Lekki Phase 1","Lekki Phase 2","Lekki – Ajah","Ikorodu","Surulere","Yaba","Oshodi","Mushin","Agege","Alimosho","Egbeda","Ojo","Badagry","Epe","Maryland","Bariga","Ojuelegba","Isolo","Lagos Island"]},
+  "Ogun":{price:4500,days:"1-2 days",lgas:["Abeokuta North","Abeokuta South","Ado-Odo/Ota","Ijebu Ode","Sagamu","Ifo","Ewekoro","Obafemi-Owode"]},
+  "Oyo":{price:5500,days:"1-2 days",lgas:["Ibadan North","Ibadan South-West","Ibadan South-East","Ogbomosho North","Oyo","Iseyin","Saki"]},
+  "Osun":{price:6000,days:"1-2 days",lgas:["Osogbo","Ile-Ife","Ilesa","Ede","Iwo","Ikirun","Ejigbo"]},
+  "Ondo":{price:6500,days:"2-3 days",lgas:["Akure North","Akure South","Ondo City","Owo","Ikare","Okitipupa"]},
+  "Ekiti":{price:6500,days:"2-3 days",lgas:["Ado-Ekiti","Ikere-Ekiti","Ijero","Ilawe-Ekiti","Efon-Alaaye","Emure"]},
+  "Kwara":{price:6000,days:"1-2 days",lgas:["Ilorin East","Ilorin West","Ilorin South","Offa","Patigi","Omu-Aran"]},
+  "Abuja FCT":{price:7500,days:"1-2 days",lgas:["Central Area","Garki","Wuse","Wuse 2","Maitama","Gwarinpa","Asokoro","Kubwa","Karu","Nyanya","Gwagwalada","Lugbe"]},
+  "Edo":{price:7000,days:"2-3 days",lgas:["Benin City (Oredo)","Egor","Ikpoba-Okha","Ovia North-East","Ekpoma","Auchi","Uromi","Igarra"]},
+  "Delta":{price:7500,days:"2-3 days",lgas:["Asaba","Warri","Ughelli North","Abraka","Agbor","Sapele","Ozoro","Koko/Burutu"]},
+  "Anambra":{price:8000,days:"2-3 days",lgas:["Onitsha North","Onitsha South","Awka North","Awka South","Nnewi North","Ekwulobia","Agulu"]},
+  "Enugu":{price:8000,days:"2-3 days",lgas:["Enugu North","Enugu South","Nsukka","Agbani","Oji River","Ngwo","Achi"]},
+  "Imo":{price:8000,days:"2-3 days",lgas:["Owerri North","Owerri West","Owerri Municipal","Okigwe","Orlu","Oguta","Mbaise"]},
+  "Abia":{price:8500,days:"2-3 days",lgas:["Aba North","Aba South","Umuahia North","Umuahia South","Arochukwu","Ohafia","Bende"]},
+  "Rivers":{price:8500,days:"2-3 days",lgas:["Port Harcourt","Obio-Akpor","Oyigbo","Eleme","Bonny","Degema","Omuma","Etche"]},
+  "Bayelsa":{price:9000,days:"3-4 days",lgas:["Yenagoa","Ogbia","Sagbama","Ekeremor","Brass","Nembe","Southern Ijaw"]},
+  "Cross River":{price:9000,days:"3-4 days",lgas:["Calabar Municipality","Calabar South","Ikom","Ogoja","Obudu","Akamkpa","Obubra"]},
+  "Akwa Ibom":{price:9000,days:"3-4 days",lgas:["Uyo","Eket","Ikot Ekpene","Oron","Abak","Ikot Abasi","Etinan"]},
+  "Benue":{price:9500,days:"3-4 days",lgas:["Makurdi","Gboko","Otukpo","Katsina-Ala","Vandeikya","Oturkpo","Adikpo"]},
+  "Kogi":{price:8500,days:"2-3 days",lgas:["Lokoja","Okene","Kabba","Ankpa","Ajaokuta","Idah","Isanlu"]},
+  "Niger":{price:9000,days:"2-3 days",lgas:["Minna","Suleja","Kontagora","Bida","Lapai","Agaie","Chanchaga"]},
+  "Plateau":{price:10000,days:"3-4 days",lgas:["Jos North","Jos South","Bukuru","Pankshin","Shendam","Wase","Mangu"]},
+  "Nasarawa":{price:9000,days:"2-3 days",lgas:["Lafia","Keffi","Akwanga","Doma","Obi","Nasarawa","Wamba"]},
+  "Taraba":{price:11000,days:"4-5 days",lgas:["Jalingo","Wukari","Bali","Gembu","Takum","Zing","Ibi"]},
+  "Adamawa":{price:11000,days:"4-5 days",lgas:["Yola North","Yola South","Mubi North","Mubi South","Numan","Ganye","Gombi"]},
+  "Gombe":{price:11000,days:"4-5 days",lgas:["Gombe","Kumo","Kaltungo","Billiri","Bajoga","Deba","Nafada"]},
+  "Bauchi":{price:11000,days:"4-5 days",lgas:["Bauchi","Azare","Misau","Jama'are","Katagum","Ningi","Alkaleri"]},
+  "Borno":{price:12000,days:"5-6 days",lgas:["Maiduguri","Konduga","Biu","Gwoza","Ngala","Monguno","Damboa"]},
+  "Yobe":{price:12000,days:"5-6 days",lgas:["Damaturu","Potiskum","Gashua","Nguru","Geidam","Bade","Nangere"]},
+  "Kano":{price:10000,days:"3-5 days",lgas:["Kano Municipal","Fagge","Dala","Gwale","Nasarawa","Tarauni","Kumbotso","Ungogo"]},
+  "Katsina":{price:11000,days:"4-5 days",lgas:["Katsina","Daura","Funtua","Mashi","Malumfashi","Rimi","Dutsin-Ma"]},
+  "Kaduna":{price:10000,days:"3-4 days",lgas:["Kaduna North","Kaduna South","Zaria","Kafanchan","Soba","Giwa","Chikun"]},
+  "Sokoto":{price:12000,days:"5-6 days",lgas:["Sokoto North","Sokoto South","Wamako","Wurno","Binji","Bodinga","Dange-Shuni"]},
+  "Zamfara":{price:12000,days:"5-6 days",lgas:["Gusau","Kaura-Namoda","Talata-Mafara","Anka","Maradun","Bakura"]},
+  "Kebbi":{price:12000,days:"5-6 days",lgas:["Birnin Kebbi","Argungu","Yauri","Zuru","Ngaski","Kalgo"]},
+  "Jigawa":{price:11000,days:"4-5 days",lgas:["Dutse","Hadejia","Kazaure","Gumel","Ringim","Birnin Kudu","Sule-Tankarkar"]},
+};
+
+const lagosZones={
+  island:["Victoria Island","Lekki Phase 1","Lekki Phase 2","Lekki – Ajah","Ikoyi","Oniru","Chevron","Sangotedo","Badore","Elegushi","Osapa London","Agungi","Ikate","Ilasan"],
+  mainland:["Ikeja","Surulere","Yaba","Oshodi","Mushin","Agege","Alimosho","Egbeda","Maryland","Bariga","Ojuelegba","Isolo","Ketu","Ojota","Mile 12","Gbagada","Onipanu","Palmgroove","Iyana-Ipaja","Dopemu"]
+};
+
+/* ====== STATE ====== */
+let cart=JSON.parse(localStorage.getItem('sh2_cart')||'[]');
+let pPrices=JSON.parse(localStorage.getItem('sh2_pp')||'{}');
+let sPrices=JSON.parse(localStorage.getItem('sh2_sp')||'{}');
+let dPrices=JSON.parse(localStorage.getItem('sh2_dp')||'{}');
+let selPayment='Opay Transfer';
+let selectedZone='';
+let payDone=false;
+let curSvc=null;
+
+// Apply localStorage prices as initial fallback only
+// (GitHub fetch will override these when it completes)
+products.forEach(p=>{if(pPrices[p.id])p.price=pPrices[p.id];});
+services.forEach(s=>{if(sPrices[s.id])s.price=sPrices[s.id];});
+Object.keys(dPrices).forEach(st=>{if(delivery[st])delivery[st].price=dPrices[st];});
+
+/* ====== LOADER ====== */
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.getElementById('loader').classList.add('out');
+    renderProducts();
+    renderServices();
+    buildStates();
+    renderAdmin();
+    initCounters();
+    initScroll();
+  },2200);
+});
+
+/* ====== NAV ====== */
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('solid',window.scrollY>60));
+function openDrawer(){document.getElementById('drawer').classList.add('on');document.getElementById('dmask').classList.add('on');}
+function closeDrawer(){document.getElementById('drawer').classList.remove('on');document.getElementById('dmask').classList.remove('on');}
+
+/* ====== COUNTERS ====== */
+function initCounters(){
+  document.querySelectorAll('[data-n]').forEach(el=>{
+    const t=parseInt(el.getAttribute('data-n'));
+    const suf=el.textContent.replace(/[0-9]/g,'');
+    let c=0;const step=Math.ceil(t/40);
+    const tm=setInterval(()=>{c=Math.min(c+step,t);el.textContent=c+suf;if(c>=t)clearInterval(tm);},40);
+  });
+}
+
+/* ====== SCROLL REVEAL ====== */
+function initScroll(){
+  const ob=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});
+  },{threshold:0.1});
+  document.querySelectorAll('.rv,.rv-l,.rv-r').forEach(el=>ob.observe(el));
+}
+
+/* ====== PRODUCTS ====== */
+function renderProducts(f='all'){
+  const g=document.getElementById('pgrid');g.innerHTML='';
+  products.forEach((p,i)=>{
+    const cats=p.cats.split(' ');
+    const hide=f!=='all'&&!cats.includes(f);
+    const card=document.createElement('div');
+    card.className='pcard rv'+(hide?' hide':'');
+    card.style.transitionDelay=(i*0.05)+'s';
+    card.onclick=()=>openPD(p.id);
+    const bClass=p.badge==='new'?'pbadge new-badge':'pbadge';
+    const bLabel=p.badge==='bestseller'?'★ Best Seller':p.badge==='new'?'New Arrival':'';
+    card.innerHTML=`
+      <div class="pcard-img">
+        <img src="${p.img}" alt="${p.name}" loading="lazy">
+        ${bLabel?`<span class="${bClass}">${bLabel}</span>`:''}
+        <button class="quick-add" onclick="event.stopPropagation();addToCart(${p.id})">Add to Bag</button>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-name">${p.name}</div>
+        <div class="pcard-sub">${p.sub}</div>
+        <div class="pcard-foot">
+          <div class="pcard-price">₦${p.price.toLocaleString()}</div>
+          <div class="pcard-stars">${'★'.repeat(p.stars)}${'☆'.repeat(5-p.stars)}</div>
+        </div>
+      </div>`;
+    g.appendChild(card);
+  });
+  setTimeout(initScroll,100);
+}
+
+function filter(f,btn){
+  document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  renderProducts(f==='new'?'all':f);
+  if(f==='new'){
+    document.querySelectorAll('.pcard').forEach(c=>{
+      const id=parseInt(c.querySelector('img').alt) || null;
+      // hide non-new cards after render
+    });
+    const g=document.getElementById('pgrid');
+    g.querySelectorAll('.pcard').forEach(card=>{
+      const img=card.querySelector('img');
+      const p=products.find(x=>img&&img.alt===x.name);
+      if(p&&p.badge!=='new')card.classList.add('hide');
+    });
+  }
+}
+
+/* ====== PRODUCT DETAIL ====== */
+function openPD(id){
+  const p=products.find(x=>x.id===id);if(!p)return;
+  document.getElementById('pd-img').src=p.img;
+  document.getElementById('pd-img').alt=p.name;
+  const b=document.getElementById('pd-badge');
+  b.textContent=p.badge==='bestseller'?'★ Best Seller':p.badge==='new'?'New Arrival':'Premium Quality';
+  document.getElementById('pd-name').textContent=p.name;
+  document.getElementById('pd-stars').textContent='★'.repeat(p.stars)+'☆'.repeat(5-p.stars);
+  document.getElementById('pd-price').textContent='₦'+p.price.toLocaleString();
+  document.getElementById('pd-desc').textContent=p.desc;
+  const specs=document.getElementById('pd-specs');
+  specs.innerHTML=p.specs.map(s=>`<span class="spec-pill">${s}</span>`).join('');
+  const atb=document.getElementById('pd-atb');
+  atb.onclick=()=>{addToCart(id);closePD();};
+  document.getElementById('pdoverlay').classList.add('on');
+  document.body.style.overflow='hidden';
+}
+function closePD(){
+  document.getElementById('pdoverlay').classList.remove('on');
+  document.body.style.overflow='';
+}
+document.getElementById('pdoverlay').addEventListener('click',function(e){if(e.target===this)closePD();});
+
+/* ====== SERVICES ====== */
+function renderServices(){
+  const g=document.getElementById('svcgrid');g.innerHTML='';
+  services.forEach((s,i)=>{
+    const c=document.createElement('div');
+    c.className='svc-card rv';c.style.transitionDelay=(i*0.05)+'s';
+    c.innerHTML=`
+      <div class="svc-icon"><i class="${s.icon}"></i></div>
+      <div class="svc-name">${s.name}</div>
+      <div class="svc-desc">${s.desc}</div>
+      <div class="svc-price">₦${s.price.toLocaleString()}</div>
+      <div class="svc-time"><i class="fas fa-clock" style="margin-right:0.3rem;"></i>${s.time}</div>
+      <button class="svc-book" onclick="openSvcModal('${s.id}')">Book This Service</button>`;
+    g.appendChild(c);
+  });
+  setTimeout(initScroll,100);
+}
+
+/* ====== CART ====== */
+function calcDiscount(sub){
+  if(sub>=2000000)return{pct:10,label:'10% discount (order ₦2m+)'};
+  if(sub>=1000000)return{pct:8,label:'8% discount (order ₦1m+)'};
+  if(sub>=500000)return{pct:5,label:'5% discount (order ₦500k+)'};
+  if(sub>=300000)return{pct:4,label:'4% discount (order ₦300k+)'};
+  if(sub>=100000)return{pct:2,label:'2% discount (order ₦150k+)'};
+  return{pct:0,label:''};
+}
+
+function addToCart(id){
+  const p=products.find(x=>x.id===id);
+  const ex=cart.find(c=>c.id===id);
+  if(ex)ex.qty++;else cart.push({...p,qty:1});
+  saveCart();updateCartUI();
+  showToast(`${p.name} added to bag!`);
+}
+function saveCart(){localStorage.setItem('sh2_cart',JSON.stringify(cart));}
+
+function updateCartUI(){
+  const total=cart.reduce((s,c)=>s+c.qty,0);
+  document.getElementById('bag-c').textContent=total;
+  renderCart();
+}
+
+function renderCart(){
+  const body=document.getElementById('cbody');
+  const foot=document.getElementById('cfoot');
+  if(!cart.length){
+    body.innerHTML=`<div class="cart-empty"><i class="fas fa-shopping-bag"></i><p>Your bag is empty.<br>Explore our collection!</p></div>`;
+    foot.style.display='none';return;
+  }
+  foot.style.display='block';
+  body.innerHTML=cart.map(item=>`
+    <div class="citem-row">
+      <img class="citem-img" src="${item.img}" alt="${item.name}">
+      <div style="flex:1">
+        <div class="citem-name">${item.name}</div>
+        <div class="citem-sub">${item.sub}</div>
+        <div class="citem-price">₦${(item.price*item.qty).toLocaleString()}</div>
+        <div class="qty-ctrl">
+          <button class="qb" onclick="changeQty(${item.id},-1)">−</button>
+          <span class="qn">${item.qty}</span>
+          <button class="qb" onclick="changeQty(${item.id},1)">+</button>
+        </div>
+      </div>
+      <button class="citem-rm" onclick="removeItem(${item.id})"><i class="fas fa-times"></i></button>
+    </div>`).join('');
+
+  const sub=cart.reduce((s,c)=>s+c.price*c.qty,0);
+  const disc=calcDiscount(sub);
+  const discAmt=Math.round(sub*disc.pct/100);
+  const total=sub-discAmt;
+
+  document.getElementById('ct-sub').textContent='₦'+sub.toLocaleString();
+  const dbanner=document.getElementById('disc-banner');
+  const discRow=document.getElementById('ct-disc-row');
+  if(disc.pct>0){
+    dbanner.classList.add('show');
+    document.getElementById('disc-msg').textContent='🎉 '+disc.label+' applied!';
+    discRow.style.display='flex';
+    document.getElementById('ct-disc-label').textContent='Discount ('+disc.pct+'%)';
+    document.getElementById('ct-disc').textContent='-₦'+discAmt.toLocaleString();
+  } else {
+    dbanner.classList.remove('show');
+    discRow.style.display='none';
+  }
+  document.getElementById('ct-total').textContent='₦'+total.toLocaleString();
+}
+
+function changeQty(id,d){
+  const item=cart.find(c=>c.id===id);if(!item)return;
+  item.qty+=d;
+  if(item.qty<=0)cart=cart.filter(c=>c.id!==id);
+  saveCart();updateCartUI();
+}
+function removeItem(id){cart=cart.filter(c=>c.id!==id);saveCart();updateCartUI();}
+function clearCart(){cart=[];saveCart();updateCartUI();showToast('Bag cleared');}
+function openCart(){document.getElementById('cbar').classList.add('on');document.getElementById('cmask').classList.add('on');renderCart();}
+function closeCart(){document.getElementById('cbar').classList.remove('on');document.getElementById('cmask').classList.remove('on');}
+
+/* ====== CHECKOUT ====== */
+function openCheckout(){
+  closeCart();
+  payDone=false;
+  document.getElementById('paywarning').classList.remove('show');
+  document.getElementById('wa-note').classList.remove('show');
+  buildCheckoutSummary();
+  buildStates();
+  document.getElementById('co-modal').classList.add('on');
+  document.body.style.overflow='hidden';
+}
+
+function buildCheckoutSummary(){
+  const sub=cart.reduce((s,c)=>s+c.price*c.qty,0);
+  const disc=calcDiscount(sub);
+  const discAmt=Math.round(sub*disc.pct/100);
+  const lines=document.getElementById('co-lines');
+  lines.innerHTML=cart.map(c=>`<div class="o-line"><span>${c.name} ×${c.qty}</span><span>₦${(c.price*c.qty).toLocaleString()}</span></div>`).join('');
+  lines.innerHTML+=`<div class="o-line"><span>Subtotal</span><span>₦${sub.toLocaleString()}</span></div>`;
+  const discRow=document.getElementById('co-disc-row');
+  if(disc.pct>0){
+    discRow.style.display='flex';
+    document.getElementById('co-disc-label').textContent=`Discount (${disc.pct}% — ${disc.label})`;
+    document.getElementById('co-disc-val').textContent='-₦'+discAmt.toLocaleString();
+  } else discRow.style.display='none';
+  document.getElementById('hidden-items').value=cart.map(c=>`${c.name} x${c.qty} = ₦${(c.price*c.qty).toLocaleString()}`).join(' | ');
+  document.getElementById('hidden-subtotal').value='₦'+sub.toLocaleString();
+  document.getElementById('hidden-discount').value=disc.pct>0?`-₦${discAmt.toLocaleString()} (${disc.pct}%)`:'None';
+  updateCoTotal();
+}
+
+function updateCoTotal(){
+  const sub=cart.reduce((s,c)=>s+c.price*c.qty,0);
+  const disc=calcDiscount(sub);
+  const discAmt=Math.round(sub*disc.pct/100);
+  const state=document.getElementById('co-state').value;
+  const dfee=state&&delivery[state]?delivery[state].price:0;
+  const total=sub-discAmt+dfee;
+  document.getElementById('co-gtotal').textContent='₦'+total.toLocaleString();
+  document.getElementById('bank-amount').textContent='₦'+total.toLocaleString();
+  document.getElementById('hidden-total').value='₦'+total.toLocaleString();
+  document.getElementById('hidden-delivery').value=dfee?'₦'+dfee.toLocaleString():'—';
+}
+
+function buildStates(){
+  const sel=document.getElementById('co-state');
+  sel.innerHTML='<option value="">— Select your state —</option>';
+  Object.keys(delivery).sort().forEach(s=>{
+    const o=document.createElement('option');o.value=s;o.textContent=s;sel.appendChild(o);
+  });
+}
+
+function onState(){
+  const s=document.getElementById('co-state').value;
+  const lgaFg=document.getElementById('lga-fg');
+  const lgaSel=document.getElementById('co-lga');
+  const dbox=document.getElementById('co-dbox');
+  lgaSel.innerHTML='<option value="">— Select LGA —</option>';
+  document.getElementById('addr-fg').style.display='none';
+  if(s&&delivery[s]){
+    lgaFg.style.display='block';
+    delivery[s].lgas.forEach(l=>{const o=document.createElement('option');o.value=l;o.textContent=l;lgaSel.appendChild(o);});
+    dbox.classList.add('show');
+    document.getElementById('co-dfee').textContent='₦'+delivery[s].price.toLocaleString();
+    document.getElementById('co-ddays').textContent='⏱ Estimated delivery: '+delivery[s].days;
+    document.getElementById('hidden-state').value=s;
+  } else {lgaFg.style.display='none';dbox.classList.remove('show');}
+  updateCoTotal();
+}
+
+function onLga(){
+  const lga=document.getElementById('co-lga').value;
+  document.getElementById('addr-fg').style.display=lga?'block':'none';
+  document.getElementById('hidden-lga').value=lga;
+}
+
+function selPay(el,method){
+  document.querySelectorAll('.pay-opt').forEach(o=>o.classList.remove('sel'));
+  el.classList.add('sel');selPayment=method;
+  document.getElementById('hidden-payment').value=method;
+}
+
+function payConfirm(yes){
+  payDone=yes;
+  document.getElementById('paywarning').classList.toggle('show',!yes);
+  document.getElementById('wa-note').classList.toggle('show',yes);
+}
+
+/* ====== ORDER SUBMIT ====== */
+function handleOrder(e){
+  const name=document.getElementById('co-name').value.trim();
+  const phone=document.getElementById('co-phone').value.trim();
+  const state=document.getElementById('co-state').value;
+  const lga=document.getElementById('co-lga').value;
+  const addr=document.getElementById('co-addr').value.trim();
+  const email=document.getElementById('co-email').value.trim();
+  if(!name||!phone||!email||!state||!lga||!addr){
+    showToast('Please fill all required fields ⚠️');return false;
+  }
+  setTimeout(()=>{
+    clearCart();
+    closeModal('co-modal');
+    showToast('Order placed! Check your email for confirmation 🎉');
+  },800);
+  return true;
+}
+
+/* ====== SERVICE BOOKING ====== */
+function openSvcModal(id){
+  curSvc=services.find(s=>s.id===id);
+  document.getElementById('sm-title').textContent=curSvc.name;
+  document.getElementById('sm-sub').textContent=`Starting from ₦${curSvc.price.toLocaleString()} · ${curSvc.time}`;
+  document.getElementById('sm-svcname').value=curSvc.name;
+  document.getElementById('sm-svcprice').value='₦'+curSvc.price.toLocaleString();
+  document.getElementById('sm-subject').value=`✂️ Service Booking: ${curSvc.name} — SoFt Hairs`;
+  selectedZone='';
+  document.querySelectorAll('.zone-c').forEach(z=>z.classList.remove('sel'));
+  document.getElementById('sm-area-fg').style.display='none';
+  document.getElementById('svc-modal').classList.add('on');
+  document.body.style.overflow='hidden';
+}
+
+function selZone(el,zone){
+  document.querySelectorAll('.zone-c').forEach(z=>z.classList.remove('sel'));
+  el.classList.add('sel');selectedZone=zone;
+  document.getElementById('sm-zone').value=zone==='island'?'Lagos Island':'Lagos Mainland';
+  const areaSel=document.getElementById('sm-area');
+  areaSel.innerHTML='<option value="">— Select area —</option>';
+  lagosZones[zone].forEach(a=>{const o=document.createElement('option');o.value=a;o.textContent=a;areaSel.appendChild(o);});
+  document.getElementById('sm-area-fg').style.display='block';
+}
+
+document.getElementById('sm-area').addEventListener('change',function(){
+  document.getElementById('sm-area-hidden').value=this.value;
+});
+
+function handleSvcBook(e){
+  const name=document.getElementById('sm-name').value.trim();
+  const phone=document.getElementById('sm-phone').value.trim();
+  const email=document.getElementById('sm-email').value.trim();
+  const area=document.getElementById('sm-area').value;
+  if(!name||!phone||!email||!selectedZone||!area){
+    showToast('Please fill all required fields ⚠️');return false;
+  }
+  setTimeout(()=>{
+    closeModal('svc-modal');
+    showToast("Service booking submitted! We'll contact you soon ✂️");
+  },500);
+  return true;
+}
+
+/* ====== MODAL HELPERS ====== */
+function closeModal(id){
+  document.getElementById(id).classList.remove('on');
+  document.body.style.overflow='';
+}
+['co-modal','svc-modal'].forEach(id=>{
+  document.getElementById(id).addEventListener('click',function(e){
+    if(e.target===this)closeModal(id);
+  });
+});
+
+/* ====== TOAST ====== */
+let toastTimer;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  document.getElementById('tmsg').textContent=msg;
+  t.classList.add('on');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('on'),3200);
+}
+
+/* ====== ADMIN ====== */
+const ADMIN_PW = 'good hair';
+
+// ── GitHub API config ──
+const GH_OWNER = 'Softgirl03';
+const GH_REPO  = 'SoFTDishesMenu';
+const GH_FILE  = 'wigmenu.json';
+const GH_TOKEN = atob('Z2hwX0FWRWFCTXZTS2dnUTRBS1Eya3ZDWDM2cWwybW9WcTNHc3dyZQ==');
+
+// Secret trigger: tap the nav logo 5 times quickly
+let _tapCount = 0, _tapTimer = null;
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelector('.nav-logo').addEventListener('click', () => {
+    _tapCount++;
+    clearTimeout(_tapTimer);
+    if (_tapCount >= 5) { _tapCount = 0; openAdminLogin(); return; }
+    _tapTimer = setTimeout(() => { _tapCount = 0; }, 2000);
+  });
+});
+
+function openAdminLogin() {
+  document.getElementById('admin-login').classList.add('on');
+  document.getElementById('alog-pw').value = '';
+  document.getElementById('alog-err').classList.remove('on');
+  setTimeout(() => document.getElementById('alog-pw').focus(), 100);
+}
+function closeAdminLogin() {
+  document.getElementById('admin-login').classList.remove('on');
+}
+function checkAdminPw() {
+  const val = document.getElementById('alog-pw').value;
+  if (val === ADMIN_PW) { closeAdminLogin(); openAdmin(); }
+  else {
+    document.getElementById('alog-err').classList.add('on');
+    document.getElementById('alog-pw').value = '';
+    document.getElementById('alog-pw').focus();
+  }
+}
+async function openAdmin() {
+  document.getElementById('admin-wrap').classList.add('on');
+  document.getElementById('ap-list').innerHTML = '<p style="font-size:0.75rem;color:var(--text3);padding:0.5rem 0;">⏳ Loading latest prices from GitHub…</p>';
+  document.getElementById('as-list').innerHTML = '';
+  document.getElementById('ad-list').innerHTML = '';
+  await fetchGithubPrices();
+  renderAdmin();
+}
+function closeAdmin() { document.getElementById('admin-wrap').classList.remove('on'); }
+
+// ── Fetch latest prices from GitHub on load ──
+async function fetchGithubPrices() {
+  const RAW = `https://raw.githubusercontent.com/${GH_OWNER}/${GH_REPO}/main/${GH_FILE}`;
+  const attempts = [
+    () => fetch(RAW + '?t=' + Date.now()),
+    () => fetch(`https://cdn.jsdelivr.net/gh/${GH_OWNER}/${GH_REPO}@main/${GH_FILE}`),
+    () => fetch(`https://corsproxy.io/?${encodeURIComponent(RAW)}`),
+    () => fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(RAW)}`),
+    () => fetch(`https://ghproxy.com/${RAW}`),
+  ];
+  for (const attempt of attempts) {
+    try {
+      const res = await attempt();
+      console.log('GitHub fetch attempt:', res.status, res.url);
+      if (!res.ok) continue;
+      const data = await res.json();
+      if (!data) continue;
+      // Apply product prices
+      if (data.products) data.products.forEach(item => {
+        const p = products.find(x => x.id === item.id);
+        if (p && item.price) { p.price = item.price; pPrices[item.id] = item.price; }
+      });
+      // Apply service prices
+      if (data.services) data.services.forEach(item => {
+        const s = services.find(x => x.id === item.id);
+        if (s && item.price) { s.price = item.price; sPrices[item.id] = item.price; }
+      });
+      // Apply delivery fees
+      if (data.delivery) Object.entries(data.delivery).forEach(([state, fee]) => {
+        if (delivery[state] && fee) { delivery[state].price = fee; dPrices[state] = fee; }
+      });
+      // Persist GitHub prices to localStorage so they're the new baseline
+      localStorage.setItem('sh2_pp', JSON.stringify(pPrices));
+      localStorage.setItem('sh2_sp', JSON.stringify(sPrices));
+      localStorage.setItem('sh2_dp', JSON.stringify(dPrices));
+      console.log('✅ SoFt Hairs: Prices loaded from GitHub.');
+      return true;
+    } catch(e) { console.warn('GitHub attempt failed:', e.message); continue; }
+  }
+  console.warn('⚠️ GitHub unreachable — using built-in prices. Normal for local files.');
+  return false;
+}
+
+// ── Push all prices to GitHub ──
+async function pushToGithub() {
+  const menuData = {
+    products: products.map(p => ({ id: p.id, name: p.name, price: p.price })),
+    services: services.map(s => ({ id: s.id, name: s.name, price: s.price })),
+    delivery: Object.fromEntries(Object.entries(delivery).map(([state, d]) => [state, d.price]))
+  };
+
+  try {
+    const apiUrl = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`;
+    // Get current SHA
+    const getRes = await fetch(apiUrl, {
+      headers: { 'Authorization': `token ${GH_TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
+    });
+
+    let sha = null;
+    if (getRes.ok) { const fd = await getRes.json(); sha = fd.sha; }
+
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(menuData, null, 2))));
+    const body = { message: 'Update prices via admin panel', content };
+    if (sha) body.sha = sha;
+
+    const pushRes = await fetch(apiUrl, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `token ${GH_TOKEN}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+
+    if (pushRes.ok) { console.log('✅ GitHub updated!'); return true; }
+    console.error('GitHub push failed:', pushRes.status);
+    return false;
+  } catch (e) { console.error('GitHub push error:', e); return false; }
+}
+
+function renderAdmin(){
+  document.getElementById('ap-list').innerHTML = products.map(p => `
+    <div class="a-row">
+      <label>${p.name}</label>
+      <input class="a-inp" type="number" id="ap${p.id}" value="${p.price}">
+    </div>`).join('');
+  document.getElementById('as-list').innerHTML = services.map(s => `
+    <div class="a-row">
+      <label>${s.name}</label>
+      <input class="a-inp" type="number" id="as${s.id}" value="${s.price}">
+    </div>`).join('');
+  document.getElementById('ad-list').innerHTML = Object.keys(delivery).sort().map(st => `
+    <div class="a-row">
+      <label>${st}</label>
+      <input class="a-inp" type="number" id="ad${st.replace(/[^a-z0-9]/gi,'')}" value="${delivery[st].price}">
+    </div>`).join('');
+}
+
+async function saveAllAdmin() {
+  // Collect all changes
+  products.forEach(p => {
+    const v = parseInt(document.getElementById('ap' + p.id)?.value);
+    if (!isNaN(v)) { p.price = v; pPrices[p.id] = v; }
+  });
+  services.forEach(s => {
+    const v = parseInt(document.getElementById('as' + s.id)?.value);
+    if (!isNaN(v)) { s.price = v; sPrices[s.id] = v; }
+  });
+  Object.keys(delivery).forEach(st => {
+    const v = parseInt(document.getElementById('ad' + st.replace(/[^a-z0-9]/gi,''))?.value);
+    if (!isNaN(v)) { delivery[st].price = v; dPrices[st] = v; }
+  });
+
+  // Save to localStorage
+  localStorage.setItem('sh2_pp', JSON.stringify(pPrices));
+  localStorage.setItem('sh2_sp', JSON.stringify(sPrices));
+  localStorage.setItem('sh2_dp', JSON.stringify(dPrices));
+  renderProducts();
+  renderServices();
+
+  const btn = document.getElementById('a-save-all-btn');
+  btn.textContent = '⏳ Saving to GitHub...';
+  btn.disabled = true;
+
+  const ok = await pushToGithub();
+  btn.textContent = ok ? '✅ Saved for everyone!' : '✅ Saved locally (GitHub failed)';
+  btn.disabled = false;
+  setTimeout(() => btn.textContent = '💾 Save All Changes', 3000);
+  showToast(ok ? 'Prices updated for all customers! ✓' : 'Saved locally ✓');
+}
+
+// Keep individual save buttons working too
+function savePP(id){
+  const v = parseInt(document.getElementById('ap'+id).value);
+  if(isNaN(v)) return;
+  products.find(p=>p.id===id).price = v;
+  pPrices[id] = v;
+  localStorage.setItem('sh2_pp', JSON.stringify(pPrices));
+  renderProducts();
+  showToast('Price updated ✓');
+}
+function saveSP(id){
+  const v = parseInt(document.getElementById('as'+id).value);
+  if(isNaN(v)) return;
+  services.find(s=>s.id===id).price = v;
+  sPrices[id] = v;
+  localStorage.setItem('sh2_sp', JSON.stringify(sPrices));
+  renderServices();
+  showToast('Service price updated ✓');
+}
+function saveDP(st){
+  const key = 'ad' + st.replace(/[^a-z0-9]/gi,'');
+  const v = parseInt(document.getElementById(key).value);
+  if(isNaN(v)) return;
+  delivery[st].price = v;
+  dPrices[st] = v;
+  localStorage.setItem('sh2_dp', JSON.stringify(dPrices));
+  showToast('Delivery fee updated ✓');
+}
+
+/* ====== PROCESS STEPS ANIMATION ====== */
+function initProcessSteps() {
+  const els = document.querySelectorAll('.proc-step, .proc-arrow');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('in');
+    });
+  }, { threshold: 0.2 });
+  els.forEach(s => obs.observe(s));
+}
+
+/* ====== TESTIMONIAL SLIDER ====== */
+let testiIdx = 0;
+function initTesti() {
+  const slides = document.querySelectorAll('.testi-slide');
+  const dotsWrap = document.getElementById('testi-dots');
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'testi-dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTesti(i);
+    dotsWrap.appendChild(d);
+  });
+  setInterval(() => nextTesti(), 5000);
+}
+function goTesti(idx) {
+  const slides = document.querySelectorAll('.testi-slide');
+  const dots = document.querySelectorAll('.testi-dot');
+  slides.forEach(s => s.classList.remove('active'));
+  dots.forEach(d => d.classList.remove('active'));
+  testiIdx = (idx + slides.length) % slides.length;
+  slides[testiIdx].classList.add('active');
+  dots[testiIdx].classList.add('active');
+}
+function nextTesti() { goTesti(testiIdx + 1); }
+function prevTesti() { goTesti(testiIdx - 1); }
+
+/* ====== INIT ====== */
+document.addEventListener('DOMContentLoaded', async () => {
+  renderProducts();
+  renderServices();
+  updateCartUI();
+  initCounters();
+  initScroll();
+  initProcessSteps();
+  initTesti();
+  renderAdmin();
+  // Fetch latest prices from GitHub
+  await fetchGithubPrices();
+  renderProducts();
+  renderServices();
+  renderAdmin();
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('out');
+  }, 2200);
+});
+</script>
+</body>
+</html>
